@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import axios from 'axios';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
@@ -8,9 +9,12 @@ import { userData, setToken } from '../Redux/reducer';
 const baseURL = 'http://127.0.0.1:8000/api/';
 
 const useAxios = () => {
-  const authTokens = useSelector((state) => state.user.token.access);
+  const authTokens = useSelector((state) => state.user.token.access_token);
+  const authRefresh = useSelector((state) => state.user.token.refresh_token);
+  console.log('access token', authTokens);
+  console.log('refresh token', authRefresh);
   const dispatch = useDispatch();
-  console.log(authTokens, 'this is use axios');
+
   const axiosInstance = axios.create({
     baseURL,
     headers: { Authorization: `Bearer ${authTokens}` },
@@ -19,17 +23,17 @@ const useAxios = () => {
   axiosInstance.interceptors.request.use(async (req) => {
     const user = jwt_decode(authTokens);
     const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
-
+    console.log(isExpired);
     if (!isExpired) return req;
 
     const response = await axios.post(`${baseURL}token/refresh/`, {
-      refresh: authTokens.refresh,
+      refresh: authRefresh,
     });
-
-    localStorage.setItem('access', response.data.access);
-    localStorage.setItem('access', response.data.refresh);
-    dispatch(userData(jwt_decode(response.data.access)));
-    dispatch(setToken(response.data.refresh));
+    console.log('access and refresh token in axios', response.data);
+    const token = { token: response.data };
+    dispatch(setToken(token));
+    console.log(req.headers);
+    console.log(response.data, 'hai');
     req.headers.Authorization = `Bearer ${response.data.access}`;
     return req;
   });

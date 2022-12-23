@@ -7,9 +7,7 @@ const axiosInstance = axios.create({
   baseURL,
   timeout: 5000,
   headers: {
-    Authorization: localStorage.getItem('access')
-      ? `Bearer ${localStorage.getItem('access')}`
-      : null,
+    Authorization: null,
     'Content-Type': 'application/json',
     accept: 'application/json',
   },

@@ -1,8 +1,11 @@
+/* eslint-disable object-curly-newline */
 import { createSlice } from '@reduxjs/toolkit';
+import { AiOutlineConsoleSql } from 'react-icons/ai';
 
 const initialState = {
   user: {},
   token: {},
+  userDetails: {},
 };
 
 export const userSlice = createSlice({
@@ -10,15 +13,24 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     userData: (state, action) => {
+      console.log(action, 'reducer action');
       const user = {
-        email: action.payload.data.email,
-        firstname: action.payload.data.first_name,
-        secondname: action.payload.data.second_name,
+        id: action.payload.id,
+        is_freelancer: action.payload.is_freelancer,
         isLoggedIn: true,
       };
       return {
         ...state,
         user,
+      };
+    },
+    userDetails: (state, action) => {
+      console.log(action, 'reducer action');
+      const userDetails = action.payload;
+
+      return {
+        ...state,
+        userDetails,
       };
     },
     logOut: (state) => {
@@ -32,9 +44,11 @@ export const userSlice = createSlice({
       };
     },
     setToken: (state, action) => {
+      console.log('token acess', action.payload.token.access);
+      console.log('refresh acess', action.payload.token.refresh);
       const token = {
-        access_token: action.payload.data.token.access,
-        refresh_token: action.payload.data.token.refresh,
+        access_token: action.payload.token.access,
+        refresh_token: action.payload.token.refresh,
       };
       return {
         ...state,
@@ -45,6 +59,6 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { logOut, userData, setToken } = userSlice.actions;
+export const { logOut, userDetails, userData, setToken } = userSlice.actions;
 
 export default userSlice.reducer;

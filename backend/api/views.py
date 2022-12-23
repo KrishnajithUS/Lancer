@@ -69,13 +69,39 @@ class LoginView(APIView):
         if user is not None:
             login(request, user)
             data = UserSerializerWithToken(user).data
-            print(data)
-            data = {"data": data}
 
+            print(data)
             return Response(data, status=status.HTTP_200_OK)
         return Response(
             {"msg": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
         )
+
+#for user details
+class  ClientDetailsView(APIView):
+    def post(self,request):
+        print(request.data["id"])
+        user=User.objects.get(id=request.data["id"])
+        print(user)
+        if user is not None:
+            serializer=UserSerializer(user)
+            print(serializer.data)
+  
+            return Response(serializer.data,status=status.HTTP_200_OK)
+
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+#update client
+class ClientUpdateView(APIView):
+    permission_classes=[IsAuthenticated]
+    def put(self,request):
+        user=User.objects.get(email=request.data["email"])
+        print("user",user)
+        if user is not None:
+            serializer=UserSerializer(user,data=request.data)
+            print("serializer",serializer)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 # logout

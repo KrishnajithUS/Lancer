@@ -36,20 +36,17 @@ function LoginForm() {
             password: values.password,
           });
           console.log('data', response.data);
-          if (response.status === 200 && response.data.data.is_freelancer) {
+          if (response.status === 200 && response.data.is_freelancer) {
             console.log(
               'response comes here first',
-              response.data.data.is_freelancer
+              response.data.is_freelancer
             );
+            console.log('token data in login', response.data);
             dispatch(userData(response.data));
-            dispatch(setToken(response.data));
+            dispatch(setToken(response.data.token));
             navigate('/fprofile');
           } else if (response.status === 200) {
-            console.log(
-              'response comes here',
-              response.data.data.is_freelancer
-            );
-            console.log('the data', response.data);
+            console.log('token data in login', response.data);
             dispatch(userData(response.data));
             dispatch(setToken(response.data));
 

@@ -21,7 +21,7 @@ class UserSerializerWithToken(UserSerializer):
 
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email", "token", "is_freelancer"]
+        fields = ["token","id","is_freelancer"]
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -59,3 +59,4 @@ class RegistrationSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
