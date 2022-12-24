@@ -12,7 +12,8 @@ from django.contrib.auth import authenticate, login, logout
 
 User = get_user_model()
 from rest_framework.parsers import JSONParser
-
+#parser for file upload(here image)
+from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework import status
 from rest_framework.response import Response
 from .serializers import UserSerializer, UserSerializerWithToken, RegistrationSerializer,UserUpdateSerializer
@@ -54,6 +55,7 @@ class RegisterView(APIView):
             serializer.save()
             data = serializer.data
             return Response(data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -91,8 +93,9 @@ class  ClientDetailsView(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 #update client
 class ClientUpdateView(APIView):
+    parser_classes=(MultiPartParser,FormParser)
     permission_classes=[IsAuthenticated]
-    def put(self,request,*args,**kwargs):
+    def put(self,request):
         user=User.objects.get(pk=request.data["id"])
         print("user",user)
         if user is not None:
@@ -101,7 +104,7 @@ class ClientUpdateView(APIView):
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 print(serializer.data)
-                return Response(serializer.data)
+                return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 

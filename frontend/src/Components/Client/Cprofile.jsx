@@ -28,24 +28,23 @@ function Cprofile() {
   const id = useSelector((state) => state.user.user.id);
 
   const api = useAxios();
-  useEffect(() => {
-    const data = async () => {
-      try {
-        const response = await api.post(`/cprofileData/`, {
-          id,
-        });
-        console.log('response', response.data);
+  const data = async () => {
+    try {
+      const response = await api.post(`/cprofileData/`, {
+        id,
+      });
+      console.log('response', response.data);
 
-        dispatch(userDetails(response.data));
-      } catch (err) {
-        console.log(err);
-      }
-    };
+      dispatch(userDetails(response.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
     data();
-  }, []);
+  }, [dispatch]);
 
   const [showModal, setShowModal] = useState(false);
-  console.log(useSelector((state) => state));
 
   const first_name = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.first_name : null
@@ -82,8 +81,8 @@ function Cprofile() {
             new_password: values.new_password,
             confirm_new_password: values.confirm_new_password,
           });
-          console.log(response.data);
           dispatch(userDetails(response.data));
+          console.log(response.data);
         } catch (err) {
           console.log(err);
         }
@@ -135,7 +134,7 @@ function Cprofile() {
               </button>
               {showModal ? (
                 <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto md:mr-[120px] fixed inset-0 z-50 outline-none focus:outline-none">
-                  <div className="relative w-auto my-6 mx-auto max-w-5xlxl">
+                  <div className="relative w-auto my-6 mt-20 mx-auto max-w-5xlxl">
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full md:w-[150%]  bg-white outline-none focus:outline-none">
                       <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
                         <h3 className="text-3xl font=semibold">Edit</h3>
