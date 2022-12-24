@@ -9,11 +9,48 @@ User = get_user_model()
 # this is for normal user creation using function based views
 # we create the profile inside that function based views
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
+        model=User
+        fields=['first_name',"last_name","email"]
+        
+    
+class UserUpdateSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    confirm_new_password = serializers.CharField(required=True)
+
+    class Meta:
         model = User
-        fields = ["first_name", "last_name", "email"]
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "password",
+            "new_password",
+            "confirm_new_password",
+        ]
+        partial=True
+        # extra_kwargs={"password":{"write_only":True}}
+
+    def update(self, instance, validated_data):
+        print(instance)
+        passord = validated_data.get("password", None)
+        if not instance.check_password(passord):
+            raise serializers.ValidationError({"old_passord": "Incorrect password"})
+        new_password = validated_data.get("new_password", None)
+        confirm_new_passord = validated_data.get("confirm_new_password", None)
+        if new_password != confirm_new_passord:
+            raise serializers.ValidationError(
+                {"new_password": "password did not match"}
+            )
+
+        instance.fist_name = validated_data.get("first_name", instance.first_name)
+        instance.last_name = validated_data.get("last_name", instance.last_name)
+        instance.email = validated_data.get("email", instance.email)
+        instance.set_password(new_password)
+        instance.save()
+        return instance
 
 
 class UserSerializerWithToken(UserSerializer):
@@ -21,7 +58,7 @@ class UserSerializerWithToken(UserSerializer):
 
     class Meta:
         model = User
-        fields = ["token","id","is_freelancer"]
+        fields = ["token", "id", "is_freelancer"]
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -40,7 +77,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email", "password","is_freelancer"]
+        fields = ["first_name", "last_name", "email", "password", "is_freelancer"]
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
@@ -50,13 +87,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
             email=validated_data["email"],
         )
         if validated_data["is_freelancer"]:
-            user.is_freelancer=True
+            user.is_freelancer = True
         else:
-            user.is_freelancer=False
+            user.is_freelancer = False
         user.set_password(validated_data["password"])
         user.is_active = True
 
         user.save()
 
         return user
-

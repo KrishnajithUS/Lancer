@@ -56,6 +56,8 @@ class User(AbstractBaseUser):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
     phone_number=models.CharField(max_length=50)
+    new_password=models.CharField(max_length=20,blank=True)
+    confirm_new_password=models.CharField(max_length=20,blank=True)
     is_staff = models.BooleanField(default=False) # a admin user; non super-user
     is_admin = models.BooleanField(default=False) # a superuser
     is_user=models.BooleanField(default=False)

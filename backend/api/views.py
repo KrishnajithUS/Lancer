@@ -15,7 +15,7 @@ from rest_framework.parsers import JSONParser
 
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserSerializerWithToken, RegistrationSerializer
+from .serializers import UserSerializer, UserSerializerWithToken, RegistrationSerializer,UserUpdateSerializer
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -92,16 +92,17 @@ class  ClientDetailsView(APIView):
 #update client
 class ClientUpdateView(APIView):
     permission_classes=[IsAuthenticated]
-    def put(self,request):
-        user=User.objects.get(email=request.data["email"])
+    def put(self,request,*args,**kwargs):
+        user=User.objects.get(pk=request.data["id"])
         print("user",user)
         if user is not None:
-            serializer=UserSerializer(user,data=request.data)
+            serializer=UserUpdateSerializer(instance=user,data=request.data,partial=True)
             print("serializer",serializer)
-            if serializer.is_valid():
+            if serializer.is_valid(raise_exception=True):
                 serializer.save()
+                print(serializer.data)
                 return Response(serializer.data)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
 # logout

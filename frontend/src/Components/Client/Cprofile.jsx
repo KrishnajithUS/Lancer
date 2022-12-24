@@ -1,3 +1,10 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable max-len */
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable comma-dangle */
+/* eslint-disable no-debugger */
 /* eslint-disable camelcase */
 /* eslint-disable operator-linebreak */
 /* eslint-disable object-curly-newline */
@@ -28,6 +35,7 @@ function Cprofile() {
           id,
         });
         console.log('response', response.data);
+
         dispatch(userDetails(response.data));
       } catch (err) {
         console.log(err);
@@ -38,15 +46,25 @@ function Cprofile() {
 
   const [showModal, setShowModal] = useState(false);
   console.log(useSelector((state) => state));
-  const first_name = useSelector((state) => state.user.userDetails.first_name);
 
-  const last_name = useSelector((state) => state.user.userDetails.last_name);
+  const first_name = useSelector((state) =>
+    state.user.userDetails ? state.user.userDetails.first_name : null
+  );
 
-  const email = useSelector((state) => state.user.userDetails.email);
+  const last_name = useSelector((state) =>
+    state.user.userDetails ? state.user.userDetails.last_name : null
+  );
+
+  const email = useSelector((state) =>
+    state.user.userDetails ? state.user.userDetails.email : null
+  );
   const initialValues = {
     first_name: '',
     last_name: '',
     email: '',
+    password: '',
+    new_password: '',
+    confirm_new_password: '',
   };
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
@@ -56,9 +74,13 @@ function Cprofile() {
       onSubmit: async (values, actions) => {
         try {
           const response = await api.put(`/cupdate/`, {
+            id,
             first_name: values.first_name,
             last_name: values.last_name,
             email: values.email,
+            password: values.password,
+            new_password: values.new_password,
+            confirm_new_password: values.confirm_new_password,
           });
           console.log(response.data);
           dispatch(userDetails(response.data));
@@ -212,21 +234,56 @@ function Cprofile() {
                           </label>
                           <input
                             className="border-slate-800 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                            id="email"
-                            name="email"
-                            type="text"
-                            placeholder="email"
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="old password"
+                            value={values.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                           />
+                          {errors.password && touched.password ? (
+                            <p className="form-error text-red-600">
+                              {errors.password}
+                            </p>
+                          ) : null}
                           <label className="block text-black text-sm font-bold mb-1">
                             New Password
                           </label>
                           <input
                             className="border-slate-800 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                            id="email"
-                            name="email"
-                            type="text"
-                            placeholder="email"
+                            id="new_password"
+                            name="new_password"
+                            type="new_password"
+                            placeholder="New password"
+                            value={values.new_password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                           />
+                          {errors.new_password && touched.new_password ? (
+                            <p className="form-error text-red-600">
+                              {errors.new_password}
+                            </p>
+                          ) : null}
+                          <label className="block text-black text-sm font-bold mb-1">
+                            Confirm New Password
+                          </label>
+                          <input
+                            className="border-slate-800 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            id="confirm_new_password"
+                            name="confirm_new_password"
+                            type="confirm_new_password"
+                            placeholder="Confirm New password"
+                            value={values.confirm_new_password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                          />
+                          {errors.confirm_new_password &&
+                          touched.confirm_new_password ? (
+                            <p className="form-error text-red-600">
+                              {errors.confirm_new_password}
+                            </p>
+                            ) : null}
                           <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                             <button
                               className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"

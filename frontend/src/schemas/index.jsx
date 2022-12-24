@@ -32,8 +32,9 @@ const cprofileSchema = Yup.object({
     .max(25),
   email: Yup.string().email(),
   password: Yup.string().min(6),
-  confirm_password: Yup.string().oneOf(
-    [Yup.ref('password'), null],
+  new_password: Yup.string().min(6),
+  confirm_new_password: Yup.string().oneOf(
+    [Yup.ref('new_password'), null],
     'Password must match',
   ),
 });
