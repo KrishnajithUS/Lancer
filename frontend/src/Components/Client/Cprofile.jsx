@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable indent */
 /* eslint-disable no-constant-condition */
 /* eslint-disable function-paren-newline */
@@ -64,36 +65,55 @@ function Cprofile() {
   const initialValues = {
     first_name: '',
     last_name: '',
+
     email: '',
-    image: '',
     password: '',
     new_password: '',
     confirm_new_password: '',
   };
-  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
-    useFormik({
-      initialValues,
-      validationSchema: cprofileSchema,
-      // eslint-disable-next-line no-unused-vars
-      onSubmit: async (values, actions) => {
-        try {
-          const response = await api.put(`/cupdate/`, {
-            id,
-            first_name: values.first_name,
-            last_name: values.last_name,
-            email: values.email,
-            password: values.password,
-            new_password: values.new_password,
-            confirm_new_password: values.confirm_new_password,
-          });
+  const {
+    values,
+    setFieldValue,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues,
+    validationSchema: cprofileSchema,
+    // eslint-disable-next-line no-unused-vars
+    onSubmit: async (values, actions) => {
+      try {
+        console.log({
+          fileName: values.file.name,
+          type: values.file.type,
+          size: `${values.file.size} bytes`,
+        });
 
-          dispatch(userDetails(response.data));
-          console.log(response.data);
-        } catch (err) {
-          console.log(err);
-        }
-      },
-    });
+        const formData = new FormData();
+        formData.append('profile_picture', values.file);
+        formData.append('id', id);
+        console.log(formData);
+        const res = await api.patch(`/cupdate/`, formData);
+
+        const response = await api.put(`/cupdate/`, {
+          id,
+          first_name: values.first_name,
+          last_name: values.last_name,
+          email: values.email,
+          password: values.password,
+          new_password: values.new_password,
+          confirm_new_password: values.confirm_new_password,
+        });
+
+        dispatch(userDetails(response.data));
+        console.log(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
   console.log(values);
   console.log(errors);
   return (
@@ -217,8 +237,15 @@ function Cprofile() {
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                             type="file"
-                            name="image"
+                            name="file"
                             id="file"
+                            onChange={(event) => {
+                              handleChange(event);
+                              setFieldValue(
+                                'file',
+                                event.currentTarget.files[0]
+                              );
+                            }}
                           />
                           <label className="block text-black text-sm font-bold mb-1">
                             Email

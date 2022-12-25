@@ -17,11 +17,11 @@ class UserSerializer(serializers.ModelSerializer):
 # this is for freelancer user and profile creation
 # creating serializer associated with the user
 class ClientProfileSerializer(serializers.ModelSerializer):
-    image_url=serializers.ImageField(required=False)
+    profile_picture=serializers.ImageField(required=False)
     class Meta:
         model = Client
         fields = ["profile_picture"]
-        
+
 class UserUpdateSerializer(serializers.ModelSerializer):
     profile_picture=serializers.ImageField(source='userprofile.profile_picture',read_only=True,required=False)
     first_name = serializers.CharField(required=False,allow_null=True,allow_blank=True)

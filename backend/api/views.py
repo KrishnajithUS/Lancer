@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-
+from api.models  import Client
 User = get_user_model()
 from rest_framework.parsers import JSONParser
 #parser for file upload(here image)
@@ -110,10 +110,17 @@ class ClientUpdateView(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     #profile picture update
     def patch(self,request,format=None):
-        print(request.data)
-        serializer=ClientProfileSerializer(data=request.data)
+        print("the data",request.data)
+        user=User.objects.get(pk=request.data['id'])
+        print(user)
+        userprofile=Client.objects.get(user=user)
+       
+        print("userprofile",userprofile)
+        serializer=ClientProfileSerializer(instance=userprofile,data=request.data)
         if serializer.is_valid():
+           
             serializer.save()
+            print("serializer",serializer.data)
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
