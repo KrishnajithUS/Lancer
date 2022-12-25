@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* eslint-disable no-constant-condition */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable max-len */
@@ -17,6 +19,7 @@ import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
+
 import Navbar from '../Constants/Navbar';
 import { cprofileSchema } from '../../schemas';
 import useAxios from '../../Axios/useAxios';
@@ -43,6 +46,7 @@ function Cprofile() {
   useEffect(() => {
     data();
   }, [dispatch]);
+  // handling image update
 
   const [showModal, setShowModal] = useState(false);
 
@@ -61,6 +65,7 @@ function Cprofile() {
     first_name: '',
     last_name: '',
     email: '',
+    image: '',
     password: '',
     new_password: '',
     confirm_new_password: '',
@@ -81,6 +86,7 @@ function Cprofile() {
             new_password: values.new_password,
             confirm_new_password: values.confirm_new_password,
           });
+
           dispatch(userDetails(response.data));
           console.log(response.data);
         } catch (err) {
@@ -88,7 +94,8 @@ function Cprofile() {
         }
       },
     });
-
+  console.log(values);
+  console.log(errors);
   return (
     <div className="w-full">
       <Navbar />
@@ -192,7 +199,9 @@ function Cprofile() {
                             Image
                           </label>
                           <input
-                            className="form-control
+                            accept="image/*"
+                            multiple={false}
+                            className="
 
                               w-full
                               px-3 py-2
@@ -208,7 +217,8 @@ function Cprofile() {
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                             type="file"
-                            id="formFile"
+                            name="image"
+                            id="file"
                           />
                           <label className="block text-black text-sm font-bold mb-1">
                             Email
@@ -282,7 +292,7 @@ function Cprofile() {
                             <p className="form-error text-red-600">
                               {errors.confirm_new_password}
                             </p>
-                            ) : null}
+                          ) : null}
                           <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                             <button
                               className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"

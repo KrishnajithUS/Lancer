@@ -16,7 +16,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserSerializerWithToken, RegistrationSerializer,UserUpdateSerializer
+from .serializers import UserSerializer, UserSerializerWithToken, RegistrationSerializer,UserUpdateSerializer,ClientProfileSerializer
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -93,8 +93,10 @@ class  ClientDetailsView(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 #update client
 class ClientUpdateView(APIView):
-    parser_classes=(MultiPartParser,FormParser)
     permission_classes=[IsAuthenticated]
+    parser_classes=[JSONParser,MultiPartParser,FormParser]
+   
+    #profile update
     def put(self,request):
         user=User.objects.get(pk=request.data["id"])
         print("user",user)
@@ -106,7 +108,16 @@ class ClientUpdateView(APIView):
                 print(serializer.data)
                 return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
+    #profile picture update
+    def patch(self,request,format=None):
+        print(request.data)
+        serializer=ClientProfileSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    
 
 # logout
 # def post(self,request):
