@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable indent */
 /* eslint-disable no-constant-condition */
@@ -17,7 +18,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from 'react';
-import { useFormik } from 'formik';
+import { useFormik, Formik } from 'formik';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -25,12 +26,19 @@ import Navbar from '../Constants/Navbar';
 import { cprofileSchema } from '../../schemas';
 import useAxios from '../../Axios/useAxios';
 import { userDetails } from '../../Redux/reducer';
+import Alert from '../Alerts/Alert';
 
 function Cprofile() {
   const dispatch = useDispatch();
   const mediaBase = 'http://localhost:8000';
   const id = useSelector((state) => state.user.user.id);
-
+  const [message, setMessage] = useState(false);
+  const messageAlert = () => {
+    setMessage(true);
+  };
+  setTimeout(() => {
+    setMessage(false);
+  }, 8000);
   const api = useAxios();
   const data = async () => {
     try {
@@ -89,17 +97,17 @@ function Cprofile() {
     // eslint-disable-next-line no-unused-vars
     onSubmit: async (values, actions) => {
       try {
-        console.log({
-          fileName: values.file.name,
-          type: values.file.type,
-          size: `${values.file.size} bytes`,
-        });
-
         const formData = new FormData();
-        formData.append('profile_picture', values.file);
-        formData.append('id', id);
-        console.log(formData);
-        const res = await api.patch(`/cupdate/`, formData);
+        if (values.file) {
+          formData.append('profile_picture', values.file);
+          formData.append('id', id);
+          console.log(formData);
+          const Res = await api.patch(`/cupdate/`, formData);
+          if (Res.status === 201) {
+            console.log('block 3');
+            messageAlert();
+          }
+        }
 
         const response = await api.put(`/cupdate/`, {
           id,
@@ -113,6 +121,12 @@ function Cprofile() {
 
         dispatch(userDetails(response.data));
         setShowModal(false);
+
+        if (response.status === 201) {
+          console.log('block 1');
+          messageAlert();
+        }
+
         console.log(response.data);
       } catch (err) {
         console.log(err);
@@ -124,6 +138,7 @@ function Cprofile() {
   return (
     <div className="w-full">
       <Navbar />
+      {message && <Alert />}
       <div className="flex  justify-center items-center  h-48 mx-4 mt-2 bg-black">
         <div className="rounded-full">
           <img

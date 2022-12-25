@@ -10,9 +10,10 @@ User = get_user_model()
 # we create the profile inside that function based views
 
 class UserSerializer(serializers.ModelSerializer):
+    profile_picture=serializers.ImageField(source='client.profile_picture',read_only=True,required=False)
     class Meta:
         model=User
-        fields=['first_name',"last_name","email"]
+        fields=['first_name',"last_name","email","profile_picture"]
         
 # this is for freelancer user and profile creation
 # creating serializer associated with the user
