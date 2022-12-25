@@ -28,7 +28,7 @@ import { userDetails } from '../../Redux/reducer';
 
 function Cprofile() {
   const dispatch = useDispatch();
-
+  const mediaBase = 'http://localhost:8000';
   const id = useSelector((state) => state.user.user.id);
 
   const api = useAxios();
@@ -54,6 +54,10 @@ function Cprofile() {
   const first_name = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.first_name : null
   );
+  const profile_picture = useSelector((state) =>
+    state.user.userDetails ? state.user.userDetails.profile_picture : null
+  );
+  console.log('profile_picture', profile_picture);
 
   const last_name = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.last_name : null
@@ -108,6 +112,7 @@ function Cprofile() {
         });
 
         dispatch(userDetails(response.data));
+        setShowModal(false);
         console.log(response.data);
       } catch (err) {
         console.log(err);
@@ -122,7 +127,7 @@ function Cprofile() {
       <div className="flex  justify-center items-center  h-48 mx-4 mt-2 bg-black">
         <div className="rounded-full">
           <img
-            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+            src={`${mediaBase}${profile_picture}`}
             className="rounded-full w-24 h-24"
             alt="Avatar"
           />

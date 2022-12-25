@@ -23,7 +23,7 @@ class ClientProfileSerializer(serializers.ModelSerializer):
         fields = ["profile_picture"]
 
 class UserUpdateSerializer(serializers.ModelSerializer):
-    profile_picture=serializers.ImageField(source='userprofile.profile_picture',read_only=True,required=False)
+    profile_picture=serializers.ImageField(source='client.profile_picture',read_only=True,required=False)
     first_name = serializers.CharField(required=False,allow_null=True,allow_blank=True)
     last_name = serializers.CharField(required=False,allow_null=True,allow_blank=True)
     email = serializers.CharField(required=False,allow_null=True,allow_blank=True)

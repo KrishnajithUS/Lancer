@@ -3,7 +3,7 @@ from django.db import models
 from django_countries.fields import CountryField
 #explicitly set upload path and filename
 def upload_to(instance,filename):
-    return 'image/{filename}'.format(filename=filename)
+    return '{filename}'.format(filename=filename)
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = models.ImageField(upload_to=upload_to,blank=True,null=True)
