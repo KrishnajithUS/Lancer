@@ -43,7 +43,7 @@ function LoginForm() {
             );
             console.log('token data in login', response.data);
             dispatch(userData(response.data));
-            dispatch(setToken(response.data.token));
+            dispatch(setToken(response.data));
             navigate('/fprofile');
           } else if (response.status === 200) {
             console.log('token data in login', response.data);

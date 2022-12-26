@@ -21,6 +21,7 @@ import React, { useState, useEffect } from 'react';
 import { useFormik, Formik } from 'formik';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import Navbar from '../Constants/Navbar';
 import { cprofileSchema } from '../../schemas';
@@ -33,6 +34,8 @@ function Cprofile() {
   const mediaBase = 'http://localhost:8000';
   const id = useSelector((state) => state.user.user.id);
   const [message, setMessage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   const messageAlert = () => {
     setMessage(true);
   };
@@ -54,10 +57,8 @@ function Cprofile() {
   };
   useEffect(() => {
     data();
-  }, [dispatch]);
+  }, [dispatch, api]);
   // handling image update
-
-  const [showModal, setShowModal] = useState(false);
 
   const first_name = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.first_name : null
@@ -105,6 +106,8 @@ function Cprofile() {
           const Res = await api.patch(`/cupdate/`, formData);
           if (Res.status === 201) {
             console.log('block 3');
+            setShowModal(false);
+
             messageAlert();
           }
         }
@@ -118,9 +121,9 @@ function Cprofile() {
           new_password: values.new_password,
           confirm_new_password: values.confirm_new_password,
         });
+        setShowModal(false);
 
         dispatch(userDetails(response.data));
-        setShowModal(false);
 
         if (response.status === 201) {
           console.log('block 1');
