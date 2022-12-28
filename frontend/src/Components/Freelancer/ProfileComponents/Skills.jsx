@@ -10,14 +10,10 @@ import { modalStatus } from '../../../Redux/reducer';
 function Skills() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [check, setCheck] = useState(
-    useSelector((state) => state.user.modelStatus),
-  );
-
+  const check = useSelector((state) => state.userData.modalStatus);
+  console.log('chek in skills', check);
   const handleChange = () => {
-    setCheck(false);
     dispatch(modalStatus(false));
-    navigate(0);
   };
 
   return (

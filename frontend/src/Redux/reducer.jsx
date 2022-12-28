@@ -7,7 +7,7 @@ const initialState = {
   user: {},
   token: {},
   userDetails: {},
-  modelStatus: {},
+  modalStatus: { status: false },
 };
 
 export const userSlice = createSlice({
@@ -36,8 +36,10 @@ export const userSlice = createSlice({
       };
     },
     modalStatus: (state, action) => {
-      const modelStatus = action.payload;
-      return { ...state, modelStatus };
+      const modalStatus = {
+        status: action.payload,
+      };
+      return { ...state, modalStatus };
     },
     logOut: (state) => {
       const user = {

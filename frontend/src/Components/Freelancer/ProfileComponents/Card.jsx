@@ -12,11 +12,10 @@ import Skills from './Skills';
 
 function Card({ data }) {
   const dispatch = useDispatch();
-  console.log(data);
-  const [check, setCheck] = useState(false);
+  const check = useSelector((state) => state.userData.modalStatus);
+
   console.log('check in card', check);
   const handleClick = () => {
-    setCheck(true);
     dispatch(modalStatus(true));
   };
 
