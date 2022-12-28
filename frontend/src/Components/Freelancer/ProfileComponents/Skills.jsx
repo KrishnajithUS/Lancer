@@ -3,16 +3,23 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 import { useState, React, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { modalStatus } from '../../../Redux/reducer';
 
 function Skills() {
-  const [check, setCheck] = useState(true);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [check, setCheck] = useState(
+    useSelector((state) => state.user.modelStatus),
+  );
+
   const handleChange = () => {
     setCheck(false);
+    dispatch(modalStatus(false));
+    navigate(0);
   };
-  // useEffect(() => {
-  //   setCheck(true);
-  // }, [check]);
-  console.log(check);
+
   return (
     <>
       {check ? (

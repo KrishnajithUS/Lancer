@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable object-curly-newline */
 import { createSlice } from '@reduxjs/toolkit';
 import { AiOutlineConsoleSql } from 'react-icons/ai';
@@ -6,6 +7,7 @@ const initialState = {
   user: {},
   token: {},
   userDetails: {},
+  modelStatus: {},
 };
 
 export const userSlice = createSlice({
@@ -33,6 +35,10 @@ export const userSlice = createSlice({
         userDetails,
       };
     },
+    modalStatus: (state, action) => {
+      const modelStatus = action.payload;
+      return { ...state, modelStatus };
+    },
     logOut: (state) => {
       const user = {
         user: {},
@@ -59,6 +65,7 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { logOut, userDetails, userData, setToken } = userSlice.actions;
+export const { logOut, userDetails, userData, setToken, modalStatus } =
+  userSlice.actions;
 
 export default userSlice.reducer;

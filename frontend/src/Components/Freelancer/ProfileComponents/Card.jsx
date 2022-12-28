@@ -5,15 +5,19 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 
 import { AiFillEdit } from 'react-icons/ai';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, React } from 'react';
+import { modalStatus } from '../../../Redux/reducer';
 import Skills from './Skills';
 
 function Card({ data }) {
+  const dispatch = useDispatch();
   console.log(data);
   const [check, setCheck] = useState(false);
+  console.log('check in card', check);
   const handleClick = () => {
     setCheck(true);
+    dispatch(modalStatus(true));
   };
 
   return (
