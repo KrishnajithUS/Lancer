@@ -5,13 +5,13 @@
 import { useState, React, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { modalStatus } from '../../../Redux/reducer';
+import { modalStatus } from '../../../Redux/Freducer';
 
 function Skills() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [check, setCheck] = useState(
-    useSelector((state) => state.user.modelStatus),
+    useSelector((state) => state.freelancer.modelStatus),
   );
 
   const handleChange = () => {

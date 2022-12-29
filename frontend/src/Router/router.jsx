@@ -1,8 +1,11 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable import/no-named-as-default-member */
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+
 import LogOut from '../Components/Constants/LogOut';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
@@ -11,14 +14,14 @@ import SelectionPage from '../Pages/SelectionPage';
 import FreelancerRegister from '../Pages/FreelancerRegister';
 import Cprofile from '../Components/Client/Cprofile';
 import Fprofile from '../Components/Freelancer/Fprofile';
-import {
-  ProfilePrivateRouter,
-  RestrictLoggedInUser,
-  FreelancerRouterPrivate,
-} from './PrivateRouter/PrivateRouter';
 
 const router = () => {
-  const dispatch = useDispatch();
+  const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
+  console.log('user auth', userAuth);
+  const FAuth = Boolean(
+    useSelector((state) => state.freelancer.Freelancer.isLoggedIn)
+  );
+  console.log('feelancer astuh', FAuth);
   return (
     <div>
       <Routes>
@@ -26,30 +29,15 @@ const router = () => {
         <Route path="/select" element={<SelectionPage />} />
         <Route
           path="/login"
-          element={
-            <RestrictLoggedInUser>
-              <Login />
-            </RestrictLoggedInUser>
-          }
+          element={userAuth ? <Cprofile /> : FAuth ? <Fprofile /> : <Login />}
         />
         <Route path="/register" element={<Register />} />
         <Route path="/fregister" element={<FreelancerRegister />} />
-        <Route
-          path="/cprofile"
-          element={
-            <ProfilePrivateRouter>
-              <Cprofile />
-            </ProfilePrivateRouter>
-          }
-        />
+        <Route path="/cprofile" element={userAuth ? <Cprofile /> : <Login />} />
 
         <Route
           path="/fprofile"
-          element={
-            <FreelancerRouterPrivate>
-              <Fprofile />
-            </FreelancerRouterPrivate>
-          }
+          element={FAuth ? <Fprofile /> : userAuth ? <Cprofile /> : <Login />}
         />
 
         <Route path="/logout" element={<LogOut />} />

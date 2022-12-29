@@ -7,7 +7,7 @@
 import { AiFillEdit } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, React } from 'react';
-import { modalStatus } from '../../../Redux/reducer';
+import { modalStatus } from '../../../Redux/Freducer';
 import Skills from './Skills';
 
 function Card({ data }) {

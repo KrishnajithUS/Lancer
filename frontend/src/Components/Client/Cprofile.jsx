@@ -144,7 +144,7 @@ function Cprofile() {
     <div className="w-full">
       <Navbar />
       {message && <Alert />}
-      <div className="flex  justify-center items-center  h-48 mx-4 mt-2 bg-black">
+      <div className="flex  justify-center items-center  h-48 mx-4 mt-2  bg-zinc-200 rounded-lg ">
         <div className="rounded-full">
           <img
             src={`${mediaBase}${profile_picture}`}

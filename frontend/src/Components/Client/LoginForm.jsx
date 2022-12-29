@@ -8,9 +8,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { FData, FsetToken } from '../../Redux/Freducer';
 import LoginImage from '../../Assets/login9.png';
 import { loginSchema } from '../../schemas/index';
 import axiosInstance from '../../Axios/axiosPrivate';
@@ -42,8 +42,9 @@ function LoginForm() {
               response.data.is_freelancer
             );
             console.log('token data in login', response.data);
-            dispatch(userData(response.data));
-            dispatch(setToken(response.data));
+            dispatch(FData(response.data));
+            dispatch(FsetToken(response.data));
+
             navigate('/fprofile');
           } else if (response.status === 200) {
             console.log('token data in login', response.data);

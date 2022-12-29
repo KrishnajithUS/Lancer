@@ -1,57 +1,61 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable comma-dangle */
+/* eslint-disable indent */
 /* eslint-disable operator-linebreak */
-/* eslint-disable object-curly-newline */
 import { createSlice } from '@reduxjs/toolkit';
-import { AiOutlineConsoleSql } from 'react-icons/ai';
 
 const initialState = {
-  user: {},
-  token: {},
-  userDetails: {},
-  modelStatus: {},
+  Freelancer: {},
+  FreelancerDetails: {},
+  token: null,
+  modalStatus: {},
 };
 
-export const userSlice = createSlice({
-  name: 'userData',
+const FreelancerSlice = createSlice({
+  name: 'freelancer',
   initialState,
   reducers: {
-    userData: (state, action) => {
+    FData: (state, action) => {
       console.log(action, 'reducer action');
-      const user = {
+      const Freelancer = {
         id: action.payload.id,
 
         isLoggedIn: true,
       };
       return {
         ...state,
-        user,
+        Freelancer,
       };
     },
-    userDetails: (state, action) => {
+    FDetails: (state, action) => {
       console.log(action, 'reducer action');
-      const userDetails = action.payload;
+      const FreelancerDetails = action.payload;
 
       return {
         ...state,
-        userDetails,
+        FreelancerDetails,
       };
     },
-
-    logOut: (state) => {
-      const user = {
+    modalStatus: (state, action) => {
+      const modelStatus = action.payload;
+      return { ...state, modelStatus };
+    },
+    FlogOut: (state) => {
+      const Freelancer = {
         id: null,
 
         isLoggedIn: false,
       };
-      const userDetails = {};
+      const FreelancerDetails = {};
       const token = {};
       return {
         ...state,
-        user,
-        userDetails,
+        Freelancer,
+        FreelancerDetails,
         token,
       };
     },
-    setToken: (state, action) => {
+    FsetToken: (state, action) => {
       console.log('token acess', action.payload.token.access);
       console.log('refresh acess', action.payload.token.refresh);
       const token = {
@@ -65,8 +69,8 @@ export const userSlice = createSlice({
     },
   },
 });
-
-// Action creators are generated for each case reducer function
-export const { logOut, userDetails, userData, setToken } = userSlice.actions;
-
-export default userSlice.reducer;
+export const {
+ logOut, FDetails, FData, FsetToken, modalStatus
+} =
+  FreelancerSlice.actions;
+export default FreelancerSlice.reducer;
