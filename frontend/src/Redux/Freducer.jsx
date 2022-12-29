@@ -70,7 +70,7 @@ const FreelancerSlice = createSlice({
   },
 });
 export const {
- logOut, FDetails, FData, FsetToken, modalStatus
+ FlogOut, FDetails, FData, FsetToken, modalStatus
 } =
   FreelancerSlice.actions;
 export default FreelancerSlice.reducer;

@@ -1,14 +1,36 @@
+/* eslint-disable quotes */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import { React, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '../Constants/Navbar';
 import Education from './ProfileComponents/Education';
 import Personal from './ProfileComponents/Personal';
 import Experience from './ProfileComponents/Experience';
 import Skills from './ProfileComponents/Skills';
 import Card from './ProfileComponents/Card';
+import useAxios from '../../Axios/useAxios';
+import { FDetails } from '../../Redux/Freducer';
 // import EduCard from './ProfileComponents/EduCard';
 
 function Fprofile() {
+  const dispatch = useDispatch();
+  const api = useAxios();
+  const id = useSelector((state) => state.freelancer.Freelancer.id);
+  const data = async () => {
+    try {
+      const response = await api.post(`/cprofileData/`, {
+        id,
+      });
+      console.log('response', response.data);
+
+      dispatch(FDetails(response.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    data();
+  }, []);
   return (
     <div>
       <Navbar />

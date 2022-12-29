@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable comma-dangle */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-wrap-multilines */
