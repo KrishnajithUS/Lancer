@@ -47,6 +47,7 @@ class FreeLancer(models.Model):
     title=models.CharField(max_length=20,blank=True,null=True)
     profile_picture = models.ImageField(blank=True)
     bio = models.CharField(max_length=60, default=True)
+    social_media_links=models.CharField(max_length=40,blank=True,null=True)
     education = models.ForeignKey(Education, on_delete=models.CASCADE,null=True)
     skills = models.CharField(max_length=30,blank=True,null=True)
     experience = models.OneToOneField(Experience, on_delete=models.CASCADE,null=True)

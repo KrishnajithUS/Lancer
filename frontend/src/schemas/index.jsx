@@ -23,15 +23,22 @@ const loginSchema = Yup.object({
 });
 
 const cprofileSchema = Yup.object({
+  username: Yup.string().min(2, 'User must be atleat two characters').max(15),
   first_name: Yup.string()
     .min(2, 'First name must be atleat two characters')
     .max(25),
   last_name: Yup.string()
-    .min(2, 'Last name must be atleat two characters')
+    .min(1, 'Last name must be atleat two characters')
     .typeError('first name must be atleast two characters')
     .max(25),
   email: Yup.string().email(),
   password: Yup.string().min(6),
+  social_media: Yup.string().matches(
+    /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+    'Enter correct url!',
+  ),
+  title: Yup.string().min(5).max(20),
+  bio: Yup.string().min(15).max(60),
   new_password: Yup.string().min(6),
   confirm_new_password: Yup.string().oneOf(
     [Yup.ref('new_password'), null],
