@@ -14,6 +14,7 @@ import {
 } from 'redux-persist';
 import userReducer from './reducer';
 import FreelancerReducer from './Freducer';
+import adminreducer from './adminreducer';
 
 const persistConfig = {
   key: 'root',
@@ -22,6 +23,7 @@ const persistConfig = {
 const reducers = combineReducers({
   user: userReducer,
   freelancer: FreelancerReducer,
+  admin: adminreducer,
 });
 const persistedReducer = persistReducer(persistConfig, reducers);
 
