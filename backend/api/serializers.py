@@ -49,7 +49,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         partial=True
  
     def update(self, instance, validated_data):
-        print(instance)
+        print("update instance",instance)
         
         password=validated_data.get("password",None)
         new_password = validated_data.get("new_password", None)
@@ -78,8 +78,29 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         
         instance.save()
         return instance
-
-
+class FreelancerSerializer(serializers.ModelSerializer):
+    user=UserUpdateSerializer(many=False)
+    class Meta:
+        model=FreeLancer
+        fields=["user","title","profile_picture","bio","social_media_links"]
+    def update(self,instance,validated_data):
+        user_data=validated_data.pop('user')
+        if validated_data.get("title",None):
+            instance.title=validated_data.get("title",instance.title)
+        if validated_data.get("bio",None):
+            instance.bio=validated_data.get("bio",instance.bio)
+        if validated_data.get("social_media",instance.social_media_links):
+            instance.social_media_links=validated_data.get("social_media",instance.social_media_links)
+        
+        instance.save()
+        #pop out the data from user dictionary
+        
+        user = UserUpdateSerializer(instance=instance.user, data=user_data)
+        user.is_valid(raise_exception=True)
+        user.save()
+        return instance
+            
+     
 class UserSerializerWithToken(UserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
 
@@ -118,8 +139,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
         username=validated_data["email"].split("@")[0]
         user.username=username
         user.save()
-        
-        Client.objects.create(user=user)
+        if user.is_freelancer:
+            FreeLancer.objects.create(user=user)
+        else:
+            Client.objects.create(user=user)
         
         
 

@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-from api.models import Client
+from api.models import Client,FreeLancer
 
 User = get_user_model()
 from rest_framework.parsers import JSONParser
@@ -24,6 +24,7 @@ from .serializers import (
     RegistrationSerializer,
     UserUpdateSerializer,
     ClientProfileSerializer,
+   FreelancerSerializer
 )
 
 
@@ -136,7 +137,29 @@ class ClientUpdateView(APIView):
             print("serializer", serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class FreelancerUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
+    # profile update
+    def put(self, request):
+        print("fupdate",request.data)
+        user = User.objects.get(pk=request.data["id"])
+        freelancer_profile=FreeLancer.objects.get(user=user)
+        print("user", user)
+        if user is not None:
+            serializer = FreelancerSerializer(
+                instance=freelancer_profile, data=request.data, partial=True
+            )
+            print("serializer", serializer)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                print(serializer.data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
 
 logout
 @api_view(["POST"])

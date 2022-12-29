@@ -68,7 +68,7 @@ function Fprofile() {
             </div>
           </div>
 
-          <Personal />
+          <Personal id={id} api={api} />
 
           <Experience />
           <Card data="skills" />

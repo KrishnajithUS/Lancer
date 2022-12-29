@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */
 /* eslint-disable function-paren-newline */
 /* eslint-disable no-confusing-arrow */
@@ -8,9 +9,11 @@
 import React from 'react';
 import { Formik, useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
+import { AiFillPauseCircle } from 'react-icons/ai';
 import { cprofileSchema } from '../../../schemas';
 
-function Personal() {
+function Personal({ id, api }) {
+  console.log('id in personal', id);
   console.log(useSelector((state) => state));
   const FirstName = useSelector((state) =>
     state.user.userDetails
@@ -53,8 +56,24 @@ function Personal() {
   } = useFormik({
     initialValues,
     validationSchema: cprofileSchema,
-    onSubmit: (values, actions) => {
+    onSubmit: async (values, actions) => {
       console.log(values);
+      const Response = await api.put('fupdate/', {
+        id,
+        title: values.title,
+        bio: values.bio,
+        social_media: values.social_media,
+        user: {
+          username: values.username,
+          first_name: values.first_name,
+          last_name: values.last_name,
+          email: values.email,
+          password: values.password,
+          new_password: values.new_password,
+          confirm_new_password: values.confirm_new_password,
+        },
+      });
+      console.log(Response.data);
     },
   });
   console.log(values);
