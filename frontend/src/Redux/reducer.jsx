@@ -48,7 +48,7 @@ export const userSlice = createSlice({
       const userDetails = {};
       const token = {};
       return {
-        state,
+        ...state,
         user,
         userDetails,
         token,

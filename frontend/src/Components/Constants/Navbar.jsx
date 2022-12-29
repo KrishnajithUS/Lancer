@@ -54,7 +54,7 @@ const Navbar = () => {
                           </Link>
                         </>
                       ) : (
-                        <Link to="/select">
+                        <Link to="/logout">
                           <div className="mr-4">
                             <a
                               href="#"
