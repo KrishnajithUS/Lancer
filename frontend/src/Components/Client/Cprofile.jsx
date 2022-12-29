@@ -60,8 +60,8 @@ function Cprofile() {
   }, [dispatch, api]);
   // handling image update
   const username = useSelector((state) =>
-  state.user.userDetails ? state.user.userDetails.username : null
-);
+    state.user.userDetails ? state.user.userDetails.username : null
+  );
   const first_name = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.first_name : null
   );
@@ -77,6 +77,7 @@ function Cprofile() {
   const email = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.email : null
   );
+
   const initialValues = {
     first_name: '',
     last_name: '',
@@ -277,7 +278,6 @@ function Cprofile() {
                           </label>
                           <input
                             className="border-slate-800 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                            id="email"
                             name="email"
                             type="text"
                             placeholder={email}
@@ -295,7 +295,6 @@ function Cprofile() {
                           </label>
                           <input
                             className="border-slate-800 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                            id="password"
                             name="password"
                             type="password"
                             placeholder="old password"
@@ -313,7 +312,6 @@ function Cprofile() {
                           </label>
                           <input
                             className="border-slate-800 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                            id="new_password"
                             name="new_password"
                             type="new_password"
                             placeholder="New password"

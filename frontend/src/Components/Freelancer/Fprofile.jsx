@@ -30,7 +30,7 @@ function Fprofile() {
   };
   useEffect(() => {
     data();
-  }, []);
+  }, [dispatch]);
   return (
     <div>
       <Navbar />
@@ -68,7 +68,7 @@ function Fprofile() {
             </div>
           </div>
 
-          <Personal id={id} api={api} />
+          <Personal id={id} api={api} dispatch={dispatch} />
 
           <Experience />
           <Card data="skills" />

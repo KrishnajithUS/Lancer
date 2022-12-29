@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { PURGE } from 'redux-persist';
 import useAxios from '../../Axios/useAxios';
 import { logOut } from '../../Redux/reducer';
+import { FlogOut } from '../../Redux/Freducer';
 
 function LogOut() {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function LogOut() {
     const response = api.post('logout/');
     console.log(response);
     dispatch(logOut());
-
+    dispatch(FlogOut());
     localStorage.removeItem('persist:root');
 
     navigate('/');

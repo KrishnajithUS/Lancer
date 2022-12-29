@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */
 /* eslint-disable function-paren-newline */
@@ -11,8 +12,9 @@ import { Formik, useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { AiFillPauseCircle } from 'react-icons/ai';
 import { cprofileSchema } from '../../../schemas';
+import { FDetails } from '../../../Redux/Freducer';
 
-function Personal({ id, api }) {
+function Personal({ id, api, dispatch }) {
   console.log('id in personal', id);
   console.log(useSelector((state) => state));
   const FirstName = useSelector((state) =>
@@ -31,6 +33,17 @@ function Personal({ id, api }) {
   console.log(useSelector((state) => state));
   const lastName = useSelector((state) =>
     state.user.userDetails ? state.freelancer.FreelancerDetails.last_name : null
+  );
+  const bio = useSelector((state) =>
+    state.user.userDetails ? state.freelancer.FreelancerDetails.bio : null
+  );
+  const title = useSelector((state) =>
+    state.user.userDetails ? state.freelancer.FreelancerDetails.title : null
+  );
+  const social_media = useSelector((state) =>
+    state.user.userDetails
+      ? state.freelancer.FreelancerDetails.social_media
+      : null
   );
 
   const initialValues = {
@@ -73,7 +86,10 @@ function Personal({ id, api }) {
           confirm_new_password: values.confirm_new_password,
         },
       });
+      dispatch(FDetails(Response.data));
+
       console.log(Response.data);
+      actions.resetForm();
     },
   });
   console.log(values);
@@ -99,7 +115,8 @@ function Personal({ id, api }) {
               </label>
               <input
                 type="text"
-                id="first_name"
+                name="first_name"
+                autoComplete="off"
                 className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                 placeholder={FirstName}
                 required=""
@@ -120,7 +137,8 @@ function Personal({ id, api }) {
               </label>
               <input
                 type="text"
-                id="last_name"
+                autoComplete="off"
+                name="last_name"
                 className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                 placeholder={lastName}
                 required=""
@@ -145,9 +163,10 @@ function Personal({ id, api }) {
               </label>
               <input
                 type="text"
+                autoComplete="off"
                 name="title"
                 className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                placeholder=""
+                placeholder={title}
                 required=""
                 value={values.title}
                 onChange={handleChange}
@@ -166,9 +185,10 @@ function Personal({ id, api }) {
               </label>
               <input
                 type="text"
+                autoComplete="off"
                 name="social_media"
                 className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                placeholder=""
+                placeholder={social_media}
                 required=""
                 value={values.social_media}
                 onChange={handleChange}
@@ -189,6 +209,7 @@ function Personal({ id, api }) {
               </label>
               <input
                 type="text"
+                autoComplete="off"
                 id="email"
                 name="username"
                 className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
@@ -211,7 +232,7 @@ function Personal({ id, api }) {
               </label>
               <input
                 type="email"
-                id="email"
+                autoComplete="off"
                 name="email"
                 className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                 placeholder={email}
@@ -234,8 +255,10 @@ function Personal({ id, api }) {
             </label>
             <input
               type="text"
+              autoComplete="off"
               name="bio"
               value={values.bio}
+              placeholder={bio}
               onChange={handleChange}
               onBlur={handleBlur}
               className=" focus:border-purple-600 focus:outline-none block w-full p-4 text-white-900 border border-slate-500 rounded-lg bg-white sm:text-md  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
@@ -253,6 +276,7 @@ function Personal({ id, api }) {
             </label>
             <input
               type="password"
+              autoComplete="off"
               name="password"
               className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
               placeholder="Old Password"
@@ -274,6 +298,7 @@ function Personal({ id, api }) {
             </label>
             <input
               type="password"
+              autoComplete="off"
               name="new_password"
               className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
               placeholder="New Password"
@@ -295,6 +320,7 @@ function Personal({ id, api }) {
             </label>
             <input
               type="password"
+              autoComplete="off"
               name="confirm_new_password"
               className=" focus:border-purple-600 focus:outline-none  bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
               placeholder="confirm password"

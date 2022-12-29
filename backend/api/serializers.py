@@ -11,9 +11,13 @@ User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     profile_picture=serializers.ImageField(source='client.profile_picture',read_only=True,required=False)
+    fprofile_picture=serializers.ImageField(source='freelancer.profile_picture',read_only=True,required=False)
+    title=serializers.CharField(source='freelancer.title',read_only=True,required=False)
+    social_media=serializers.CharField(source='freelancer.social_media_links',read_only=True,required=False)
+    bio=serializers.CharField(source='freelancer.bio',read_only=True,required=False)
     class Meta:
         model=User
-        fields=['username','first_name',"last_name","email","profile_picture"]
+        fields=['username','first_name',"last_name","email","profile_picture","bio","fprofile_picture","title","social_media"]
         
 # this is for freelancer user and profile creation
 # creating serializer associated with the user

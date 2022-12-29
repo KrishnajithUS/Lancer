@@ -137,6 +137,7 @@ class ClientUpdateView(APIView):
             print("serializer", serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class FreelancerUpdateView(APIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [JSONParser, MultiPartParser, FormParser]
@@ -154,8 +155,8 @@ class FreelancerUpdateView(APIView):
             print("serializer", serializer)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                print(serializer.data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                serializernew = UserSerializer(user)
+                return Response(serializernew.data, status=status.HTTP_201_CREATED)
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
