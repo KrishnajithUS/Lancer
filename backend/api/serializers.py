@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
     profile_picture=serializers.ImageField(source='client.profile_picture',read_only=True,required=False)
     class Meta:
         model=User
-        fields=['first_name',"last_name","email","profile_picture"]
+        fields=['username','first_name',"last_name","email","profile_picture"]
         
 # this is for freelancer user and profile creation
 # creating serializer associated with the user
@@ -99,7 +99,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email", "password", "is_freelancer"]
+        fields = ["username","first_name", "last_name", "email", "password", "is_freelancer"]
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
@@ -115,7 +115,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
             user.is_freelancer = False
         user.set_password(validated_data["password"])
         user.is_active = True
-      
+        username=validated_data["email"].split("@")[0]
+        user.username=username
         user.save()
         
         Client.objects.create(user=user)

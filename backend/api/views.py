@@ -138,8 +138,10 @@ class ClientUpdateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# logout
-# def post(self,request):
-#     logout(request)
+logout
+@api_view(["POST"])
+def LogOut(request):
+    print(request.user)
+    logout(request)
 
-#     request Response({'msg':'successfully logged out'},status=status.HTTP_200_OK)
+    return Response({'msg':'successfully logged out'},status=status.HTTP_200_OK)

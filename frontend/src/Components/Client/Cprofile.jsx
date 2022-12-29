@@ -59,7 +59,9 @@ function Cprofile() {
     data();
   }, [dispatch, api]);
   // handling image update
-
+  const username = useSelector((state) =>
+  state.user.userDetails ? state.user.userDetails.username : null
+);
   const first_name = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.first_name : null
   );
@@ -160,7 +162,7 @@ function Cprofile() {
             <div className="grid gap-6 grid-cols-6 justify-center items-center pt-4   md:grid-cols-2 grid-col-1">
               <div className="col-start-1 col-end-7 md:col-span-3">
                 <span>Username:</span>
-                <span className="pl-3">krishnajith</span>
+                <span className="pl-3">{username}</span>
               </div>
               <div className="col-start-1 col-end-7 md:col-span-3">
                 <span>first_name:</span>

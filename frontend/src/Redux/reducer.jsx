@@ -41,12 +41,17 @@ export const userSlice = createSlice({
     },
     logOut: (state) => {
       const user = {
-        user: {},
+        id: null,
+        is_freelancer: null,
         isLoggedIn: false,
       };
+      const userDetails = {};
+      const token = {};
       return {
-        ...state,
+        state,
         user,
+        userDetails,
+        token,
       };
     },
     setToken: (state, action) => {
