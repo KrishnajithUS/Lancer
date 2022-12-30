@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-from api.models import Client,FreeLancer
+from api.models import Client, FreeLancer
 
 User = get_user_model()
 from rest_framework.parsers import JSONParser
@@ -24,7 +24,7 @@ from .serializers import (
     RegistrationSerializer,
     UserUpdateSerializer,
     ClientProfileSerializer,
-   FreelancerSerializer
+    FreelancerSerializer,
 )
 
 
@@ -89,17 +89,34 @@ class LoginView(APIView):
 
 # for user details
 class ClientDetailsView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
-        print(request.data["id"])
-        user = User.objects.get(id=request.data["id"])
-        print(user)
-        if user is not None:
-            serializer = UserSerializer(user)
-            print(serializer.data)
 
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        if request.data["is_admin"]:
+            user = User.objects.get(id=request.data["id"])
+            if user.is_superadmin:
+                user = User.objects.filter(is_superadmin=False)
+                print(user)
+                serializer = UserSerializer(user,many=True)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+
+                return Response(
+                    {"details": "the user is not a superuser"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        else:
+
+            user = User.objects.get(id=request.data["id"])
+
+            if user is not None:
+                serializer = UserSerializer(user)
+
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # update client
@@ -138,15 +155,16 @@ class ClientUpdateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class FreelancerUpdateView(APIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     # profile update
     def put(self, request):
-        print("fupdate",request.data)
+        print("fupdate", request.data)
         user = User.objects.get(pk=request.data["id"])
-        freelancer_profile=FreeLancer.objects.get(user=user)
+        freelancer_profile = FreeLancer.objects.get(user=user)
         print("user", user)
         if user is not None:
             serializer = FreelancerSerializer(
@@ -160,12 +178,13 @@ class FreelancerUpdateView(APIView):
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
 
 logout
+
+
 @api_view(["POST"])
 def LogOut(request):
     print(request.user)
     logout(request)
 
-    return Response({'msg':'successfully logged out'},status=status.HTTP_200_OK)
+    return Response({"msg": "successfully logged out"}, status=status.HTTP_200_OK)

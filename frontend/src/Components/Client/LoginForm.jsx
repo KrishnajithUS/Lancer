@@ -35,19 +35,13 @@ function LoginForm() {
             email: values.email,
             password: values.password,
           });
-          console.log('data', response.data);
+
           if (response.status === 200 && response.data.is_freelancer) {
-            console.log(
-              'response comes here first',
-              response.data.is_freelancer
-            );
-            console.log('token data in login', response.data);
             dispatch(FData(response.data));
             dispatch(FsetToken(response.data));
 
             navigate('/fprofile');
           } else if (response.status === 200) {
-            console.log('token data in login', response.data);
             dispatch(userData(response.data));
             dispatch(setToken(response.data));
 
@@ -58,18 +52,12 @@ function LoginForm() {
         } catch (err) {
           if (err.response) {
             setErrorMessage('Invalid Credentials');
-            console.log('first check', err.response);
-          } else if (err.request) {
-            console.log('seconcd check', err.request);
-          } else {
-            console.log('anything else');
           }
         }
         actions.resetForm();
       },
     });
-  console.log(values);
-  console.log(errors);
+
   return (
     <section>
       {/* component */}

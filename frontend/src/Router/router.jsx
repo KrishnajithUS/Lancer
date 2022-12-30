@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable quotes */
 /* eslint-disable comma-dangle */
 /* eslint-disable no-nested-ternary */
@@ -16,6 +17,7 @@ import FreelancerRegister from '../Pages/FreelancerRegister';
 import Cprofile from '../Components/Client/Cprofile';
 import Fprofile from '../Components/Freelancer/Fprofile';
 import AdminHome from '../Components/Admin/AdminHome';
+import AdminLogin from '../Components/Admin/AdminLogin';
 
 const router = () => {
   const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
@@ -33,6 +35,7 @@ const router = () => {
           path="/login"
           element={userAuth ? <Cprofile /> : FAuth ? <Fprofile /> : <Login />}
         />
+        <Route path="/adminlogin" element={<AdminLogin />} />
         <Route path="/register" element={<Register />} />
         <Route path="/fregister" element={<FreelancerRegister />} />
         <Route path="/cprofile" element={userAuth ? <Cprofile /> : <Login />} />

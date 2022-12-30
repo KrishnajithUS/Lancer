@@ -1,12 +1,32 @@
+/* eslint-disable quotes */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Transition } from '@headlessui/react';
 import { AiOutlineUsergroupDelete } from 'react-icons/ai';
 import { BsFillHandbagFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 import Tables from './Tables';
+import useAxiosAdmin from '../../Axios/userAxiosAdmin';
 
 function AdminHome() {
+  const id = useSelector((state) => state.admin.admin.id);
+  const api = useAxiosAdmin();
+  const [userDetails, setUserDetails] = useState([]);
+  const data = async () => {
+    try {
+      const response = await api.post(`/cprofileData/`, {
+        id,
+        is_admin: true,
+      });
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    data();
+  });
   const [isOpen, setIsOpen] = useState(false);
   const [table, setTable] = useState(false);
   const handleTable = () => {
@@ -167,24 +187,24 @@ function AdminHome() {
                   </li>
 
                   <li className="rounded-sm">
-                    <a
-                      rel="noopener noreferrer"
-                      href="#"
-                      className="flex items-center p-2 space-x-3 rounded-md"
+                    <button
+                      type="button"
+                      onClick={handleTable}
+                      className="transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 flex items-center p-2 space-x-3 rounded-md"
                     >
-                      <AiOutlineUsergroupDelete />
+                      <AiOutlineUsergroupDelete size={25} />
                       <span>User Management</span>
-                    </a>
+                    </button>
                   </li>
                   <li className="rounded-sm">
-                    <a
-                      rel="noopener noreferrer"
-                      href="#"
-                      className="flex items-center p-2 space-x-3 rounded-md"
+                    <button
+                      onClick={handleTable}
+                      type="button"
+                      className="transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 flex items-center p-2 space-x-3 rounded-md"
                     >
                       <BsFillHandbagFill size={25} />
                       <span>Freelancer Management</span>
-                    </a>
+                    </button>
                   </li>
 
                   <li className="rounded-sm">
@@ -220,7 +240,7 @@ function AdminHome() {
             </div>
           </div>
         </div>
-        <div className=" md:col-span-3 col-span-full">
+        <div className="h-screen md:col-span-3 col-span-full   dark:bg-gray-800">
           <Tables table={table} />
         </div>
       </div>

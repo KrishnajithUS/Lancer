@@ -13,8 +13,12 @@ export const adminSlice = createSlice({
   initialState,
   reducers: {
     adminData: (state, action) => {
+      console.log(action);
+      console.log('heeei', action.payload.id);
       const admin = {
         id: action.payload.id,
+        access_token: action.payload.token.access,
+        refresh_token: action.payload.token.refresh,
         isLoggedIn: true,
       };
       return {
@@ -35,4 +39,4 @@ export const adminSlice = createSlice({
   },
 });
 export const { adminData, adminLogOut } = adminSlice.actions;
-export default userSlice.reducer;
+export default adminSlice.reducer;
