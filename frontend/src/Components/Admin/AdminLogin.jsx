@@ -32,6 +32,7 @@ function AdminLogin() {
           const response = await axiosInstance.post('/login/', {
             email: values.email,
             password: values.password,
+            is_admin: true,
           });
           console.log(response.status, 'the status');
 

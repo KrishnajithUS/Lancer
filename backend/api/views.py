@@ -70,21 +70,37 @@ class RegisterView(APIView):
 # freelancer Login
 class LoginView(APIView):
     def post(self, request):
-        print(request.data)
-        email = request.data["email"]
+        if request.data.get('is_admin'):
+                print(request.data,"data in else")
+                email=request.data['email']
+                passsword = request.data["password"]
+                user = authenticate(email=email, password=passsword)
+                print("user in else",user)
+                if user is not None and user.is_superadmin:
+                    login(request, user)
+                    data = UserSerializerWithToken(user).data
 
-        passsword = request.data["password"]
-        user = authenticate(email=email, password=passsword)
-        
-        if user is not None:
-            login(request, user)
-            data = UserSerializerWithToken(user).data
+                    print(data)
+                    return Response(data, status=status.HTTP_200_OK)
+                return Response(
+                    {"msg": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
+                )
+                
+        else:   
+                print(request.data,"data in else")
+                email=request.data['email']
+                passsword = request.data["password"]
+                user = authenticate(email=email, password=passsword)
+                print("user in else",user)
+                if user is not None:
+                    login(request, user)
+                    data = UserSerializerWithToken(user).data
 
-            print(data)
-            return Response(data, status=status.HTTP_200_OK)
-        return Response(
-            {"msg": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
-        )
+                    print(data)
+                    return Response(data, status=status.HTTP_200_OK)
+                return Response(
+                    {"msg": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
+                )
 
 
 # for user details
@@ -93,7 +109,7 @@ class ClientDetailsView(APIView):
 
     def post(self, request):
 
-        if request.data["is_admin"]:
+        if request.data.get("is_admin"):
             user = User.objects.get(id=request.data["id"])
             if user.is_superadmin:
                 user = User.objects.filter(is_superadmin=False,is_freelancer=False)
