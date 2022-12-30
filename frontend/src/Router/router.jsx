@@ -15,6 +15,7 @@ import SelectionPage from '../Pages/SelectionPage';
 import FreelancerRegister from '../Pages/FreelancerRegister';
 import Cprofile from '../Components/Client/Cprofile';
 import Fprofile from '../Components/Freelancer/Fprofile';
+import AdminHome from '../Components/Admin/AdminHome';
 
 const router = () => {
   const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
@@ -42,6 +43,7 @@ const router = () => {
         />
 
         <Route path="/logout" element={<LogOut />} />
+        <Route path="/dashboard" element={<AdminHome />} />
       </Routes>
     </div>
   );
