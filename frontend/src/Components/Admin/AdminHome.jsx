@@ -19,14 +19,15 @@ function AdminHome() {
         id,
         is_admin: true,
       });
-      console.log(response);
+      setUserDetails(response.data);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
     data();
-  });
+  }, []);
+  console.log(userDetails);
   const [isOpen, setIsOpen] = useState(false);
   const [table, setTable] = useState(false);
   const handleTable = () => {
@@ -241,7 +242,7 @@ function AdminHome() {
           </div>
         </div>
         <div className="h-screen md:col-span-3 col-span-full   dark:bg-gray-800">
-          <Tables table={table} />
+          <Tables table={table} userDetails={userDetails} />
         </div>
       </div>
     </div>

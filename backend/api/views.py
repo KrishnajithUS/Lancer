@@ -75,7 +75,7 @@ class LoginView(APIView):
 
         passsword = request.data["password"]
         user = authenticate(email=email, password=passsword)
-
+        
         if user is not None:
             login(request, user)
             data = UserSerializerWithToken(user).data
@@ -96,7 +96,7 @@ class ClientDetailsView(APIView):
         if request.data["is_admin"]:
             user = User.objects.get(id=request.data["id"])
             if user.is_superadmin:
-                user = User.objects.filter(is_superadmin=False)
+                user = User.objects.filter(is_superadmin=False,is_freelancer=False)
                 print(user)
                 serializer = UserSerializer(user,many=True)
 
@@ -104,7 +104,7 @@ class ClientDetailsView(APIView):
             else:
 
                 return Response(
-                    {"details": "the user is not a superuser"},
+                    {"details": "the user is not an admin"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
         else:

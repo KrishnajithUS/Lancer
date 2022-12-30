@@ -52,7 +52,7 @@ export const userSlice = createSlice({
       };
     },
     setToken: (state, action) => {
-      console.log('token acess', action.payload.token.access);
+      console.log('token acess', action.payload);
       console.log('refresh acess', action.payload.token.refresh);
       const token = {
         access_token: action.payload.token.access,

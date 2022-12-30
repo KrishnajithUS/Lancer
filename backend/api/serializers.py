@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
     bio=serializers.CharField(source='freelancer.bio',read_only=True,required=False)
     class Meta:
         model=User
-        fields=['username','first_name',"last_name","email","profile_picture","bio","fprofile_picture","title","social_media"]
+        fields=['id','username','first_name',"last_name","email","profile_picture","bio","fprofile_picture","title","social_media"]
         
 # this is for freelancer user and profile creation
 # creating serializer associated with the user

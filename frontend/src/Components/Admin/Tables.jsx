@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-indent */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import { AiFillLock, AiFillUnlock } from 'react-icons/ai';
 
-function Tables({ table }) {
+function Tables({ table, userDetails }) {
+  console.log(userDetails);
   if (table) {
     return (
       <div className="overflow-x-auto flex justify-center relative">
@@ -31,19 +33,26 @@ function Tables({ table }) {
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-
-              <td className="py-4 px-6">1</td>
-              <td className="py-4 px-6">Anil pk</td>
-              <td className="py-4 px-6">Ani@455</td>
-              <td className="py-4 px-6">Ani88@gmail.com</td>
-              <td className="py-4 px-6">null</td>
-              <td className="py-4 px-6">
-                <AiFillUnlock />
-              </td>
-            </tr>
-          </tbody>
+          {userDetails.map((item) => {
+            return (
+              <tbody key={item.email}>
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <td className="py-4 px-6">{item.id ? item.id : null}</td>
+                  <td className="py-4 px-6">
+                    {item.first_name}
+                    <br />
+                    {item.last_name}
+                  </td>
+                  <td className="py-4 px-6">{item.username}</td>
+                  <td className="py-4 px-6">{item.email}</td>
+                  <td className="py-4 px-6">null</td>
+                  <td className="py-4 px-6">
+                    <AiFillUnlock />
+                  </td>
+                </tr>
+              </tbody>
+            );
+          })}
         </table>
       </div>
     );

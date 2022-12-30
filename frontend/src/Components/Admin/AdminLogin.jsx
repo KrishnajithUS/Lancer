@@ -12,7 +12,7 @@ import { loginSchema } from '../../schemas';
 
 import axiosInstance from '../../Axios/axiosPrivate';
 
-import { adminData } from '../../Redux/adminreducer';
+import { adminData, adminUpdate } from '../../Redux/adminreducer';
 
 function AdminLogin() {
   const [errorMessage, setErrorMessage] = useState('');
@@ -33,19 +33,17 @@ function AdminLogin() {
             email: values.email,
             password: values.password,
           });
-          console.log(response.data);
+          console.log(response.status, 'the status');
 
-          dispatch(adminData(response.data));
-
-          navigate('/dashboard');
+          if (response.status === 200) {
+            dispatch(adminData(response.data));
+            navigate('/dashboard');
+          } else {
+            setErrorMessage('something went wrong');
+          }
         } catch (err) {
           if (err.response) {
             setErrorMessage('Invalid Credentials');
-            console.log('first check', err.response);
-          } else if (err.request) {
-            console.log('seconcd check', err.request);
-          } else {
-            console.log('anything else');
           }
         }
         actions.resetForm();
@@ -55,6 +53,29 @@ function AdminLogin() {
   console.log(errors);
   return (
     <div>
+      {errorMessage && (
+        <div
+          className="bg-red-100 border mt-4 border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <strong className="font-bold">{errorMessage}</strong>
+
+          <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+            <svg
+              onClick={() => {
+                setErrorMessage('');
+              }}
+              className="fill-current h-6 w-6 text-red-500"
+              role="button"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <title>Close</title>
+              <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+            </svg>
+          </span>
+        </div>
+      )}
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex  flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
           <div className="w-full  bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

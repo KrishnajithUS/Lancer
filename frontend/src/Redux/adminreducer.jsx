@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-unused-vars */
 /* eslint-disable operator-linebreak */
@@ -26,6 +27,21 @@ export const adminSlice = createSlice({
         admin,
       };
     },
+    adminUpdate: (state, action) => {
+      console.log('access in red', action.payload.token.access);
+      console.log('access in red', action.payload.token.refresh);
+      // creating a new state objects with all the existing property
+      // creating an admin object with all the properties of admin object
+      // and then update specific values
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          access_token: action.payload.token.access,
+          refresh_token: action.payload.token.refresh,
+        },
+      };
+    },
     adminLogOut: (state, action) => {
       const admin = {
         id: null,
@@ -38,5 +54,5 @@ export const adminSlice = createSlice({
     },
   },
 });
-export const { adminData, adminLogOut } = adminSlice.actions;
+export const { adminData, adminUpdate, adminLogOut } = adminSlice.actions;
 export default adminSlice.reducer;
