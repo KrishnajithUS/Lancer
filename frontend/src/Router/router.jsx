@@ -25,7 +25,11 @@ const router = () => {
   const FAuth = Boolean(
     useSelector((state) => state.freelancer.Freelancer.isLoggedIn)
   );
-  console.log('feelancer astuh', FAuth);
+  const adminAuth = Boolean(
+    useSelector((state) => state.admin.admin.isLoggedIn)
+  );
+  console.log(useSelector((state) => state.admin.admin.isLoggedIn));
+  console.log('admin astuh', adminAuth);
   return (
     <div>
       <Routes>
@@ -46,7 +50,11 @@ const router = () => {
         />
 
         <Route path="/logout" element={<LogOut />} />
-        <Route path="/dashboard" element={<AdminHome />} />
+
+        <Route
+          path="/dashboard"
+          element={adminAuth ? <AdminHome /> : <AdminLogin />}
+        />
       </Routes>
     </div>
   );

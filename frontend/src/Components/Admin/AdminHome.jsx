@@ -5,34 +5,25 @@ import { React, useState, useEffect } from 'react';
 import { Transition } from '@headlessui/react';
 import { AiOutlineUsergroupDelete } from 'react-icons/ai';
 import { BsFillHandbagFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Tables from './Tables';
-import useAxiosAdmin from '../../Axios/userAxiosAdmin';
+import Ftables from './Ftables';
 
 function AdminHome() {
-  const id = useSelector((state) => state.admin.admin.id);
-  const api = useAxiosAdmin();
-  const [userDetails, setUserDetails] = useState([]);
-  const data = async () => {
-    try {
-      const response = await api.post(`/cprofileData/`, {
-        id,
-        is_admin: true,
-      });
-      setUserDetails(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    data();
-  }, []);
-  console.log(userDetails);
+  const showstate = useSelector((state) => state.admin.initialdata);
+
+  const [display, setDisplay] = useState(showstate);
+
   const [isOpen, setIsOpen] = useState(false);
-  const [table, setTable] = useState(false);
+
   const handleTable = () => {
-    setTable(!table);
+    setDisplay('usermanagement');
   };
+  const handleTableL = () => {
+    setDisplay('freelancer');
+  };
+
   return (
     <div>
       <div className="grid grid-cols-5   md:grid-cols-4  ">
@@ -130,7 +121,7 @@ function AdminHome() {
                   </li>
                   <li className="rounded-sm">
                     <button
-                      onClick={handleTable}
+                      onClick={handleTableL}
                       type="button"
                       className="transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 flex items-center p-2 space-x-3 rounded-md"
                     >
@@ -140,9 +131,8 @@ function AdminHome() {
                   </li>
 
                   <li className="rounded-sm">
-                    <a
-                      rel="noopener noreferrer"
-                      href="#"
+                    <Link
+                      path="/logout"
                       className="flex items-center p-2 space-x-3 rounded-md"
                     >
                       <svg
@@ -153,8 +143,7 @@ function AdminHome() {
                         <path d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z" />
                         <rect width="32" height="64" x="256" y="232" />
                       </svg>
-                      <span>Logout</span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -199,7 +188,7 @@ function AdminHome() {
                   </li>
                   <li className="rounded-sm">
                     <button
-                      onClick={handleTable}
+                      onClick={handleTableL}
                       type="button"
                       className="transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 flex items-center p-2 space-x-3 rounded-md"
                     >
@@ -242,7 +231,11 @@ function AdminHome() {
           </div>
         </div>
         <div className="h-screen md:col-span-3 col-span-full   dark:bg-gray-800">
-          <Tables table={table} userDetails={userDetails} />
+          {display === 'usermanagement' ? (
+            <Tables />
+          ) : display === 'freelancer' ? (
+            <Ftables />
+          ) : null}
         </div>
       </div>
     </div>

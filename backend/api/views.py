@@ -110,8 +110,9 @@ class ClientDetailsView(APIView):
     def post(self, request):
 
         if request.data.get("is_admin"):
-            user = User.objects.get(id=request.data["id"])
-            if user.is_superadmin:
+            print("checking in admin",(request.data))
+            
+            if request.user.is_superadmin:
                 user = User.objects.filter(is_superadmin=False,is_freelancer=False)
                 print(user)
                 serializer = UserSerializer(user,many=True)
@@ -123,8 +124,20 @@ class ClientDetailsView(APIView):
                     {"details": "the user is not an admin"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-        else:
+        elif request.data.get("is_freelancer"):
+            if request.user.is_superadmin:
+                user = User.objects.filter(is_superadmin=False,is_freelancer=True)
+                print(user)
+                serializer = UserSerializer(user,many=True)
 
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+
+                return Response(
+                    {"details": "the user is not an admin"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        else:
             user = User.objects.get(id=request.data["id"])
 
             if user is not None:
@@ -143,31 +156,31 @@ class ClientUpdateView(APIView):
     # profile update
     def put(self, request):
         user = User.objects.get(pk=request.data["id"])
-        print("user", user)
+       
         if user is not None:
             serializer = UserUpdateSerializer(
                 instance=user, data=request.data, partial=True
             )
-            print("serializer", serializer)
+           
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                print(serializer.data)
+               
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # profile picture update
     def patch(self, request, format=None):
-        print("the data", request.data)
+      
         user = User.objects.get(pk=request.data["id"])
-        print(user)
+        
         userprofile = Client.objects.get(user=user)
 
-        print("userprofile", userprofile)
+        
         serializer = ClientProfileSerializer(instance=userprofile, data=request.data)
         if serializer.is_valid():
 
             serializer.save()
-            print("serializer", serializer.data)
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -194,8 +207,7 @@ class FreelancerUpdateView(APIView):
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-logout
+#logout
 
 
 @api_view(["POST"])
@@ -204,3 +216,19 @@ def LogOut(request):
     logout(request)
 
     return Response({"msg": "successfully logged out"}, status=status.HTTP_200_OK)
+#block and unblock
+class BlockUnblockView(APIView):
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        user=User.objects.get(id=request.data["newid"])
+        if user is not None and user.is_active == True:
+            user.is_active =  False
+            user.save()
+          
+            return Response({"details":"user blocked"},status=status.HTTP_200_OK)
+        else :
+            user.is_active = True
+            user.save()
+          
+            return Response({"details":"user unblocked"},status=status.HTTP_200_OK)
+        

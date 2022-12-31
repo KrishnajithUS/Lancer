@@ -10,10 +10,6 @@ import { adminUpdate } from '../Redux/adminreducer';
 const baseURL = 'http://127.0.0.1:8000/api/';
 
 const useAxiosAdmin = () => {
-  console.log(
-    useSelector((state) => state.admin.admin),
-    'data from redux'
-  );
   const authTokens = useSelector((state) => state.admin.admin.access_token);
   const authRefresh = useSelector((state) => state.admin.admin.refresh_token);
   console.log('refresh', authTokens);

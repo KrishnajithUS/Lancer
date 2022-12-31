@@ -1,28 +1,28 @@
 /* eslint-disable quotes */
-/* eslint-disable react/jsx-indent */
 /* eslint-disable react/prop-types */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable jsx-a11y/alt-text */
-import { React, useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiFillLock, AiFillUnlock } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import useAxiosAdmin from '../../Axios/userAxiosAdmin';
 
-function Tables() {
+function Ftables() {
   const api = useAxiosAdmin();
   const id = useSelector((state) => state.admin.admin.id);
-  const [userDetails, setUserDetails] = useState([]);
+  const [freelancerDetails, setFreelancerDetails] = useState([]);
   const data = async () => {
     try {
-      const response = await api.post(`/cprofileData/`, {
+      const Response = await api.post(`/cprofileData/`, {
         id,
-        is_admin: true,
+
+        is_freelancer: true,
       });
-      setUserDetails(response.data);
+      console.log(Response.data);
+      setFreelancerDetails(Response.data);
     } catch (err) {
       console.log(err);
     }
   };
+
   const datan = async (newid) => {
     try {
       const response = await api.post(`/block/`, {
@@ -42,13 +42,14 @@ function Tables() {
     datan(newid);
   };
   return (
-    <div className="overflow-x-auto flex justify-center relative">
+    <div className="overflow-x-auto  flex justify-center relative">
       <table className="w-[100%] text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="py-3 px-6">
               id
             </th>
+
             <th scope="col" className="py-3 px-6">
               Full Name
             </th>
@@ -62,23 +63,40 @@ function Tables() {
               Profile Picture
             </th>
             <th scope="col" className="py-3 px-6">
+              Bio
+            </th>
+            <th scope="col" className="py-3 px-6">
+              Title
+            </th>
+            <th scope="col" className="py-3 px-6">
+              Social media links
+            </th>
+
+            <th scope="col" className="py-3 px-6">
               Actions
             </th>
           </tr>
         </thead>
-        {userDetails.map((item) => {
+        {freelancerDetails.map((item) => {
           return (
             <tbody key={item.email}>
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td className="py-4 px-6">{item.id ? item.id : null}</td>
+                <td className="py-4 px-6">{item.id}</td>
                 <td className="py-4 px-6">
-                  {item.first_name}
-                  <br />
-                  {item.last_name}
+                  <div className="flex">
+                    <div className="pr-2">{item.first_name}</div>
+
+                    <div>{item.last_name}</div>
+                  </div>
                 </td>
                 <td className="py-4 px-6">{item.username}</td>
                 <td className="py-4 px-6">{item.email}</td>
-                <td className="py-4 px-6">null</td>
+                <td className="py-4 px-6">
+                  {item.fprofile_picture ? item.fprofile_picture : null}
+                </td>
+                <td className="py-4 px-6">{item.bio}</td>
+                <td className="py-4 px-6">{item.title}</td>
+                <td className="py-4 px-6">{item.social_media}</td>
                 <td className="py-4 px-6 ">
                   {item.is_active ? (
                     <button
@@ -107,4 +125,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default Ftables;

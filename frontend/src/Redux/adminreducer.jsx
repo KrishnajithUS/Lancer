@@ -8,6 +8,7 @@ import { userSlice } from './reducer';
 
 const initialState = {
   admin: {},
+  initialdata: 'usermanagement',
 };
 export const adminSlice = createSlice({
   name: 'admin',
