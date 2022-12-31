@@ -18,6 +18,7 @@ function LogOut() {
     console.log(response);
     dispatch(logOut());
     dispatch(FlogOut());
+    console.log('admin logout');
     dispatch(adminLogOut());
     localStorage.removeItem('persist:root');
 

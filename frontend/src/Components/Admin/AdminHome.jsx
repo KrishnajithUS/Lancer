@@ -132,7 +132,7 @@ function AdminHome() {
 
                   <li className="rounded-sm">
                     <Link
-                      path="/logout"
+                      to="/logout"
                       className="flex items-center p-2 space-x-3 rounded-md"
                     >
                       <svg
@@ -143,6 +143,7 @@ function AdminHome() {
                         <path d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z" />
                         <rect width="32" height="64" x="256" y="232" />
                       </svg>
+                      <span>Logout</span>
                     </Link>
                   </li>
                 </ul>
@@ -198,9 +199,8 @@ function AdminHome() {
                   </li>
 
                   <li className="rounded-sm">
-                    <a
-                      rel="noopener noreferrer"
-                      href="#"
+                    <Link
+                      to="/logout"
                       className="flex items-center p-2 space-x-3 rounded-md"
                     >
                       <svg
@@ -212,7 +212,7 @@ function AdminHome() {
                         <rect width="32" height="64" x="256" y="232" />
                       </svg>
                       <span>Logout</span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

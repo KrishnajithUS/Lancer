@@ -1,12 +1,13 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable quotes */
 /* eslint-disable comma-dangle */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable import/no-named-as-default-member */
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import LogOut from '../Components/Constants/LogOut';
 import Home from '../Pages/Home';
@@ -20,16 +21,21 @@ import AdminHome from '../Components/Admin/AdminHome';
 import AdminLogin from '../Components/Admin/AdminLogin';
 
 const router = () => {
+  const navigate = useNavigate();
   const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
-  console.log('user auth', userAuth);
+
   const FAuth = Boolean(
     useSelector((state) => state.freelancer.Freelancer.isLoggedIn)
   );
   const adminAuth = Boolean(
     useSelector((state) => state.admin.admin.isLoggedIn)
   );
-  console.log(useSelector((state) => state.admin.admin.isLoggedIn));
-  console.log('admin astuh', adminAuth);
+
+  useEffect(() => {
+    if (adminAuth) {
+      navigate('/dashboard');
+    }
+  }, []);
   return (
     <div>
       <Routes>
@@ -39,7 +45,10 @@ const router = () => {
           path="/login"
           element={userAuth ? <Cprofile /> : FAuth ? <Fprofile /> : <Login />}
         />
-        <Route path="/adminlogin" element={<AdminLogin />} />
+        <Route
+          path="/adminlogin"
+          element={adminAuth ? <AdminHome /> : <AdminLogin />}
+        />
         <Route path="/register" element={<Register />} />
         <Route path="/fregister" element={<FreelancerRegister />} />
         <Route path="/cprofile" element={userAuth ? <Cprofile /> : <Login />} />
