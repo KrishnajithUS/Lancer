@@ -1,13 +1,5 @@
-/* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-shadow */
-/* eslint-disable function-paren-newline */
-/* eslint-disable no-confusing-arrow */
-/* eslint-disable prettier/prettier */
-/* eslint-disable comma-dangle */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable max-len */
 import React from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
@@ -15,36 +7,20 @@ import { cprofileSchema } from '../../../schemas';
 import { FDetails } from '../../../Redux/Freducer';
 
 function Personal({ id, api, dispatch, data }) {
-  console.log('id in personal', id);
+  const FirstName = useSelector((state) => (state.user.userDetails
+    ? state.freelancer.FreelancerDetails.first_name
+    : null));
   console.log(useSelector((state) => state));
-  const FirstName = useSelector((state) =>
-    state.user.userDetails
-      ? state.freelancer.FreelancerDetails.first_name
-      : null
-  );
+  const userName = useSelector((state) => (state.user.userDetails ? state.freelancer.FreelancerDetails.username : null));
   console.log(useSelector((state) => state));
-  const userName = useSelector((state) =>
-    state.user.userDetails ? state.freelancer.FreelancerDetails.username : null
-  );
+  const email = useSelector((state) => (state.user.userDetails ? state.freelancer.FreelancerDetails.email : null));
   console.log(useSelector((state) => state));
-  const email = useSelector((state) =>
-    state.user.userDetails ? state.freelancer.FreelancerDetails.email : null
-  );
-  console.log(useSelector((state) => state));
-  const lastName = useSelector((state) =>
-    state.user.userDetails ? state.freelancer.FreelancerDetails.last_name : null
-  );
-  const bio = useSelector((state) =>
-    state.user.userDetails ? state.freelancer.FreelancerDetails.bio : null
-  );
-  const title = useSelector((state) =>
-    state.user.userDetails ? state.freelancer.FreelancerDetails.title : null
-  );
-  const social_media = useSelector((state) =>
-    state.user.userDetails
-      ? state.freelancer.FreelancerDetails.social_media
-      : null
-  );
+  const lastName = useSelector((state) => (state.user.userDetails ? state.freelancer.FreelancerDetails.last_name : null));
+  const bio = useSelector((state) => (state.user.userDetails ? state.freelancer.FreelancerDetails.bio : null));
+  const title = useSelector((state) => (state.user.userDetails ? state.freelancer.FreelancerDetails.title : null));
+  const social_media = useSelector((state) => (state.user.userDetails
+    ? state.freelancer.FreelancerDetails.social_media
+    : null));
 
   const initialValues = {
     username: '',

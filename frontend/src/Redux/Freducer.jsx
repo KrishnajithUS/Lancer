@@ -1,8 +1,4 @@
-/* eslint-disable object-curly-newline */
-/* eslint-disable prettier/prettier */
-/* eslint-disable comma-dangle */
-/* eslint-disable indent */
-/* eslint-disable operator-linebreak */
+/* eslint-disable max-len */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -75,6 +71,5 @@ const FreelancerSlice = createSlice({
     },
   },
 });
-export const { FlogOut, FDetails, Fskills, FData, FsetToken, modalStatus } =
-  FreelancerSlice.actions;
+export const { FlogOut, FDetails, Fskills, FData, FsetToken, modalStatus } = FreelancerSlice.actions;
 export default FreelancerSlice.reducer;

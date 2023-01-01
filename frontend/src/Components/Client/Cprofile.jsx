@@ -1,27 +1,10 @@
-/* eslint-disable no-alert */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable indent */
-/* eslint-disable no-constant-condition */
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable max-len */
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-confusing-arrow */
-/* eslint-disable comma-dangle */
-/* eslint-disable no-debugger */
 /* eslint-disable camelcase */
-/* eslint-disable operator-linebreak */
-/* eslint-disable object-curly-newline */
-/* eslint-disable quotes */
-/* eslint-disable no-shadow */
-/* eslint-disable react/button-has-type */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable comma-dangle */
 import React, { useState, useEffect } from 'react';
-import { useFormik, Formik } from 'formik';
+import { useFormik } from 'formik';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import Navbar from '../Constants/Navbar';
 import { cprofileSchema } from '../../schemas';
@@ -60,23 +43,18 @@ function Cprofile() {
   }, [dispatch, api]);
   // handling image update
   const username = useSelector((state) =>
-    state.user.userDetails ? state.user.userDetails.username : null
-  );
+    (state.user.userDetails ? state.user.userDetails.username : null));
   const first_name = useSelector((state) =>
-    state.user.userDetails ? state.user.userDetails.first_name : null
-  );
+    (state.user.userDetails ? state.user.userDetails.first_name : null));
   const profile_picture = useSelector((state) =>
-    state.user.userDetails ? state.user.userDetails.profile_picture : null
-  );
+    (state.user.userDetails ? state.user.userDetails.profile_picture : null));
   console.log('profile_picture', profile_picture);
 
   const last_name = useSelector((state) =>
-    state.user.userDetails ? state.user.userDetails.last_name : null
-  );
+    (state.user.userDetails ? state.user.userDetails.last_name : null));
 
   const email = useSelector((state) =>
-    state.user.userDetails ? state.user.userDetails.email : null
-  );
+    (state.user.userDetails ? state.user.userDetails.email : null));
 
   const initialValues = {
     first_name: '',
@@ -337,12 +315,12 @@ function Cprofile() {
                             onChange={handleChange}
                             onBlur={handleBlur}
                           />
-                          {errors.confirm_new_password &&
-                          touched.confirm_new_password ? (
+                          {errors.confirm_new_password
+                          && touched.confirm_new_password ? (
                             <p className="form-error text-red-600">
                               {errors.confirm_new_password}
                             </p>
-                          ) : null}
+                            ) : null}
                           <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                             <button
                               className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"

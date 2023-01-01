@@ -16,7 +16,7 @@ function Ftables() {
 
         is_freelancer: true,
       });
-      console.log(Response.data);
+
       setFreelancerDetails(Response.data);
     } catch (err) {
       console.log(err);
@@ -25,7 +25,7 @@ function Ftables() {
 
   const datan = async (newid) => {
     try {
-      const response = await api.post(`/block/`, {
+      await api.post(`/block/`, {
         newid,
         is_admin: true,
       });
@@ -38,7 +38,6 @@ function Ftables() {
     data();
   }, []);
   const handleSubmit = (newid) => {
-    console.log(newid);
     datan(newid);
   };
   return (

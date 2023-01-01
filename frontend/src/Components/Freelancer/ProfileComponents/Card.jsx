@@ -1,10 +1,3 @@
-/* eslint-disable quotes */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/prop-types */
-/* eslint-disable jsx-a11y/no-redundant-roles */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-
 import { AiFillEdit } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, React } from 'react';
@@ -16,12 +9,16 @@ function Card({ data }) {
   const api = useAxios();
   const dispatch = useDispatch();
   const [dataHandler, setDataHandler] = useState([]);
-
+  const [addskill, setAddSkill] = useState(false);
   const check = useSelector((state) => state.freelancer.modelStatus);
   console.log(check);
   const handleClick = (newid) => {
     dispatch(Fskills(newid));
 
+    dispatch(modalStatus('showmodal'));
+  };
+  const handleClickL = () => {
+    setAddSkill(true)
     dispatch(modalStatus('showmodal'));
   };
   const skills = async () => {
@@ -44,10 +41,7 @@ function Card({ data }) {
         <div className="pt-2 pl-3 ">
           <h6 className="text-lg  font-bold dark:text-black">{data}</h6>
         </div>
-        <ul
-          role="list"
-          className="divide-y bg-white rounded-lg pl-10 pr-10 shadow-md divide-white dark:divide-gray-700 m-4 "
-        >
+        <ul className="divide-y bg-white rounded-lg pl-10 pr-10 shadow-md divide-white dark:divide-gray-700 m-4 ">
           {dataHandler.map((item) => {
             return (
               <li key={item.id} className="py-3 sm:py-4">
@@ -78,11 +72,11 @@ function Card({ data }) {
                 </p>
               </div>
               <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
-                <button onClick={handleClick} type="button">
+                <button onClick={handleClickL} type="button">
                   <AiFillEdit />
                 </button>
 
-                {check === 'showmodal' && <Skills addskill skills={skills} />}
+                {check === 'showmodal' && <Skills addskill={addskill} skills={skills} />}
               </div>
             </div>
           </li>

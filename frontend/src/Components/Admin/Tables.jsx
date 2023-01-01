@@ -25,7 +25,7 @@ function Tables() {
   };
   const datan = async (newid) => {
     try {
-      const response = await api.post(`/block/`, {
+      await api.post(`/block/`, {
         newid,
         is_admin: true,
       });
@@ -38,7 +38,6 @@ function Tables() {
     data();
   }, []);
   const handleSubmit = (newid) => {
-    console.log(newid);
     datan(newid);
   };
   return (

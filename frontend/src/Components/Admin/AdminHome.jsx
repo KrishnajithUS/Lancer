@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { React, useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { AiOutlineUsergroupDelete } from 'react-icons/ai';
 import { BsFillHandbagFill } from 'react-icons/bs';

@@ -1,13 +1,10 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable quotes */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { React, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '../Constants/Navbar';
-import Education from './ProfileComponents/Education';
+
 import Personal from './ProfileComponents/Personal';
 import Experience from './ProfileComponents/Experience';
-import Skills from './ProfileComponents/Skills';
+
 import Card from './ProfileComponents/Card';
 import useAxios from '../../Axios/useAxios';
 import { FDetails } from '../../Redux/Freducer';

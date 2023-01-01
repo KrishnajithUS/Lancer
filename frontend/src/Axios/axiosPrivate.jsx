@@ -13,26 +13,4 @@ const axiosInstance = axios.create({
   },
 });
 
-// axiosInstance.interceptors.request.use(async (req) => {
-//   console.log('request comes here first');
-//   if (!authtoken) {
-//     console.log('request comes here second');
-//     authtoken = localStorage.getItem('access');
-//     req.headers.Authorization = `Bearer ${authtoken}`;
-//   }
-//   const user = jwt_decode(authtoken);
-
-//   const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
-//   console.log('isExpired', isExpired);
-//   if (!isExpired) return req;
-//   console.log(refresh);
-//   const response = await axios.post(`${baseURL}token/refresh/`, {
-//     refresh,
-//   });
-//   localStorage.setItem('access', response.data.access);
-//   localStorage.setItem('access', response.data.refresh);
-//   req.headers.Authorization = `Bearer ${response.data.access}`;
-//   return req;
-// });
-
 export default axiosInstance;

@@ -1,18 +1,7 @@
-/* eslint-disable object-curly-newline */
-/* eslint-disable no-alert */
-/* eslint-disable prettier/prettier */
-/* eslint-disable semi */
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
-/* eslint-disable quotes */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-
-import { useState, React } from 'react';
+import { React } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+
 import useAxios from '../../../Axios/useAxios';
 import { cprofileSchema } from '../../../schemas';
 import { modalStatus } from '../../../Redux/Freducer';
@@ -20,7 +9,6 @@ import { modalStatus } from '../../../Redux/Freducer';
 function Skills({ addskill, skills }) {
   const api = useAxios();
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const check = useSelector((state) => state.freelancer.modelStatus);
   const singleData = useSelector((state) => state.freelancer.skills);
@@ -46,10 +34,11 @@ function Skills({ addskill, skills }) {
     initialValues,
     validationScheme: cprofileSchema,
     onSubmit: async (values, actions) => {
-      console.log('values', values);
+      console.log(addskill, 'addskill');
       if (addskill) {
         try {
-          const Response = await api.post(`skills/`, {
+          console.log(addskill, 'addskill');
+          await api.post(`skills/`, {
             skills: values.skills,
             id,
           });
@@ -58,8 +47,9 @@ function Skills({ addskill, skills }) {
           alert(err);
         }
       } else {
+        console.log('if not the id is present');
         try {
-          const Response = await api.put(`skills/`, {
+          await api.put(`skills/`, {
             skills: values.skills,
             id,
           });
@@ -70,6 +60,7 @@ function Skills({ addskill, skills }) {
       }
 
       handleChangeL();
+      actions.resetForm();
     },
   });
   console.log(values);
@@ -137,9 +128,15 @@ function Skills({ addskill, skills }) {
                 <div className="m-4 ">
                   <button
                     type="submit"
-                    className="   text-black bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+                    className="mr-2   text-black bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
                   >
                     Save
+                  </button>
+                  <button
+                    type="submit"
+                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                  >
+                    Delete
                   </button>
                 </div>
               </form>

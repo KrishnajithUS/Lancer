@@ -1,7 +1,4 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable object-curly-newline */
 import { createSlice } from '@reduxjs/toolkit';
-import { AiOutlineConsoleSql } from 'react-icons/ai';
 
 const initialState = {
   user: {},
