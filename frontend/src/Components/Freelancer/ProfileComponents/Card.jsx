@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/prop-types */
@@ -7,18 +8,33 @@
 import { AiFillEdit } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, React } from 'react';
+import useAxios from '../../../Axios/useAxios';
 import { modalStatus } from '../../../Redux/Freducer';
 import Skills from './Skills';
 
 function Card({ data }) {
+  const api = useAxios();
   const dispatch = useDispatch();
-  console.log(data);
+  const [dataHandler, setDataHandler] = useState([]);
+  console.log(dataHandler, 'skills data');
   const check = useSelector((state) => state.freelancer.modelStatus);
   console.log(check);
   const handleClick = () => {
     dispatch(modalStatus('showmodal'));
   };
+  const skills = async () => {
+    try {
+      const response = await api.get(`/skills/`);
+      console.log('response', response.data);
 
+      setDataHandler([response.data]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    skills();
+  }, [dispatch]);
   if (data === 'skills') {
     return (
       <div className="bg-zinc-200 order-4 rounded-lg  col-span-3  md:col-start-2 col-end-4">
@@ -41,7 +57,7 @@ function Card({ data }) {
                   <AiFillEdit />
                 </button>
 
-                {check === 'showmodal' && <Skills />}
+                {check === 'showmodal' && <Skills skills={skills} />}
               </div>
             </div>
           </li>

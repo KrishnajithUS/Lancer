@@ -16,9 +16,9 @@ import useAxios from '../../../Axios/useAxios';
 import { cprofileSchema } from '../../../schemas';
 import { modalStatus } from '../../../Redux/Freducer';
 
-function Skills() {
+function Skills({ skills }) {
   const api = useAxios();
-  const [skills, setSkills] = useState([]);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const check = useSelector((state) => state.freelancer.modelStatus);
@@ -46,7 +46,7 @@ function Skills() {
         const Response = await api.post(`skills/`, {
           skills: values.skills,
         });
-        setSkills(Response.data);
+        skills();
       } catch (err) {
         alert(err);
       }

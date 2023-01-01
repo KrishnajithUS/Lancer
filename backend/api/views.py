@@ -213,13 +213,28 @@ class SkillsView(APIView):
         if serializer.is_valid():
             serializer.save()
             print(serializer.data)
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
-        print(serializer.errors)
+            return Response({"details":"created"},status=status.HTTP_201_CREATED)
+        print(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         
+        return Response(serializer.errors,status=status.HTTP_201_CREATED)
+    def get(self,request):
+        user=request.user
 
+        freelancer=FreeLancer.objects.get(user=user)
+     
+        skills=Skills.objects.filter(user=freelancer)
+        #skills may be multiple objets
+        #so we need to use many= True to serialize that object
+        serializer=SkillSerializer(skills,many=True)
 
-        return Response({"details":"successfully created"},status=status.HTTP_201_CREATED)
-        
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    def put(self,request):
+        freelancer=FreeLancer.objects.get(user=request.user)
+        serializer=SkillSerializer(instance=freelancer,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+            return Response({"details":"updated"},status=status.HTTP_200_OK)
 
 # logout
 

@@ -161,3 +161,4 @@ class SkillSerializer(serializers.ModelSerializer):
         skills.save()
         return skills
     
+    

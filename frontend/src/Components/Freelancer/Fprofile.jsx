@@ -17,7 +17,7 @@ function Fprofile() {
   const dispatch = useDispatch();
   const api = useAxios();
   const [dataHandler, setDataHandler] = useState([]);
-  console.log('datahandler', dataHandler);
+
   const id = useSelector((state) => state.freelancer.Freelancer.id);
   const data = async () => {
     try {
@@ -27,12 +27,7 @@ function Fprofile() {
       console.log('response', response.data);
 
       dispatch(FDetails(response.data));
-      // setDataHandler({
-      //   bio: response.data.bio,
-      //   first_name: response.data.first_name,
-      //   last_name: response.data.last_name,
-      //   title: response.data.title,
-      // });
+
       setDataHandler([response.data]);
     } catch (err) {
       console.log(err);
