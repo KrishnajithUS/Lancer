@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable prettier/prettier */
 /* eslint-disable comma-dangle */
 /* eslint-disable indent */
@@ -8,7 +9,7 @@ const initialState = {
   Freelancer: {},
   FreelancerDetails: {},
   token: null,
-  modalStatus: {},
+  modalStatus: 'hidemodal',
 };
 
 const FreelancerSlice = createSlice({
@@ -69,8 +70,6 @@ const FreelancerSlice = createSlice({
     },
   },
 });
-export const {
- FlogOut, FDetails, FData, FsetToken, modalStatus
-} =
+export const { FlogOut, FDetails, FData, FsetToken, modalStatus } =
   FreelancerSlice.actions;
 export default FreelancerSlice.reducer;

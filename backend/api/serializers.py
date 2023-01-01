@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Client, FreeLancer
+from .models import Client, FreeLancer,Skills
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import exceptions
 
@@ -93,9 +93,8 @@ class FreelancerSerializer(serializers.ModelSerializer):
             instance.title=validated_data.get("title",instance.title)
         if validated_data.get("bio",None):
             instance.bio=validated_data.get("bio",instance.bio)
-        if validated_data.get("social_media",instance.social_media_links):
-            instance.social_media_links=validated_data.get("social_media",instance.social_media_links)
-        
+        if validated_data.get("social_media_links",None):
+            instance.social_media_links=validated_data.get("social_media_links","bio")
         instance.save()
         #pop out the data from user dictionary
         
@@ -151,3 +150,14 @@ class RegistrationSerializer(serializers.ModelSerializer):
         
 
         return user
+#freelancer skills serializer
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Skills
+        fields=['skills']
+    def create(self, validated_data):
+        freelancer=FreeLancer.objects.get(user=self.context['request'].user)
+        skills=Skills(user=freelancer,skills=validated_data["skills"])
+        skills.save()
+        return skills
+    

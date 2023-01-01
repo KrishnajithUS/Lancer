@@ -13,11 +13,10 @@ import Skills from './Skills';
 function Card({ data }) {
   const dispatch = useDispatch();
   console.log(data);
-  const [check, setCheck] = useState(false);
-  console.log('check in card', check);
+  const check = useSelector((state) => state.freelancer.modelStatus);
+  console.log(check);
   const handleClick = () => {
-    setCheck(true);
-    dispatch(modalStatus(true));
+    dispatch(modalStatus('showmodal'));
   };
 
   if (data === 'skills') {
@@ -42,7 +41,7 @@ function Card({ data }) {
                   <AiFillEdit />
                 </button>
 
-                {check && <Skills />}
+                {check === 'showmodal' && <Skills />}
               </div>
             </div>
           </li>

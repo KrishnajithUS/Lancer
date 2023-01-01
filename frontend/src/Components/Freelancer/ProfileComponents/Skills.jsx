@@ -1,28 +1,63 @@
+/* eslint-disable no-alert */
+/* eslint-disable prettier/prettier */
+/* eslint-disable semi */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable quotes */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import { useState, React, useEffect } from 'react';
+import { useState, React } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import useAxios from '../../../Axios/useAxios';
+import { cprofileSchema } from '../../../schemas';
 import { modalStatus } from '../../../Redux/Freducer';
 
 function Skills() {
+  const api = useAxios();
+  const [skills, setSkills] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [check, setCheck] = useState(
-    useSelector((state) => state.freelancer.modelStatus),
-  );
+  const check = useSelector((state) => state.freelancer.modelStatus);
 
-  const handleChange = () => {
-    setCheck(false);
-    dispatch(modalStatus(false));
-    navigate(0);
+  const handleChangeL = () => {
+    dispatch(modalStatus('hidemodal'));
   };
+  const initialValues = {
+    skills: '',
+  };
+  const {
+    values,
 
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues,
+    validationScheme: cprofileSchema,
+    onSubmit: async (values, actions) => {
+      console.log('values', values);
+      try {
+        const Response = await api.post(`skills/`, {
+          skills: values.skills,
+        });
+        setSkills(Response.data);
+      } catch (err) {
+        alert(err);
+      }
+      handleChangeL();
+    },
+  });
+  console.log(values);
+  console.log(errors);
   return (
     <>
-      {check ? (
+      {check === 'showmodal' ? (
         <div
           tabIndex={-1}
           className="fixed md:flex justify-center items-center top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full"
@@ -30,7 +65,7 @@ function Skills() {
           <div className="bg-zinc-200 w-[50%] h-[50%] relative  rounded-lg">
             <div className="relative">
               <button
-                onClick={handleChange}
+                onClick={handleChangeL}
                 type="button"
                 className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
               >
@@ -49,7 +84,7 @@ function Skills() {
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
-              <form className="w-full">
+              <form className="w-full" onSubmit={handleSubmit}>
                 <div className="pt-2 pl-3 ">
                   <h6 className="text-lg text-black  font-bold dark:text-black">
                     Skills
@@ -65,11 +100,17 @@ function Skills() {
                   </label>
                   <input
                     type="text"
-                    id="email"
+                    name="skills"
                     className=" focus:border-purple-600 focus:outline-none bg-white text-white-900 text-sm rounded-lg block w-full p-2.5   dark:placeholder-slate-400 dark:text-black"
                     placeholder="django Developer"
                     required=""
+                    value={values.skills}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
+                  {errors.skills && touched.skills ? (
+                    <p className="form-error text-red-600">{errors.skills}</p>
+                  ) : null}
                 </div>
 
                 <div className="m-4 ">

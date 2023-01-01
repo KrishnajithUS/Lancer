@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-from api.models import Client, FreeLancer
+from api.models import Client, FreeLancer, Skills
 
 User = get_user_model()
 from rest_framework.parsers import JSONParser
@@ -25,6 +25,7 @@ from .serializers import (
     UserUpdateSerializer,
     ClientProfileSerializer,
     FreelancerSerializer,
+    SkillSerializer
 )
 
 
@@ -46,7 +47,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(["GET"])
 def getUserPrfile(request):
     user = request.user
-    print(user)
+
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
@@ -55,52 +56,50 @@ def getUserPrfile(request):
 class RegisterView(APIView):
     # permission_classes=[AllowAny]
     def post(self, request, format=None):
-        print(request.data)
+
         serializer = RegistrationSerializer(data=request.data)
-        print(serializer)
+
         if serializer.is_valid():
 
             serializer.save()
             data = serializer.data
             return Response(data, status=status.HTTP_201_CREATED)
-        print(serializer.errors)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # freelancer Login
 class LoginView(APIView):
     def post(self, request):
-        if request.data.get('is_admin'):
-                print(request.data,"data in else")
-                email=request.data['email']
-                passsword = request.data["password"]
-                user = authenticate(email=email, password=passsword)
-                print("user in else",user)
-                if user is not None and user.is_superadmin:
-                    login(request, user)
-                    data = UserSerializerWithToken(user).data
+        if request.data.get("is_admin"):
 
-                    print(data)
-                    return Response(data, status=status.HTTP_200_OK)
-                return Response(
-                    {"msg": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
-                )
-                
-        else:   
-                print(request.data,"data in else")
-                email=request.data['email']
-                passsword = request.data["password"]
-                user = authenticate(email=email, password=passsword)
-                print("user in else",user)
-                if user is not None:
-                    login(request, user)
-                    data = UserSerializerWithToken(user).data
+            email = request.data["email"]
+            passsword = request.data["password"]
+            user = authenticate(email=email, password=passsword)
 
-                    print(data)
-                    return Response(data, status=status.HTTP_200_OK)
-                return Response(
-                    {"msg": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
-                )
+            if user is not None and user.is_superadmin:
+                login(request, user)
+                data = UserSerializerWithToken(user).data
+
+                return Response(data, status=status.HTTP_200_OK)
+            return Response(
+                {"msg": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        else:
+
+            email = request.data["email"]
+            passsword = request.data["password"]
+            user = authenticate(email=email, password=passsword)
+
+            if user is not None:
+                login(request, user)
+                data = UserSerializerWithToken(user).data
+
+                return Response(data, status=status.HTTP_200_OK)
+            return Response(
+                {"msg": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 # for user details
@@ -110,12 +109,11 @@ class ClientDetailsView(APIView):
     def post(self, request):
 
         if request.data.get("is_admin"):
-            print("checking in admin",(request.data))
-            
+
             if request.user.is_superadmin:
-                user = User.objects.filter(is_superadmin=False,is_freelancer=False)
-                print(user)
-                serializer = UserSerializer(user,many=True)
+                user = User.objects.filter(is_superadmin=False, is_freelancer=False)
+
+                serializer = UserSerializer(user, many=True)
 
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
@@ -126,9 +124,9 @@ class ClientDetailsView(APIView):
                 )
         elif request.data.get("is_freelancer"):
             if request.user.is_superadmin:
-                user = User.objects.filter(is_superadmin=False,is_freelancer=True)
-                print(user)
-                serializer = UserSerializer(user,many=True)
+                user = User.objects.filter(is_superadmin=False, is_freelancer=True)
+
+                serializer = UserSerializer(user, many=True)
 
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
@@ -156,31 +154,30 @@ class ClientUpdateView(APIView):
     # profile update
     def put(self, request):
         user = User.objects.get(pk=request.data["id"])
-       
+
         if user is not None:
             serializer = UserUpdateSerializer(
                 instance=user, data=request.data, partial=True
             )
-           
+
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-               
+
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # profile picture update
     def patch(self, request, format=None):
-      
+
         user = User.objects.get(pk=request.data["id"])
-        
+
         userprofile = Client.objects.get(user=user)
 
-        
         serializer = ClientProfileSerializer(instance=userprofile, data=request.data)
         if serializer.is_valid():
 
             serializer.save()
-            
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -191,23 +188,40 @@ class FreelancerUpdateView(APIView):
 
     # profile update
     def put(self, request):
-        print("fupdate", request.data)
+
         user = User.objects.get(pk=request.data["id"])
         freelancer_profile = FreeLancer.objects.get(user=user)
-        print("user", user)
+
         if user is not None:
             serializer = FreelancerSerializer(
                 instance=freelancer_profile, data=request.data, partial=True
             )
-            print("serializer", serializer)
+
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 serializernew = UserSerializer(user)
                 return Response(serializernew.data, status=status.HTTP_201_CREATED)
-        print(serializer.errors)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#logout
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#skill create and update
+class SkillsView(APIView):
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        serializer=SkillSerializer(data=request.data, context={
+        'request': request
+    })
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        
+
+
+        return Response({"details":"successfully created"},status=status.HTTP_201_CREATED)
+        
+
+# logout
 
 
 @api_view(["POST"])
@@ -216,19 +230,21 @@ def LogOut(request):
     logout(request)
 
     return Response({"msg": "successfully logged out"}, status=status.HTTP_200_OK)
-#block and unblock
+
+
+# block and unblock
 class BlockUnblockView(APIView):
-    permission_classes=[IsAuthenticated]
-    def post(self,request):
-        user=User.objects.get(id=request.data["newid"])
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = User.objects.get(id=request.data["newid"])
         if user is not None and user.is_active == True:
-            user.is_active =  False
+            user.is_active = False
             user.save()
-          
-            return Response({"details":"user blocked"},status=status.HTTP_200_OK)
-        else :
+
+            return Response({"details": "user blocked"}, status=status.HTTP_200_OK)
+        else:
             user.is_active = True
             user.save()
-          
-            return Response({"details":"user unblocked"},status=status.HTTP_200_OK)
-        
+
+            return Response({"details": "user unblocked"}, status=status.HTTP_200_OK)

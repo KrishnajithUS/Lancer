@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */
@@ -8,13 +9,12 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Formik, useFormik } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
-import { AiFillPauseCircle } from 'react-icons/ai';
+import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import { cprofileSchema } from '../../../schemas';
 import { FDetails } from '../../../Redux/Freducer';
 
-function Personal({ id, api, dispatch }) {
+function Personal({ id, api, dispatch, data }) {
   console.log('id in personal', id);
   console.log(useSelector((state) => state));
   const FirstName = useSelector((state) =>
@@ -52,7 +52,7 @@ function Personal({ id, api, dispatch }) {
     last_name: '',
     title: '',
     bio: '',
-    social_media: '',
+    social_media_links: '',
     email: '',
     password: '',
     new_password: '',
@@ -75,7 +75,7 @@ function Personal({ id, api, dispatch }) {
         id,
         title: values.title,
         bio: values.bio,
-        social_media: values.social_media,
+        social_media_links: values.social_media,
         user: {
           username: values.username,
           first_name: values.first_name,
@@ -86,9 +86,11 @@ function Personal({ id, api, dispatch }) {
           confirm_new_password: values.confirm_new_password,
         },
       });
-      dispatch(FDetails(Response.data));
 
-      console.log(Response.data);
+      dispatch(FDetails(Response.data));
+      // updating the parent component for fetching the latest data
+      data();
+
       actions.resetForm();
     },
   });
