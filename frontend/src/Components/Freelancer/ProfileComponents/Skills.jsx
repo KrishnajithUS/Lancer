@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable no-alert */
 /* eslint-disable prettier/prettier */
 /* eslint-disable semi */
@@ -16,16 +17,20 @@ import useAxios from '../../../Axios/useAxios';
 import { cprofileSchema } from '../../../schemas';
 import { modalStatus } from '../../../Redux/Freducer';
 
-function Skills({ skills }) {
+function Skills({ addskill, skills }) {
   const api = useAxios();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const check = useSelector((state) => state.freelancer.modelStatus);
+  const singleData = useSelector((state) => state.freelancer.skills);
+  console.log(singleData);
+  const id = singleData.id ? singleData.id : null;
 
   const handleChangeL = () => {
     dispatch(modalStatus('hidemodal'));
   };
+
   const initialValues = {
     skills: '',
   };
@@ -42,14 +47,28 @@ function Skills({ skills }) {
     validationScheme: cprofileSchema,
     onSubmit: async (values, actions) => {
       console.log('values', values);
-      try {
-        const Response = await api.post(`skills/`, {
-          skills: values.skills,
-        });
-        skills();
-      } catch (err) {
-        alert(err);
+      if (addskill) {
+        try {
+          const Response = await api.post(`skills/`, {
+            skills: values.skills,
+            id,
+          });
+          skills();
+        } catch (err) {
+          alert(err);
+        }
+      } else {
+        try {
+          const Response = await api.put(`skills/`, {
+            skills: values.skills,
+            id,
+          });
+          skills();
+        } catch (err) {
+          alert(err);
+        }
       }
+
       handleChangeL();
     },
   });
@@ -102,7 +121,9 @@ function Skills({ skills }) {
                     type="text"
                     name="skills"
                     className=" focus:border-purple-600 focus:outline-none bg-white text-white-900 text-sm rounded-lg block w-full p-2.5   dark:placeholder-slate-400 dark:text-black"
-                    placeholder="django Developer"
+                    placeholder={
+                      singleData.skills ? singleData.skills : 'enter a skill'
+                    }
                     required=""
                     value={values.skills}
                     onChange={handleChange}

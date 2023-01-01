@@ -154,11 +154,16 @@ class RegistrationSerializer(serializers.ModelSerializer):
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model=Skills
-        fields=['skills']
+        fields=['id','skills']
     def create(self, validated_data):
         freelancer=FreeLancer.objects.get(user=self.context['request'].user)
         skills=Skills(user=freelancer,skills=validated_data["skills"])
         skills.save()
         return skills
+    def update(self,instance,validated_data):
+        if validated_data.get("skills",None):
+            instance.skills = validated_data.get("skills",instance.skills)
+        instance.save()
+        return instance
     
     

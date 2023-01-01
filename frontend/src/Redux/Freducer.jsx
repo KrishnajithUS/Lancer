@@ -10,6 +10,7 @@ const initialState = {
   FreelancerDetails: {},
   token: null,
   modalStatus: 'hidemodal',
+  skills: {},
 };
 
 const FreelancerSlice = createSlice({
@@ -56,6 +57,10 @@ const FreelancerSlice = createSlice({
         token,
       };
     },
+    Fskills: (state, action) => {
+      const skills = action.payload;
+      return { ...state, skills };
+    },
     FsetToken: (state, action) => {
       console.log('token acess', action.payload.token.access);
       console.log('refresh acess', action.payload.token.refresh);
@@ -70,6 +75,6 @@ const FreelancerSlice = createSlice({
     },
   },
 });
-export const { FlogOut, FDetails, FData, FsetToken, modalStatus } =
+export const { FlogOut, FDetails, Fskills, FData, FsetToken, modalStatus } =
   FreelancerSlice.actions;
 export default FreelancerSlice.reducer;

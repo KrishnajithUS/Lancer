@@ -214,7 +214,7 @@ class SkillsView(APIView):
             serializer.save()
             print(serializer.data)
             return Response({"details":"created"},status=status.HTTP_201_CREATED)
-        print(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
         
         return Response(serializer.errors,status=status.HTTP_201_CREATED)
     def get(self,request):
@@ -229,12 +229,15 @@ class SkillsView(APIView):
 
         return Response(serializer.data,status=status.HTTP_200_OK)
     def put(self,request):
-        freelancer=FreeLancer.objects.get(user=request.user)
-        serializer=SkillSerializer(instance=freelancer,data=request.data)
+        print(request.data)
+        skills=Skills.objects.get(pk=request.data["id"])
+        print("skills",skills)
+        serializer=SkillSerializer(instance=skills,data=request.data)
         if serializer.is_valid():
             serializer.save()
             print(serializer.data)
             return Response({"details":"updated"},status=status.HTTP_200_OK)
+        return Response(serializer.errors)
 
 # logout
 
