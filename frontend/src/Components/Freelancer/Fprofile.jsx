@@ -16,7 +16,7 @@ function Fprofile() {
   const dispatch = useDispatch();
   const api = useAxios();
   const [dataHandler, setDataHandler] = useState([]);
-  const mediaBase = 'http//localhost:8000';
+
   const id = useSelector((state) => state.freelancer.Freelancer.id);
   const data = async () => {
     try {
@@ -63,7 +63,7 @@ function Fprofile() {
                         className="w-24 h-24 mt-2 rounded-full "
                         src={
                           item.fprofile_picture
-                            ? `${mediaBase}${item.fprofile_picture}`
+                            ? `http://localhost:8000${item.fprofile_picture}`
                             : profile1
                         }
                         alt="image_"
