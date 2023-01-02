@@ -222,9 +222,10 @@ class FreelancerUpdateView(APIView):
 class SkillsView(APIView):
     permission_classes=[IsAuthenticated]
     def post(self,request):
-        if request.data['is_delete']:
-
+      
+        if request.data.get('is_delete'):
             skills=Skills.objects.get(pk=request.data["id"])
+            print(skills)            
             skills.delete()
             return Response({"details":"deleted successfully"},status=status.HTTP_200_OK)
         serializer=SkillSerializer(data=request.data, context={
