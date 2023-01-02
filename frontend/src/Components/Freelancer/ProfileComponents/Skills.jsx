@@ -22,6 +22,19 @@ function Skills({ addskill, skills }) {
   const initialValues = {
     skills: '',
   };
+  const handleDelete = async () => {
+    try {
+      console.log(addskill, 'addskill');
+      await api.post(`skills/`, {
+        id,
+        is_delete: true,
+      });
+      skills();
+      handleChangeL();
+    } catch (err) {
+      alert(err);
+    }
+  };
   const {
     values,
 
@@ -70,9 +83,9 @@ function Skills({ addskill, skills }) {
       {check === 'showmodal' ? (
         <div
           tabIndex={-1}
-          className="fixed md:flex justify-center items-center top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full"
+          className="fixed flex justify-center items-center top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full"
         >
-          <div className="bg-zinc-200 w-[50%] h-[50%] relative  rounded-lg">
+          <div className="bg-zinc-200 md:w-[50%] md:h-[50%] w-full h-[50%] relative  rounded-lg">
             <div className="relative">
               <button
                 onClick={handleChangeL}
@@ -94,7 +107,7 @@ function Skills({ addskill, skills }) {
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
-              <form className="w-full" onSubmit={handleSubmit}>
+              <form className="w-full pl-2 pr-2 md:pl-0 md:pr-0" onSubmit={handleSubmit}>
                 <div className="pt-2 pl-3 ">
                   <h6 className="text-lg text-black  font-bold dark:text-black">
                     Skills
@@ -128,13 +141,14 @@ function Skills({ addskill, skills }) {
                 <div className="m-4 ">
                   <button
                     type="submit"
-                    className="mr-2   text-black bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+                    className="mr-2  mb-2 text-black bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
                   >
                     Save
                   </button>
                   <button
-                    type="submit"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                    type="button"
+                    onClick={handleDelete}
+                    className="mr-2   text-black bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:rinred-300 font-medium rounded-lg text-xs w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red  "
                   >
                     Delete
                   </button>

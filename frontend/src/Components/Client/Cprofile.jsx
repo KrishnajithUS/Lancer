@@ -1,3 +1,6 @@
+/* eslint-disable indent */
+/* eslint-disable function-paren-newline */
+/* eslint-disable no-confusing-arrow */
 /* eslint-disable camelcase */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable comma-dangle */
@@ -43,18 +46,23 @@ function Cprofile() {
   }, [dispatch, api]);
   // handling image update
   const username = useSelector((state) =>
-    (state.user.userDetails ? state.user.userDetails.username : null));
+    state.user.userDetails ? state.user.userDetails.username : null
+  );
   const first_name = useSelector((state) =>
-    (state.user.userDetails ? state.user.userDetails.first_name : null));
+    state.user.userDetails ? state.user.userDetails.first_name : null
+  );
   const profile_picture = useSelector((state) =>
-    (state.user.userDetails ? state.user.userDetails.profile_picture : null));
+    state.user.userDetails ? state.user.userDetails.profile_picture : null
+  );
   console.log('profile_picture', profile_picture);
 
   const last_name = useSelector((state) =>
-    (state.user.userDetails ? state.user.userDetails.last_name : null));
+    state.user.userDetails ? state.user.userDetails.last_name : null
+  );
 
   const email = useSelector((state) =>
-    (state.user.userDetails ? state.user.userDetails.email : null));
+    state.user.userDetails ? state.user.userDetails.email : null
+  );
 
   const initialValues = {
     first_name: '',
@@ -65,6 +73,7 @@ function Cprofile() {
     new_password: '',
     confirm_new_password: '',
   };
+
   const {
     values,
     setFieldValue,
@@ -83,6 +92,7 @@ function Cprofile() {
         if (values.file) {
           formData.append('profile_picture', values.file);
           formData.append('id', id);
+
           console.log(formData);
           const Res = await api.patch(`/cupdate/`, formData);
           if (Res.status === 201) {
@@ -320,7 +330,7 @@ function Cprofile() {
                             <p className="form-error text-red-600">
                               {errors.confirm_new_password}
                             </p>
-                            ) : null}
+                          ) : null}
                           <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                             <button
                               className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"

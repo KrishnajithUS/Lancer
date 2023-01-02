@@ -188,7 +188,7 @@ class FreelancerUpdateView(APIView):
 
     # profile update
     def put(self, request):
-
+       
         user = User.objects.get(pk=request.data["id"])
         freelancer_profile = FreeLancer.objects.get(user=user)
 
@@ -203,10 +203,30 @@ class FreelancerUpdateView(APIView):
                 return Response(serializernew.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # profile picture update
+    def patch(self, request, format=None):
+        print(request.data)
+        user = User.objects.get(pk=request.data["id"])
+
+        userprofile = FreeLancer.objects.get(user=user)
+
+        serializer =FreelancerSerializer(instance=userprofile, data=request.data,partial=True)
+        if serializer.is_valid():
+
+            serializer.save()
+            serializer.save()
+            serializernew = UserSerializer(user)
+            return Response(serializernew.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 #skill create and update
 class SkillsView(APIView):
     permission_classes=[IsAuthenticated]
     def post(self,request):
+        if request.data['is_delete']:
+
+            skills=Skills.objects.get(pk=request.data["id"])
+            skills.delete()
+            return Response({"details":"deleted successfully"},status=status.HTTP_200_OK)
         serializer=SkillSerializer(data=request.data, context={
         'request': request
     })

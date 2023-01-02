@@ -83,24 +83,33 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 class FreelancerSerializer(serializers.ModelSerializer):
-    user=UserUpdateSerializer(many=False)
+    user=UserUpdateSerializer(many=False,required=False)
     class Meta:
         model=FreeLancer
         fields=["user","title","profile_picture","bio","social_media_links"]
+        partial=True
     def update(self,instance,validated_data):
-        user_data=validated_data.pop('user')
+        try:
+           user_data=validated_data.pop('user')
+        except:
+            pass
         if validated_data.get("title",None):
             instance.title=validated_data.get("title",instance.title)
         if validated_data.get("bio",None):
             instance.bio=validated_data.get("bio",instance.bio)
         if validated_data.get("social_media_links",None):
-            instance.social_media_links=validated_data.get("social_media_links","bio")
+            instance.social_media_links=validated_data.get("social_media_links",instance.bio)
+        if validated_data.get("profile_picture",None):
+            instance.profile_picture=validated_data.get("profile_picture",instance.profile_picture)
         instance.save()
         #pop out the data from user dictionary
-        
-        user = UserUpdateSerializer(instance=instance.user, data=user_data)
-        user.is_valid(raise_exception=True)
-        user.save()
+        try:
+           user = UserUpdateSerializer(instance=instance.user, data=user_data)
+
+           user.is_valid(raise_exception=True)
+           user.save()
+        except:
+            pass
         return instance
             
      
