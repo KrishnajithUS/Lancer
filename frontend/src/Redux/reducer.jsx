@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: {},
   token: {},
+  userDetails: {},
+  modelStatus: {},
 };
 
 export const userSlice = createSlice({
@@ -10,10 +12,10 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     userData: (state, action) => {
+      console.log(action, 'reducer action');
       const user = {
-        email: action.payload.data.email,
-        firstname: action.payload.data.first_name,
-        secondname: action.payload.data.second_name,
+        id: action.payload.id,
+
         isLoggedIn: true,
       };
       return {
@@ -21,20 +23,37 @@ export const userSlice = createSlice({
         user,
       };
     },
+    userDetails: (state, action) => {
+      console.log(action, 'reducer action');
+      const userDetails = action.payload;
+
+      return {
+        ...state,
+        userDetails,
+      };
+    },
+
     logOut: (state) => {
       const user = {
-        user: {},
+        id: null,
+
         isLoggedIn: false,
       };
+      const userDetails = {};
+      const token = {};
       return {
         ...state,
         user,
+        userDetails,
+        token,
       };
     },
     setToken: (state, action) => {
+      console.log('token acess', action.payload);
+      console.log('refresh acess', action.payload.token.refresh);
       const token = {
-        access_token: action.payload.data.token.access,
-        refresh_token: action.payload.data.token.refresh,
+        access_token: action.payload.token.access,
+        refresh_token: action.payload.token.refresh,
       };
       return {
         ...state,
@@ -45,6 +64,6 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { logOut, userData, setToken } = userSlice.actions;
+export const { logOut, userDetails, userData, setToken } = userSlice.actions;
 
 export default userSlice.reducer;

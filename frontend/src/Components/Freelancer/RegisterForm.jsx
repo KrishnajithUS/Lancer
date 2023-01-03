@@ -1,11 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable prefer-template */
-/* eslint-disable quotes */
-/* eslint-disable object-curly-newline */
-/* eslint-disable no-shadow */
-/* eslint-disable operator-linebreak */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';

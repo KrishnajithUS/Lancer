@@ -52,10 +52,13 @@ class User(AbstractBaseUser):
         unique=True,
     )
     last_name=models.CharField(max_length=30,blank=True)
+    username=models.CharField(max_length=50,unique=True,blank=True)
     is_active = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
     phone_number=models.CharField(max_length=50)
+    new_password=models.CharField(max_length=20,blank=True)
+    confirm_new_password=models.CharField(max_length=20,blank=True)
     is_staff = models.BooleanField(default=False) # a admin user; non super-user
     is_admin = models.BooleanField(default=False) # a superuser
     is_user=models.BooleanField(default=False)
@@ -85,7 +88,7 @@ class User(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
-
+    
   
 
 

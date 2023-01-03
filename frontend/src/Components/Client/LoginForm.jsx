@@ -8,9 +8,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { FData, FsetToken } from '../../Redux/Freducer';
 import LoginImage from '../../Assets/login9.png';
 import { loginSchema } from '../../schemas/index';
 import axiosInstance from '../../Axios/axiosPrivate';
@@ -35,21 +35,13 @@ function LoginForm() {
             email: values.email,
             password: values.password,
           });
-          console.log('data', response.data);
-          if (response.status === 200 && response.data.data.is_freelancer) {
-            console.log(
-              'response comes here first',
-              response.data.data.is_freelancer
-            );
-            dispatch(userData(response.data));
-            dispatch(setToken(response.data));
+
+          if (response.status === 200 && response.data.is_freelancer) {
+            dispatch(FData(response.data));
+            dispatch(FsetToken(response.data));
+
             navigate('/fprofile');
           } else if (response.status === 200) {
-            console.log(
-              'response comes here',
-              response.data.data.is_freelancer
-            );
-            console.log('the data', response.data);
             dispatch(userData(response.data));
             dispatch(setToken(response.data));
 
@@ -60,18 +52,12 @@ function LoginForm() {
         } catch (err) {
           if (err.response) {
             setErrorMessage('Invalid Credentials');
-            console.log('first check', err.response);
-          } else if (err.request) {
-            console.log('seconcd check', err.request);
-          } else {
-            console.log('anything else');
           }
         }
         actions.resetForm();
       },
     });
-  console.log(values);
-  console.log(errors);
+
   return (
     <section>
       {/* component */}

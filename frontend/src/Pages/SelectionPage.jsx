@@ -14,9 +14,7 @@ import Navbar from '../Components/Constants/Navbar';
 function SelectionPage() {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
-  const handleChange = (e) => {
-    setValue(e.target.value, true);
-  };
+
   const handlesubmit = () => {
     if (value === 'client') {
       console.log('client');

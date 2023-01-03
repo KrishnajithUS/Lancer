@@ -13,12 +13,18 @@ import {
   REGISTER,
 } from 'redux-persist';
 import userReducer from './reducer';
+import FreelancerReducer from './Freducer';
+import adminreducer from './adminreducer';
 
 const persistConfig = {
-  key: 'user',
+  key: 'root',
   storage,
 };
-const reducers = combineReducers({ user: userReducer });
+const reducers = combineReducers({
+  user: userReducer,
+  freelancer: FreelancerReducer,
+  admin: adminreducer,
+});
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({

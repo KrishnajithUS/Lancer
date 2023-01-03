@@ -1,11 +1,17 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
+import { useSelector } from 'react-redux';
 import logo from '../../Assets/logo.png';
 // eslint-disable-next-line react/function-component-definition
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const isAuth = useSelector((state) => state.user.user.isLoggedIn);
+  const FisAuth = useSelector(
+    (state) => state.freelancer.Freelancer.isLoggedIn,
+  );
 
   return (
     <div className="sticky top-0 z-50  shadow-sm shadow-purple-400">
@@ -20,29 +26,62 @@ const Navbar = () => {
                   </div>
 
                   <div className="hidden md:block">
-                    <div className="ml-10 flex w-full  items-baseline space-x-4">
+                    <div
+                      className={
+                        !isAuth
+                          ? 'ml-10 flex w-full  items-baseline space-x-4'
+                          : !FisAuth
+                            ? 'ml-10 flex w-full  items-baseline space-x-4'
+                            : ' flex w-full  items-baseline space-x-4'
+                      }
+                    >
                       <input
                         type="text"
                         placeholder="Search"
                         className="lg:w-full w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
                       />
-                      <Link to="/login">
-                        <a
-                          href="#"
-                          className=" font-sans custom-line-button text-white px-1 py-2 primary text-sm font-medium"
-                        >
-                          Login
-                        </a>
-                      </Link>
-
-                      <Link to="/select">
-                        <a
-                          href="#"
-                          className="font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
-                        >
-                          Join
-                        </a>
-                      </Link>
+                      {isAuth ? (
+                        <Link to="/logout">
+                          <div className="mr-4">
+                            <a
+                              href="#"
+                              className="font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
+                            >
+                              LogOut
+                            </a>
+                          </div>
+                        </Link>
+                      ) : FisAuth ? (
+                        <Link to="/logout">
+                          <div className="mr-4">
+                            <a
+                              href="#"
+                              className="font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
+                            >
+                              LogOut
+                            </a>
+                          </div>
+                        </Link>
+                      ) : (
+                        <>
+                          <Link to="/login">
+                            <a
+                              href="#"
+                              className=" font-sans custom-line-button text-white px-1 py-2 primary text-sm font-medium"
+                            >
+                              Login
+                            </a>
+                          </Link>
+                          <Link to="/select">
+                            <a
+                              href="#"
+                              className="font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
+                            >
+                              Join
+                            </a>
+                          </Link>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -104,32 +143,60 @@ const Navbar = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="md:hidden" id="mobile-menu">
-                <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
-                  <Link to="/login">
-                    <a
-                      href="#"
-                      className="button-new text-white block px-3 py-2   text-base font-medium"
-                    >
-                      Login
-                    </a>
-                  </Link>
-
-                  <Link to="register/">
-                    <a
-                      href="#"
-                      className="custom-line-button block px-3 py-2 mt-2 text-base font-medium"
-                    >
-                      Join
-                    </a>
-                  </Link>
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="w-full px-2 py-3  h-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
-                  />
+              {isAuth ? (
+                <div className="md:hidden" id="mobile-menu">
+                  <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
+                    <Link to="/logOut">
+                      <a
+                        href="#"
+                        className="button-new text-white block px-3 py-2   text-base font-medium"
+                      >
+                        LogOut
+                      </a>
+                    </Link>
+                  </div>
                 </div>
-              </div>
+              ) : FisAuth ? (
+                <div className="md:hidden" id="mobile-menu">
+                  <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
+                    <Link to="/logOut">
+                      <a
+                        href="#"
+                        className="button-new text-white block px-3 py-2   text-base font-medium"
+                      >
+                        LogOut
+                      </a>
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="md:hidden" id="mobile-menu">
+                  <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
+                    <Link to="/login">
+                      <a
+                        href="#"
+                        className="button-new text-white block px-3 py-2   text-base font-medium"
+                      >
+                        Login
+                      </a>
+                    </Link>
+
+                    <Link to="register/">
+                      <a
+                        href="#"
+                        className="custom-line-button block px-3 py-2 mt-2 text-base font-medium"
+                      >
+                        Join
+                      </a>
+                    </Link>
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      className="w-full px-2 py-3  h-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
+                    />
+                  </div>
+                </div>
+              )}
             </Transition>
           </nav>
         </div>
