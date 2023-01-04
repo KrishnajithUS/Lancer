@@ -17,12 +17,9 @@ function Card({ data }) {
   const api = useAxios();
   const dispatch = useDispatch();
   const [dataHandler, setDataHandler] = useState([]);
+  const [edataHandler, setDataeHandler] = useState([]);
   const [expState, setExpState] = useState('');
-  const [Data, setExpData] = useState([]);
-  const expData = (expdata) => {
-    setExpData(expdata);
-  };
-  console.log(Data, 'experiencedata');
+
   const check = useSelector((state) => state.freelancer.modelStatus);
   const checkL = useSelector((state) => state.freelancer.modelStatusN);
   console.log(check);
@@ -31,8 +28,12 @@ function Card({ data }) {
 
     dispatch(modalStatus('showmodal'));
   };
-  const handleClickL2 = () => {
+  const handleClickL2 = (newid) => {
+    dispatch(Fskills(newid));
     setExpState('showexp');
+  };
+  const handleClickL3 = () => {
+    setExpState('showexp2');
   };
   const handleClickL = () => {
     dispatch(modalStatusN('showmodal'));
@@ -48,8 +49,19 @@ function Card({ data }) {
       console.log(err);
     }
   };
+  const experience = async () => {
+    try {
+      const response = await api.get(`/eupdate/`);
+      console.log('response', response.data);
+
+      setDataeHandler(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     skills();
+    experience();
   }, []);
 
   if (data === 'skills') {
@@ -88,7 +100,7 @@ function Card({ data }) {
             <div className="flex justify-end items-center space-x-4">
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
-                  add skills
+                  Add skills
                 </p>
               </div>
               <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
@@ -114,44 +126,47 @@ function Card({ data }) {
           role="list"
           className="divide-y bg-white rounded-lg pl-10 pr-10 shadow-md divide-white dark:divide-gray-700 m-4 "
         >
+          {edataHandler.map((item) => (
+            <li className="py-3 sm:py-4">
+              <div className="flex justify-end items-center space-x-4">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
+                    {item.company}
+                  </p>
+                </div>
+                <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
+                  <button onClick={() => handleClickL2(item)} type="button">
+                    <AiFillEdit />
+                  </button>
+
+                  {expState === 'showexp' && (
+                    <Experience
+                      experience={experience}
+                      setExpState={setExpState}
+                      expState={expState}
+                    />
+                  )}
+                </div>
+              </div>
+            </li>
+          ))}
+
           <li className="py-3 sm:py-4">
             <div className="flex justify-end items-center space-x-4">
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
-                  {Data.company}
+                  Add Experience
                 </p>
               </div>
               <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
-                <button onClick={() => handleClickL2()} type="button">
+                <button onClick={handleClickL3} type="button">
                   <AiFillEdit />
                 </button>
 
-                {expState === 'showexp' && (
+                {expState === 'showexp2' && (
                   <Experience
-                    expData={expData}
-                    setExpState={setExpState}
-                    expState={expState}
-                  />
-                )}
-              </div>
-            </div>
-          </li>
-
-          <li className="py-3 sm:py-4">
-            <div className="flex justify-end items-center space-x-4">
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
-                  add skills
-                </p>
-              </div>
-              <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
-                <button onClick={handleClickL2} type="button">
-                  <AiFillEdit />
-                </button>
-
-                {expState === 'showexp' && (
-                  <Experience
-                    expData={expData}
+                    experience={experience}
+                    addnew
                     setExpState={setExpState}
                     expState={expState}
                   />

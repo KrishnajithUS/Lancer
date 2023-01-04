@@ -3,7 +3,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { PURGE } from 'redux-persist';
 import useAxios from '../../Axios/useAxios';
 import { logOut } from '../../Redux/reducer';
 import { FlogOut } from '../../Redux/Freducer';
@@ -14,13 +13,12 @@ function LogOut() {
   const navigate = useNavigate();
   const api = useAxios();
   useEffect(() => {
-    const response = api.post('logout/');
-    console.log(response);
+    api.post('logout/');
+
     dispatch(logOut());
     dispatch(FlogOut());
-    console.log('admin logout');
+
     dispatch(adminLogOut());
-    localStorage.removeItem('persist:root');
 
     navigate('/');
   }, []);

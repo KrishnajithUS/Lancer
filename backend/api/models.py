@@ -41,7 +41,7 @@ class Education(models.Model):
     def __str__(self):
         return self.university
 class Experience(models.Model):
-    user = models.OneToOneField(FreeLancer, on_delete=models.CASCADE,null=True,blank=True,default=None)
+    user = models.ForeignKey(FreeLancer, on_delete=models.CASCADE,null=True,blank=True,default=None)
 
     company = models.CharField(max_length=70,blank=True,null=True)
     place = models.CharField(max_length=60,blank=True,null=True)

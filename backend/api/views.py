@@ -266,39 +266,40 @@ class ExperienceView(APIView):
     def post(self,request):
         print(request.data)
         if request.data.get('is_delete'):
-            Experience=Experience.objects.get(pk=request.data["id"])
+            experience=Experience.objects.filter(pk=request.data["id"])
                     
-            Experience.delete()
+            experience.delete()
             return Response({"details":"deleted successfully"},status=status.HTTP_200_OK)
         serializer=ExpSerializer(data=request.data, context={
         'request': request
     })
         if serializer.is_valid():
             serializer.save()
-            print(serializer.data)
+            
             return Response({"details":"created"},status=status.HTTP_201_CREATED)
 
         print(serializer.errors)
-        return Response(serializer.errors,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     def get(self,request):
         user=request.user
 
         freelancer=FreeLancer.objects.get(user=user)
      
-        experience=Experience.objects.get(user=freelancer)
+        experience=Experience.objects.filter(user=freelancer)
         #skills may be multiple objets
         #so we need to use many= True to serialize that object
-        serializer=ExpSerializer(experience,many=False)
+        serializer=ExpSerializer(experience,many=True)
 
         return Response(serializer.data,status=status.HTTP_200_OK)
     def put(self,request):
+        print(request.data)
         freelancer=FreeLancer.objects.get(user=request.user)
-        experience=Experience.objects.get(user=freelancer)
+        experience=Experience.objects.get(pk=request.data["id"],user=freelancer)
         # country=request.data.get('bcountry')
         # experience.country=country
      
         print(experience)
-        serializer=ExpSerializer(instance=experience,data=request.data)
+        serializer=ExpSerializer(instance=experience,data=request.data,many=False)
         print(serializer)
         if serializer.is_valid():
             serializer.save()

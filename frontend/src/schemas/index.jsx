@@ -49,12 +49,12 @@ const cprofileSchema = Yup.object({
   ),
 });
 const ExperienceSchema = Yup.object({
-  company: Yup.string().min(2).max(30),
+  company: Yup.string().min(2).max(30).required('Please enter your Company name'),
   country: Yup.string().min(2).max(30),
   place: Yup.string().min(2).max(30),
-  description: Yup.string().min(15).max(40),
+  description: Yup.string().min(15).max(40).required('Please enter your Description'),
   checkbox: Yup.boolean().oneOf([true], 'Message'),
 
-  years: Yup.number()
+  years: Yup.number(),
 });
 export { loginSchema, signUpSchema, cprofileSchema, ExperienceSchema };

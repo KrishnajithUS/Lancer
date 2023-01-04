@@ -13,7 +13,7 @@ function Skills({ addskill, skills }) {
   const check = useSelector((state) => state.freelancer.modelStatus);
   const checkL = useSelector((state) => state.freelancer.modelStatusN);
   const singleData = useSelector((state) => state.freelancer.skills);
-  console.log(singleData);
+
   const id = singleData.id ? singleData.id : null;
 
   const handleChangeL = () => {

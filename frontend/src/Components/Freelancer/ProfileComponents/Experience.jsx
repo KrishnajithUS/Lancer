@@ -8,11 +8,12 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import countryList from 'react-select-country-list';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import { ExperienceSchema } from '../../../schemas';
 import useAxios from '../../../Axios/useAxios';
 
-function Experience({ setExpState, expState, expData }) {
-  console.log(expData);
+function Experience({ addnew, setExpState, expState, experience }) {
+  const addnewN = Boolean(addnew);
   const [check, setCheck] = useState(false);
   const [bcountry, setCountry] = useState('');
   const arr = Array.from({ length: 100 }, (_, index) => index + 1);
@@ -21,6 +22,7 @@ function Experience({ setExpState, expState, expData }) {
   const changeHandler = (e) => {
     setCountry(e.target.value);
   };
+  const singleData = useSelector((state) => state.freelancer.skills);
 
   const [select, setSelect] = useState(null);
   const handleChangeL = (e) => {
@@ -39,23 +41,18 @@ function Experience({ setExpState, expState, expData }) {
     setSelect(e.target.value);
   };
   const api = useAxios();
-  const [dataHandler, setDataHandler] = useState([]);
-  const { country, description, company, place, id, no_of_years } = dataHandler;
-
-  const Education = async () => {
+  const handleDelete = async () => {
     try {
-      const response = await api.get(`/eupdate/`);
-
-      setDataHandler(response.data);
-      expData(response.data);
+      await api.post(`/eupdate/`, {
+        id: singleData.id ? singleData.id : '',
+        is_delete: true,
+      });
+      experience();
+      handleChangeL2();
     } catch (err) {
       console.log(err);
     }
   };
-  console.log('the data handler', dataHandler);
-  useEffect(() => {
-    Education();
-  }, []);
 
   const initialValues = {
     company: '',
@@ -64,6 +61,7 @@ function Experience({ setExpState, expState, expData }) {
     no_of_years: '',
     description: '',
   };
+  console.log('addnewN', addnewN);
   const {
     values,
 
@@ -77,10 +75,10 @@ function Experience({ setExpState, expState, expData }) {
     validationSchema: ExperienceSchema,
 
     onSubmit: async (values, actions) => {
-      if (id) {
+      if (addnewN) {
         try {
           console.log(check);
-          await api.put(`/eupdate/`, {
+          const response = await api.post(`/eupdate/`, {
             company: values.company,
             country: bcountry,
             description: values.description,
@@ -88,13 +86,14 @@ function Experience({ setExpState, expState, expData }) {
             no_of_years: select,
             is_currently_working: check,
           });
-          Education();
+          experience();
         } catch (er) {
           console.log(er);
         }
       } else {
         try {
-          await api.post(`/eupdate/`, {
+          const response = await api.put(`/eupdate/`, {
+            id: singleData.id,
             company: values.company,
             country: bcountry,
             description: values.description,
@@ -102,16 +101,19 @@ function Experience({ setExpState, expState, expData }) {
             no_of_years: values.years,
             is_currently_working: check,
           });
-          Education();
+          experience();
         } catch (er) {
           console.log(er);
         }
       }
+      handleChangeL2();
+
       actions.resetForm();
     },
   });
-
-  if (expState === 'showexp') {
+  console.log(values);
+  console.log(errors);
+  if (expState === 'showexp' || expState === 'showexp2') {
     return (
       <>
         <div
@@ -158,7 +160,7 @@ function Experience({ setExpState, expState, expData }) {
                     type="text"
                     name="company"
                     className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                    placeholder={company || ''}
+                    placeholder={addnewN ? '' : singleData.company}
                     required=""
                     value={values.company}
                     onChange={handleChange}
@@ -179,7 +181,7 @@ function Experience({ setExpState, expState, expData }) {
                       No of Years
                     </label>
                     <select
-                      value={no_of_years}
+                      value={addnewN ? '' : singleData.no_of_years}
                       onChange={handleChangeLL}
                       className=" text-gray-900     focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                     >
@@ -202,7 +204,7 @@ function Experience({ setExpState, expState, expData }) {
                       type="text"
                       name="place"
                       className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                      placeholder={place || null}
+                      placeholder={addnewN ? '' : singleData.place || null}
                       value={values.place}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -239,7 +241,7 @@ function Experience({ setExpState, expState, expData }) {
                       Select Country
                     </label>
                     <select
-                      value={country}
+                      value={addnewN ? '' : singleData.country}
                       id="countries"
                       onChange={changeHandler}
                       className=" text-gray-900      focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
@@ -268,14 +270,16 @@ function Experience({ setExpState, expState, expData }) {
                     type="text"
                     name="description"
                     className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                    placeholder={description || ''}
+                    placeholder={addnewN ? '' : singleData.description || ''}
                     value={values.description}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
 
                   {errors.description && touched.description ? (
-                    <p className="form-error text-red-600">{errors.place}</p>
+                    <p className="form-error text-red-600">
+                      {errors.description}
+                    </p>
                   ) : null}
                 </div>
 
@@ -286,6 +290,15 @@ function Experience({ setExpState, expState, expData }) {
                   >
                     Save
                   </button>
+                  {addnewN ? '' : (
+                    <button
+                      type="button"
+                      onClick={handleDelete}
+                      className="ml-2   text-black bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:rinred-300 font-medium rounded-lg text-xs w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red  "
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               </form>
             </div>
