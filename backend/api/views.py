@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-from api.models import Client, FreeLancer, Skills
+from api.models import Client, FreeLancer, Skills,Experience
 
 User = get_user_model()
 from rest_framework.parsers import JSONParser
@@ -19,6 +19,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 from rest_framework.response import Response
 from .serializers import (
+    ExpSerializer,
     UserSerializer,
     UserSerializerWithToken,
     RegistrationSerializer,
@@ -259,7 +260,51 @@ class SkillsView(APIView):
             print(serializer.data)
             return Response({"details":"updated"},status=status.HTTP_200_OK)
         return Response(serializer.errors)
+#Experience
+class ExperienceView(APIView):
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        print(request.data)
+        if request.data.get('is_delete'):
+            Experience=Experience.objects.get(pk=request.data["id"])
+                    
+            Experience.delete()
+            return Response({"details":"deleted successfully"},status=status.HTTP_200_OK)
+        serializer=ExpSerializer(data=request.data, context={
+        'request': request
+    })
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+            return Response({"details":"created"},status=status.HTTP_201_CREATED)
 
+        print(serializer.errors)
+        return Response(serializer.errors,status=status.HTTP_201_CREATED)
+    def get(self,request):
+        user=request.user
+
+        freelancer=FreeLancer.objects.get(user=user)
+     
+        experience=Experience.objects.get(user=freelancer)
+        #skills may be multiple objets
+        #so we need to use many= True to serialize that object
+        serializer=ExpSerializer(experience,many=False)
+
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    def put(self,request):
+        freelancer=FreeLancer.objects.get(user=request.user)
+        experience=Experience.objects.get(user=freelancer)
+        # country=request.data.get('bcountry')
+        # experience.country=country
+     
+        print(experience)
+        serializer=ExpSerializer(instance=experience,data=request.data)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+            return Response({"details":"updated"},status=status.HTTP_200_OK)
+        return Response(serializer.errors)
 # logout
 
 

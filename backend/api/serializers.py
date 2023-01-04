@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Client, FreeLancer,Skills
+from .models import Client, FreeLancer,Skills,Experience
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import exceptions
 
@@ -172,6 +172,33 @@ class SkillSerializer(serializers.ModelSerializer):
     def update(self,instance,validated_data):
         if validated_data.get("skills",None):
             instance.skills = validated_data.get("skills",instance.skills)
+        instance.save()
+        return instance
+class ExpSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Experience
+        fields=['id','company','place','country','is_currently_working','no_of_years','description']
+    def create(self, validated_data):
+        freelancer=FreeLancer.objects.get(user=self.context['request'].user)
+        education=Experience(user=freelancer,**validated_data)
+        education.save()
+        return education
+    def update(self,instance,validated_data):
+        print("hoi")
+        if validated_data.get("company",None):
+            instance.company = validated_data.get("company",instance.company)
+        if validated_data.get("place",None):
+            instance.place = validated_data.get("place",instance.place)
+        if validated_data.get("country",None):
+            instance.country=validated_data.get("country",instance.country)
+        if validated_data.get("is_currently_working",None):
+            instance.is_currently_working = validated_data.get("is_currently_working",instance.is_currently_working)
+        if validated_data.get("no_of_years",None):
+            instance.no_of_years = validated_data.get("no_of_years",instance.no_of_years)
+        if validated_data.get("description",None):
+            instance.description = validated_data.get("description",instance.description)
+       
         instance.save()
         return instance
     

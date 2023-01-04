@@ -5,9 +5,10 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable import/no-named-as-default-member */
-import React, { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Footer from '../Components/Constants/Footer';
 
 import LogOut from '../Components/Constants/LogOut';
 import Home from '../Pages/Home';
@@ -21,7 +22,6 @@ import AdminHome from '../Components/Admin/AdminHome';
 import AdminLogin from '../Components/Admin/AdminLogin';
 
 const router = () => {
-  const navigate = useNavigate();
   const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
 
   const FAuth = Boolean(
@@ -31,41 +31,47 @@ const router = () => {
     useSelector((state) => state.admin.admin.isLoggedIn)
   );
 
-  useEffect(() => {
-    if (adminAuth) {
-      navigate('/dashboard');
-    }
-  }, []);
+  if (!adminAuth) {
+    return (
+      <>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/select" element={<SelectionPage />} />
+          <Route
+            path="/login"
+            element={userAuth ? <Cprofile /> : FAuth ? <Fprofile /> : <Login />}
+          />
+          <Route
+            path="/adminlogin"
+            element={adminAuth ? <AdminHome /> : <AdminLogin />}
+          />
+          <Route path="/register" element={<Register />} />
+          <Route path="/fregister" element={<FreelancerRegister />} />
+          <Route
+            path="/cprofile"
+            element={userAuth ? <Cprofile /> : <Login />}
+          />
+
+          <Route
+            path="/fprofile"
+            element={FAuth ? <Fprofile /> : userAuth ? <Cprofile /> : <Login />}
+          />
+
+          <Route path="/logout" element={<LogOut />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+        <Footer />
+      </>
+    );
+  }
   return (
-    <div>
+    <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/select" element={<SelectionPage />} />
-        <Route
-          path="/login"
-          element={userAuth ? <Cprofile /> : FAuth ? <Fprofile /> : <Login />}
-        />
-        <Route
-          path="/adminlogin"
-          element={adminAuth ? <AdminHome /> : <AdminLogin />}
-        />
-        <Route path="/register" element={<Register />} />
-        <Route path="/fregister" element={<FreelancerRegister />} />
-        <Route path="/cprofile" element={userAuth ? <Cprofile /> : <Login />} />
-
-        <Route
-          path="/fprofile"
-          element={FAuth ? <Fprofile /> : userAuth ? <Cprofile /> : <Login />}
-        />
-
+        <Route path="*" element={<AdminHome />} />
+        <Route path="/dashboard" element={<AdminHome />} />
         <Route path="/logout" element={<LogOut />} />
-
-        <Route
-          path="/dashboard"
-          element={adminAuth ? <AdminHome /> : <AdminLogin />}
-        />
       </Routes>
-    </div>
+    </>
   );
 };
 

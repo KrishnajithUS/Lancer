@@ -63,28 +63,59 @@ function LoginForm() {
       {/* component */}
       {/* Container */}
 
-      <div className="container mx-auto">
+      <div className="container mx-auto ">
         {errorMessage && (
-          <div
-            className="bg-red-100 border mt-4 border-red-400 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <strong className="font-bold">{errorMessage}</strong>
+          <div className="flex relative justify-center items-center">
+            <div
+              id="toast-warning"
+              className="flex absolute top-2 z-50  w-full max-w-xs p-4 text-gray-100 bg-white rounded-lg shadow dark:text-black dark:bg-gray-100"
+              role="alert"
+            >
+              <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="sr-only">Warning icon</span>
+              </div>
+              <div className="ml-3 text-sm font-normal">
+                Improve password difficulty.
+              </div>
 
-            <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-              <svg
-                onClick={() => {
-                  setErrorMessage('');
-                }}
-                className="fill-current h-6 w-6 text-red-500"
-                role="button"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
+              <button
+                type="button"
+                className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-white rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                data-dismiss-target="#toast-danger"
+                aria-label="Close"
               >
-                <title>Close</title>
-                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-              </svg>
-            </span>
+                <span className="sr-only">Close</span>
+                <svg
+                  onClick={() => {
+                    setErrorMessage('');
+                  }}
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         )}
         <div className="flex justify-center px-6 my-12">

@@ -6,6 +6,7 @@ const initialState = {
   FreelancerDetails: {},
   token: null,
   modalStatus: 'hidemodal',
+  modalStatusN: 'hidemodal',
   skills: {},
 };
 
@@ -37,6 +38,10 @@ const FreelancerSlice = createSlice({
     modalStatus: (state, action) => {
       const modelStatus = action.payload;
       return { ...state, modelStatus };
+    },
+    modalStatusN: (state, action) => {
+      const modelStatusN = action.payload;
+      return { ...state, modelStatusN };
     },
     FlogOut: (state) => {
       const Freelancer = {
@@ -71,5 +76,13 @@ const FreelancerSlice = createSlice({
     },
   },
 });
-export const { FlogOut, FDetails, Fskills, FData, FsetToken, modalStatus } = FreelancerSlice.actions;
+export const {
+  FlogOut,
+  FDetails,
+  Fskills,
+  FData,
+  FsetToken,
+  modalStatus,
+  modalStatusN,
+} = FreelancerSlice.actions;
 export default FreelancerSlice.reducer;

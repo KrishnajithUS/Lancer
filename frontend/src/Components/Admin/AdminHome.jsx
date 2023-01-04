@@ -26,8 +26,8 @@ function AdminHome() {
 
   return (
     <div>
-      <div className="grid grid-cols-5   md:grid-cols-4  ">
-        <div className="md:col-span-1 col-span-full">
+      <div className="grid grid-cols-5   md:grid-cols-8  ">
+        <div className="md:col-span-2 col-span-full">
           <div className="flex flex-col  md:h-screen p-3  dark:bg-gray-900 dark:text-gray-100">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -158,7 +158,7 @@ function AdminHome() {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="flex-1 ">
+              <div className="flex-1 md:hidden ">
                 <ul className="pt-2 pb-4 space-y-1 text-sm">
                   <li className="rounded-sm">
                     <a
@@ -169,7 +169,7 @@ function AdminHome() {
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
-                        className="md:w-5 h-5 w-2 h-2 fill-current dark:text-gray-400"
+                        className="md:w-5 h-5 w-2  fill-current dark:text-gray-400"
                       >
                         <path d="M469.666,216.45,271.078,33.749a34,34,0,0,0-47.062.98L41.373,217.373,32,226.745V496H208V328h96V496H480V225.958ZM248.038,56.771c.282,0,.108.061-.013.18C247.9,56.832,247.756,56.771,248.038,56.771ZM448,464H336V328a32,32,0,0,0-32-32H208a32,32,0,0,0-32,32V464H64V240L248.038,57.356c.013-.012.014-.023.024-.035L448,240Z" />
                       </svg>
@@ -230,7 +230,7 @@ function AdminHome() {
             </div>
           </div>
         </div>
-        <div className="h-screen md:col-span-3 col-span-full   dark:bg-gray-800">
+        <div className=" md:col-span-6 col-span-full     dark:bg-gray-800">
           {display === 'usermanagement' ? (
             <Tables />
           ) : display === 'freelancer' ? (

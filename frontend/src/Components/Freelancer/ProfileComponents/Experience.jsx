@@ -1,134 +1,299 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-irregular-whitespace */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import countryList from 'react-select-country-list';
+import { useFormik } from 'formik';
+import { ExperienceSchema } from '../../../schemas';
+import useAxios from '../../../Axios/useAxios';
 
-function Experience() {
-  return (
-    <>
-      {' '}
-      <div className="bg-zinc-200 order-4 rounded-lg  col-span-3  md:col-start-2 col-end-4">
-        <div className="border-2 rounded-lg  col-span-3 md:col-start-2 col-end-4">
-          <form>
-            <p className="pt-2 pl-3 ">
-              <h6 className="text-lg  font-bold dark:text-black">
-                Most Recent Experience
-              </h6>
-            </p>
-            <div className="m-4">
-              <label
-                htmlFor="first_name"
-                className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
-              >
-                Company
-              </label>
-              <input
-                type="text"
-                id="first_name"
-                className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                placeholder="Company"
-                required=""
-              />
-            </div>
+function Experience({ setExpState, expState, expData }) {
+  console.log(expData);
+  const [check, setCheck] = useState(false);
+  const [bcountry, setCountry] = useState('');
+  const arr = Array.from({ length: 100 }, (_, index) => index + 1);
+  const options = arr;
+  const optionsnew = useMemo(() => countryList().getLabels(), []);
+  const changeHandler = (e) => {
+    setCountry(e.target.value);
+  };
 
-            <div className="grid gap-6 m-4 mb-6 md:grid-cols-2">
-              <div>
-                <label
-                  htmlFor="first_name"
-                  className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
-                >
-                  Country
-                </label>
-                <select
-                  id="countries"
-                  className=" text-gray-900     focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                >
-                  <option selected>Choose a country</option>
-                  <option value="US">United States</option>
-                  <option value="CA">Canada</option>
-                  <option value="FR">France</option>
-                  <option value="DE">Germany</option>
-                </select>
-              </div>
-              <div>
-                <label
-                  htmlFor="last_name"
-                  className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
-                >
-                  Place
-                </label>
-                <input
-                  type="text"
-                  id="last_name"
-                  className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                  placeholder="Doe"
-                  required=""
-                />
-              </div>
-            </div>
-            <div className="m-4">
-              <div>
-                <input
-                  id="default-checkbox"
-                  type="checkbox"
-                  value=""
-                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label
-                  htmlFor="disabled-checkbox"
-                  className="ml-2 text-sm font-medium text-gray-400 dark:text-gray-500"
-                >
-                  I am Currently Working on this role
-                </label>
-              </div>
-            </div>
-            <div className="grid gap-6 m-4 mb-6 md:grid-cols-2">
-              <div>
-                <label
-                  htmlFor="first_name"
-                  className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
-                >
-                  No of Years
-                </label>
-                <select
-                  id="countries"
-                  className=" text-gray-900     focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                >
-                  <option selected>Years</option>
-                  <option value="US">United States</option>
-                  <option value="CA">Canada</option>
-                  <option value="FR">France</option>
-                  <option value="DE">Germany</option>
-                </select>
-              </div>
-            </div>
-            <div className="m-4">
-              <label
-                htmlFor="first_name"
-                className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
-              >
-                Description
-              </label>
-              <textarea
-                type="text"
-                id="first_name"
-                className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
-                placeholder="Company"
-                required=""
-              />
-            </div>
+  const [select, setSelect] = useState(null);
+  const handleChangeL = (e) => {
+    const { value, checked } = e.target;
 
-            <div className="m-4 ">
+    if (checked) {
+      setCheck(true);
+    } else {
+      setCheck(false);
+    }
+  };
+  const handleChangeL2 = () => {
+    setExpState('');
+  };
+  const handleChangeLL = (e) => {
+    setSelect(e.target.value);
+  };
+  const api = useAxios();
+  const [dataHandler, setDataHandler] = useState([]);
+  const { country, description, company, place, id, no_of_years } = dataHandler;
+
+  const Education = async () => {
+    try {
+      const response = await api.get(`/eupdate/`);
+
+      setDataHandler(response.data);
+      expData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log('the data handler', dataHandler);
+  useEffect(() => {
+    Education();
+  }, []);
+
+  const initialValues = {
+    company: '',
+    bcountry: '',
+    place: '',
+    no_of_years: '',
+    description: '',
+  };
+  const {
+    values,
+
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues,
+    validationSchema: ExperienceSchema,
+
+    onSubmit: async (values, actions) => {
+      if (id) {
+        try {
+          console.log(check);
+          await api.put(`/eupdate/`, {
+            company: values.company,
+            country: bcountry,
+            description: values.description,
+            place: values.place,
+            no_of_years: select,
+            is_currently_working: check,
+          });
+          Education();
+        } catch (er) {
+          console.log(er);
+        }
+      } else {
+        try {
+          await api.post(`/eupdate/`, {
+            company: values.company,
+            country: bcountry,
+            description: values.description,
+            place: values.place,
+            no_of_years: values.years,
+            is_currently_working: check,
+          });
+          Education();
+        } catch (er) {
+          console.log(er);
+        }
+      }
+      actions.resetForm();
+    },
+  });
+
+  if (expState === 'showexp') {
+    return (
+      <>
+        <div
+          tabIndex={-1}
+          className=" fixed flex justify-center items-center top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full"
+        >
+          <div className="bg-zinc-200 shadow-lg border  md:h-[100%] border-gray-500 relative  rounded-lg">
+            <div className="relative m-4 ">
               <button
-                type="submit"
-                className="   text-black bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+                onClick={handleChangeL2}
+                type="button"
+                className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
               >
-                Save
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="sr-only">Close modal</span>
               </button>
+
+              <form onSubmit={handleSubmit}>
+                <p className="md:pt-2 pl-3  ">
+                  <h6 className="text-lg  font-bold dark:text-black">
+                    Add Experience
+                  </h6>
+                </p>
+                <div className="m-4">
+                  <label
+                    htmlFor="first_name"
+                    className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
+                  >
+                    Company
+                  </label>
+                  <input
+                    type="text"
+                    name="company"
+                    className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                    placeholder={company || ''}
+                    required=""
+                    value={values.company}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+
+                  {errors.company && touched.company ? (
+                    <p className="form-error text-red-600">{errors.company}</p>
+                  ) : null}
+                </div>
+
+                <div className="grid gap-6 m-4 mb-6 md:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="first_name"
+                      className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
+                    >
+                      No of Years
+                    </label>
+                    <select
+                      value={no_of_years}
+                      onChange={handleChangeLL}
+                      className=" text-gray-900     focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                    >
+                      {options.map((option, index) => (
+                        <option value={option} key={index}>
+                          {option}
+                                                  
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="last_name"
+                      className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
+                    >
+                      Place
+                    </label>
+                    <input
+                      type="text"
+                      name="place"
+                      className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                      placeholder={place || null}
+                      value={values.place}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+
+                    {errors.place && touched.place ? (
+                      <p className="form-error text-red-600">{errors.place}</p>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="m-4">
+                  <div>
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      value="checked"
+                      onChange={handleChangeL}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor="disabled-checkbox"
+                      className="ml-2 text-sm font-medium text-gray-400 dark:text-gray-500"
+                    >
+                      I am Currently Working on this role
+                    </label>
+                  </div>
+                </div>
+                <div className="grid gap-6 m-4 mb-6 md:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="first_name"
+                      className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
+                    >
+                      Select Country
+                    </label>
+                    <select
+                      value={country}
+                      id="countries"
+                      onChange={changeHandler}
+                      className=" text-gray-900      focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                    >
+                      {optionsnew.map((option, index) => (
+                        <>
+                          <option value="none" selected disabled hidden>
+                            Select a country
+                          </option>
+                          <option value={option} key={index}>
+                            {option}
+                          </option>
+                        </>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="m-4">
+                  <label
+                    htmlFor="first_name"
+                    className="block mb-2 text-sm font-medium text-white-900 dark:text-black"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    type="text"
+                    name="description"
+                    className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                    placeholder={description || ''}
+                    value={values.description}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+
+                  {errors.description && touched.description ? (
+                    <p className="form-error text-red-600">{errors.place}</p>
+                  ) : null}
+                </div>
+
+                <div className="m-4 ">
+                  <button
+                    type="submit"
+                    className="   text-black bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 }
 
 export default Experience;

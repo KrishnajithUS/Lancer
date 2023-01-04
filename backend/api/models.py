@@ -31,7 +31,7 @@ class FreeLancer(models.Model):
     def __str__(self):
         return self.user.first_name
 class Education(models.Model):
-    education = models.ForeignKey(FreeLancer, on_delete=models.CASCADE,default=None)
+    user = models.ForeignKey(FreeLancer, on_delete=models.CASCADE,default=None)
     university = models.CharField(max_length=30, blank=True)
     degree = models.CharField(max_length=30, blank=True)
     languages = models.CharField(max_length=25, blank=True)
@@ -41,18 +41,18 @@ class Education(models.Model):
     def __str__(self):
         return self.university
 class Experience(models.Model):
-    experience = models.OneToOneField(FreeLancer, on_delete=models.CASCADE,null=True,blank=True,default=None)
+    user = models.OneToOneField(FreeLancer, on_delete=models.CASCADE,null=True,blank=True,default=None)
 
     company = models.CharField(max_length=70,blank=True,null=True)
     place = models.CharField(max_length=60,blank=True,null=True)
     country = models.CharField(max_length=30, blank=True,null=True)
     is_currently_working = models.BooleanField(default=False,null=True)
-    no_of_years = models.IntegerField()
+    no_of_years = models.IntegerField(blank=True,null=True)
     description = models.TextField(max_length=100, blank=True,null=True)
     is_completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.company
+        return self.place
 
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable prettier/prettier */
 import * as Yup from 'yup';
 
@@ -36,7 +37,7 @@ const cprofileSchema = Yup.object({
   password: Yup.string().min(6),
   social_media_links: Yup.string().matches(
     /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-    'Enter correct url!',
+    'Enter correct url!'
   ),
   title: Yup.string().min(5).max(20),
   bio: Yup.string().min(15).max(60),
@@ -44,7 +45,16 @@ const cprofileSchema = Yup.object({
   new_password: Yup.string().min(6),
   confirm_new_password: Yup.string().oneOf(
     [Yup.ref('new_password'), null],
-    'Password must match',
+    'Password must match'
   ),
 });
-export { loginSchema, signUpSchema, cprofileSchema };
+const ExperienceSchema = Yup.object({
+  company: Yup.string().min(2).max(30),
+  country: Yup.string().min(2).max(30),
+  place: Yup.string().min(2).max(30),
+  description: Yup.string().min(15).max(40),
+  checkbox: Yup.boolean().oneOf([true], 'Message'),
+
+  years: Yup.number()
+});
+export { loginSchema, signUpSchema, cprofileSchema, ExperienceSchema };

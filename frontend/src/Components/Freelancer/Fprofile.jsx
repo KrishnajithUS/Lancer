@@ -4,7 +4,7 @@ import Navbar from '../Constants/Navbar';
 import profile1 from '../../Assets/profile1.svg';
 
 import Personal from './ProfileComponents/Personal';
-import Experience from './ProfileComponents/Experience';
+
 import ImageUploader from './ProfileComponents/ImageUploader';
 import Card from './ProfileComponents/Card';
 import useAxios from '../../Axios/useAxios';
@@ -100,8 +100,9 @@ function Fprofile() {
 
           <Personal id={id} api={api} data={data} dispatch={dispatch} />
 
-          <Experience />
+          <Card data="Experience" />
           <Card data="skills" />
+          <Card data="Education" />
           {/* <EduCard data="education" /> */}
         </div>
       </div>
