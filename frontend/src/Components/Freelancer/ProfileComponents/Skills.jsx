@@ -91,12 +91,12 @@ function Skills({ addskill, skills }) {
           tabIndex={-1}
           className="fixed flex justify-center items-center top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full"
         >
-          <div className="bg-zinc-200 md:w-[50%] md:h-[50%] w-full h-[50%] relative  rounded-lg">
+          <div className="bg-zinc-200 md:w-[50%] shadow-lg border  border-gray-500  md:h-[50%] w-full h-[50%] relative  rounded-lg">
             <div className="relative">
               <button
                 onClick={handleChangeL2}
                 type="button"
-                className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                className="absolute top-3 right-2.5 text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-dark"
               >
                 <svg
                   aria-hidden="true"
