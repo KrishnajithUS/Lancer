@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Client, FreeLancer,Skills,Experience
+from .models import Client, Education, FreeLancer,Skills,Experience
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import exceptions
 
@@ -181,9 +181,9 @@ class ExpSerializer(serializers.ModelSerializer):
         fields=['id','company','place','country','is_currently_working','no_of_years','description']
     def create(self, validated_data):
         freelancer=FreeLancer.objects.get(user=self.context['request'].user)
-        education=Experience(user=freelancer,**validated_data)
-        education.save()
-        return education
+        experience=Experience(user=freelancer,**validated_data)
+        experience.save()
+        return experience
     def update(self,instance,validated_data):
         print("hoi")
         if validated_data.get("company",None):
@@ -201,5 +201,25 @@ class ExpSerializer(serializers.ModelSerializer):
        
         instance.save()
         return instance
-    
+class EduSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Education
+        fields=["id","university","degree","field_of_study"]
+    def create(self, validated_data):
+        freelancer=FreeLancer.objects.get(user=self.context['request'].user)
+        education=Education(user=freelancer,**validated_data)
+        education.save()
+        return education
+    def update(self,instance,validated_data):
+        print("hoi")
+        if validated_data.get("university",None):
+            instance.university = validated_data.get("university",instance.university)
+        if validated_data.get("degree",None):
+            instance.degree = validated_data.get("degree",instance.degree)
+        if validated_data.get("field_of_study",None):
+            instance.field_of_study=validated_data.get("field_of_study",instance.field_of_study)
+
+        instance.save()
+        return instance
     

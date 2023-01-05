@@ -34,7 +34,6 @@ class Education(models.Model):
     user = models.ForeignKey(FreeLancer, on_delete=models.CASCADE,default=None)
     university = models.CharField(max_length=30, blank=True)
     degree = models.CharField(max_length=30, blank=True)
-    languages = models.CharField(max_length=25, blank=True)
     field_of_study = models.CharField(max_length=20, blank=True)
     is_completed = models.BooleanField(default=False)
 

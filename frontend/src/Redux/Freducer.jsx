@@ -7,6 +7,7 @@ const initialState = {
   token: null,
   modalStatus: 'hidemodal',
   modalStatusN: 'hidemodal',
+  setRefreshInProgress: false,
   skills: {},
 };
 
@@ -62,9 +63,14 @@ const FreelancerSlice = createSlice({
       const skills = action.payload;
       return { ...state, skills };
     },
+    setRefreshInProgress: (state, action) => {
+      const setRefreshInProgress = action.payload;
+      console.log('setResfreshtoken', setRefreshInProgress);
+      return { ...state, setRefreshInProgress };
+    },
     FsetToken: (state, action) => {
-      console.log('token acess', action.payload.token.access);
-      console.log('refresh acess', action.payload.token.refresh);
+      console.log('token acess in reducer', action.payload.token.access);
+      console.log('refresh acess in reducer', action.payload.token.refresh);
       const token = {
         access_token: action.payload.token.access,
         refresh_token: action.payload.token.refresh,
@@ -84,5 +90,6 @@ export const {
   FsetToken,
   modalStatus,
   modalStatusN,
+  setRefreshInProgress,
 } = FreelancerSlice.actions;
 export default FreelancerSlice.reducer;

@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-from api.models import Client, FreeLancer, Skills,Experience
+from api.models import Client, Education, FreeLancer, Skills,Experience
 
 User = get_user_model()
 from rest_framework.parsers import JSONParser
@@ -26,7 +26,8 @@ from .serializers import (
     UserUpdateSerializer,
     ClientProfileSerializer,
     FreelancerSerializer,
-    SkillSerializer
+    SkillSerializer,
+    EduSerializer
 )
 
 
@@ -300,6 +301,49 @@ class ExperienceView(APIView):
      
         print(experience)
         serializer=ExpSerializer(instance=experience,data=request.data,many=False)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+            return Response({"details":"updated"},status=status.HTTP_200_OK)
+        return Response(serializer.errors)
+#Education
+class EducationView(APIView):
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        print(request.data)
+        if request.data.get('is_delete'):
+            education=Education.objects.filter(pk=request.data["id"])
+                    
+            education.delete()
+            return Response({"details":"deleted successfully"},status=status.HTTP_200_OK)
+        serializer=EduSerializer(data=request.data, context={
+        'request': request
+    })
+        if serializer.is_valid():
+            serializer.save()
+            
+            return Response({"details":"created"},status=status.HTTP_201_CREATED)
+
+        print(serializer.errors)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    def get(self,request):
+        user=request.user
+
+        freelancer=FreeLancer.objects.get(user=user)
+     
+        education=Education.objects.filter(user=freelancer)
+        #skills may be multiple objets
+        #so we need to use many= True to serialize that object
+        serializer=EduSerializer(education,many=True)
+        print(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    def put(self,request):
+        print(request.data)
+        freelancer=FreeLancer.objects.get(user=request.user)
+        education=Education.objects.get(pk=request.data["id"],user=freelancer)
+
+        serializer=EduSerializer(instance=education,data=request.data,many=False)
         print(serializer)
         if serializer.is_valid():
             serializer.save()

@@ -49,12 +49,33 @@ const cprofileSchema = Yup.object({
   ),
 });
 const ExperienceSchema = Yup.object({
-  company: Yup.string().min(2).max(30).required('Please enter your Company name'),
+  company: Yup.string()
+    .min(2)
+    .max(30)
+    .required('Please enter your Company name'),
   country: Yup.string().min(2).max(30),
   place: Yup.string().min(2).max(30),
-  description: Yup.string().min(15).max(40).required('Please enter your Description'),
+  description: Yup.string()
+    .min(15)
+    .max(40)
+    .required('Please enter your Description'),
   checkbox: Yup.boolean().oneOf([true], 'Message'),
 
   years: Yup.number(),
 });
-export { loginSchema, signUpSchema, cprofileSchema, ExperienceSchema };
+const EducationSchema = Yup.object({
+  university: Yup.string().min(2).max(30),
+  degree: Yup.string().min(2).max(30).required('Please enter Degree'),
+  field_of_study: Yup.string()
+    .min(5, 'minimum five characters')
+    .max(40)
+    .required('Please enter your Field of study'),
+});
+
+export {
+  loginSchema,
+  EducationSchema,
+  signUpSchema,
+  cprofileSchema,
+  ExperienceSchema,
+};

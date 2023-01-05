@@ -14,7 +14,8 @@ import useAxios from '../../../Axios/useAxios';
 
 function Experience({ addnew, setExpState, expState, experience }) {
   const addnewN = Boolean(addnew);
-  const [check, setCheck] = useState(false);
+  const singleData = useSelector((state) => state.freelancer.skills);
+  const [check, setCheck] = useState(Boolean(singleData.is_currently_working));
   const [bcountry, setCountry] = useState('');
   const arr = Array.from({ length: 100 }, (_, index) => index + 1);
   const options = arr;
@@ -22,17 +23,12 @@ function Experience({ addnew, setExpState, expState, experience }) {
   const changeHandler = (e) => {
     setCountry(e.target.value);
   };
-  const singleData = useSelector((state) => state.freelancer.skills);
 
   const [select, setSelect] = useState(null);
   const handleChangeL = (e) => {
     const { value, checked } = e.target;
 
-    if (checked) {
-      setCheck(true);
-    } else {
-      setCheck(false);
-    }
+    setCheck(!check);
   };
   const handleChangeL2 = () => {
     setExpState('');
@@ -78,7 +74,7 @@ function Experience({ addnew, setExpState, expState, experience }) {
       if (addnewN) {
         try {
           console.log(check);
-          const response = await api.post(`/eupdate/`, {
+          await api.post(`/eupdate/`, {
             company: values.company,
             country: bcountry,
             description: values.description,
@@ -92,7 +88,7 @@ function Experience({ addnew, setExpState, expState, experience }) {
         }
       } else {
         try {
-          const response = await api.put(`/eupdate/`, {
+          await api.put(`/eupdate/`, {
             id: singleData.id,
             company: values.company,
             country: bcountry,
@@ -220,7 +216,7 @@ function Experience({ addnew, setExpState, expState, experience }) {
                     <input
                       id="default-checkbox"
                       type="checkbox"
-                      value="checked"
+                      checked={check}
                       onChange={handleChangeL}
                       className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
@@ -241,7 +237,7 @@ function Experience({ addnew, setExpState, expState, experience }) {
                       Select Country
                     </label>
                     <select
-                      value={addnewN ? '' : singleData.country}
+                      value={addnewN ? '' : bcountry || singleData.country}
                       id="countries"
                       onChange={changeHandler}
                       className=" text-gray-900      focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
@@ -290,11 +286,13 @@ function Experience({ addnew, setExpState, expState, experience }) {
                   >
                     Save
                   </button>
-                  {addnewN ? '' : (
+                  {addnewN ? (
+                    ''
+                  ) : (
                     <button
                       type="button"
                       onClick={handleDelete}
-                      className="ml-2   text-black bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:rinred-300 font-medium rounded-lg text-xs w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red  "
+                      className="md:ml-2 mt-2   text-black bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:rinred-300 font-medium rounded-lg text-xs w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red  "
                     >
                       Delete
                     </button>

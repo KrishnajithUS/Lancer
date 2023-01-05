@@ -11,6 +11,7 @@ import { useState, useEffect, React } from 'react';
 import useAxios from '../../../Axios/useAxios';
 import { modalStatus, modalStatusN, Fskills } from '../../../Redux/Freducer';
 import Experience from './Experience';
+import Education from './Education';
 import Skills from './Skills';
 
 function Card({ data }) {
@@ -18,11 +19,13 @@ function Card({ data }) {
   const dispatch = useDispatch();
   const [dataHandler, setDataHandler] = useState([]);
   const [edataHandler, setDataeHandler] = useState([]);
+  const [educationData, setEducationData] = useState([]);
   const [expState, setExpState] = useState('');
+  const [eduState, setEduState] = useState('');
 
   const check = useSelector((state) => state.freelancer.modelStatus);
   const checkL = useSelector((state) => state.freelancer.modelStatusN);
-  console.log(check);
+  console.log(educationData);
   const handleClick = (newid) => {
     dispatch(Fskills(newid));
 
@@ -37,6 +40,13 @@ function Card({ data }) {
   };
   const handleClickL = () => {
     dispatch(modalStatusN('showmodal'));
+  };
+  const handleClickE = (newid) => {
+    dispatch(Fskills(newid));
+    setEduState('showedu');
+  };
+  const handleClickE2 = () => {
+    setEduState('showedu2');
   };
   console.log('experience state', expState);
   const skills = async () => {
@@ -59,9 +69,20 @@ function Card({ data }) {
       console.log(err);
     }
   };
+  const education = async () => {
+    try {
+      const response = await api.get(`/edupdate/`);
+      console.log('response educatjion', response.data);
+
+      setEducationData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     skills();
     experience();
+    education();
   }, []);
 
   if (data === 'skills') {
@@ -159,7 +180,7 @@ function Card({ data }) {
                 </p>
               </div>
               <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
-                <button onClick={handleClickL3} type="button">
+                <button onClick={() => handleClickL3} type="button">
                   <AiFillEdit />
                 </button>
 
@@ -188,28 +209,30 @@ function Card({ data }) {
           role="list"
           className="divide-y bg-white rounded-lg pl-10 pr-10 shadow-md divide-white dark:divide-gray-700 m-4 "
         >
-          {dataHandler.map((item) => {
-            return (
-              <li key={item.id} className="py-3 sm:py-4">
-                <div className="flex justify-end items-center space-x-4">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
-                      {item.skills}
-                    </p>
-                  </div>
-                  <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
-                    <button type="button">
-                      <AiFillEdit />
-                    </button>
-
-                    {check === 'showmodal' && (
-                      <Skills dataHandler={dataHandler} />
-                    )}
-                  </div>
+          {educationData.map((item) => (
+            <li key={item.id} className="py-3 sm:py-4">
+              <div className="flex justify-end items-center space-x-4">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
+                    {item.university}
+                  </p>
                 </div>
-              </li>
-            );
-          })}
+                <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
+                  <button onClick={() => handleClickE(item)} type="button">
+                    <AiFillEdit />
+                  </button>
+
+                  {eduState === 'showedu' && (
+                    <Education
+                      education={education}
+                      setEduState={setEduState}
+                      eduState={eduState}
+                    />
+                  )}
+                </div>
+              </div>
+            </li>
+          ))}
           <li className="py-3 sm:py-4">
             <div className="flex justify-end items-center space-x-4">
               <div className="flex-1 min-w-0">
@@ -218,11 +241,18 @@ function Card({ data }) {
                 </p>
               </div>
               <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
-                <button onClick={handleClickL} type="button">
+                <button onClick={() => handleClickE2()} type="button">
                   <AiFillEdit />
                 </button>
 
-                {checkL === 'showmodal' && <Skills addskill skills={skills} />}
+                {eduState === 'showedu2' && (
+                  <Education
+                    education={education}
+                    setEduState={setEduState}
+                    eduState={eduState}
+                    addnew
+                  />
+                )}
               </div>
             </div>
           </li>
