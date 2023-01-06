@@ -4,7 +4,7 @@ from django.db import models
 # explicitly set upload path and filename
 def upload_to(instance, filename):
     return "{filename}".format(filename=filename)
-
+#otp model
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

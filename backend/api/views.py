@@ -10,7 +10,8 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
 from api.models import Client, Education, FreeLancer, Skills,Experience
-
+from .emails import verify_token
+from .emails import send_otp
 User = get_user_model()
 from rest_framework.parsers import JSONParser
 
@@ -58,14 +59,25 @@ def getUserPrfile(request):
 class RegisterView(APIView):
     # permission_classes=[AllowAny]
     def post(self, request, format=None):
-
-        serializer = RegistrationSerializer(data=request.data)
-
+        
+        
+        if request.data.get('verification'):
+            print(request.data)
+            user=User.objects.get(pk=request.data["id"])
+            print(user)
+            new=verify_token(user,request.data['otp'])
+            print("new otp",new)
+            return Response({"details":"created"})
+        serializer = RegistrationSerializer(data=request.data)  
         if serializer.is_valid():
-
+        
             serializer.save()
+            print(serializer.data['email'])
+            send_otp(request.data.get('email'))
             data = serializer.data
-            return Response(data, status=status.HTTP_201_CREATED)
+            print(data)
+            return Response({"details":"check your email for verification","id":serializer.data['id']}, status=status.HTTP_201_CREATED)
+        
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

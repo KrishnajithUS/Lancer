@@ -46,7 +46,8 @@ function Register() {
           is_freelancer: false,
         });
         if (response.status === 201) {
-          navigate('/login');
+          console.log(response.data.id)
+          navigate(`/verifyotp/${response.data.id}`);
         } else {
           setErrorMessage('A user with same email already exists');
         }

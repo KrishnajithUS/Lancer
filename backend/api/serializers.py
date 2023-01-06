@@ -3,12 +3,33 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Client, Education, FreeLancer,Skills,Experience
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import exceptions
+import hashlib
+from .emails import send_otp
 
 User = get_user_model()
 
 # this is for normal user creation using function based views
 # we create the profile inside that function based views
+#unique username creator
+def generate_username(email):
+  # Split the email address into the username and domain
+  username, domain = email.split('@')
 
+  # Generate a unique number for the username
+  unique_number = generate_unique_number(username)
+
+  # Return the username with the unique number appended
+  return username + str(unique_number)
+
+def generate_unique_number(username):
+  # Hash the username to create a unique ID
+  hashed_username = hashlib.sha1(username.encode('utf-8')).hexdigest()
+
+  # Convert the hash to an integer
+  unique_number = int(hashed_username, 16)
+
+  # Return the unique number
+  return unique_number
 class UserSerializer(serializers.ModelSerializer):
     profile_picture=serializers.ImageField(source='client.profile_picture',read_only=True,required=False)
     fprofile_picture=serializers.ImageField(source='freelancer.profile_picture',read_only=True,required=False)
@@ -132,11 +153,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = User
-        fields = ["username","first_name", "last_name", "email", "password", "is_freelancer"]
+        fields = ["id","username","first_name", "last_name", "email", "password", "is_freelancer"]
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-       
+        
         user = User(
             first_name=validated_data["first_name"],
             last_name=validated_data["last_name"],
@@ -147,10 +168,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
         else:
             user.is_freelancer = False
         user.set_password(validated_data["password"])
-        user.is_active = True
-        username=validated_data["email"].split("@")[0]
+        user.is_active = False
+        username=generate_username(validated_data["email"])
         user.username=username
         user.save()
+
         if user.is_freelancer:
             FreeLancer.objects.create(user=user)
         else:

@@ -71,6 +71,12 @@ const EducationSchema = Yup.object({
     .max(40)
     .required('Please enter your Field of study'),
 });
+const OtpShema = Yup.object({
+  digit1: Yup.number().min(0).required('Please enter a Digit'),
+  digit2: Yup.number().min(0).required('Please enter a Digit'),
+  digit3: Yup.number().min(0).required('Please enter a Digit'),
+  digit4: Yup.number().min(0).required('Please enter a Digit'),
+});
 
 export {
   loginSchema,
@@ -78,4 +84,5 @@ export {
   signUpSchema,
   cprofileSchema,
   ExperienceSchema,
+  OtpShema,
 };

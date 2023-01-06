@@ -9,7 +9,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Footer from '../Components/Constants/Footer';
-
+import Otp from '../Components/Constants/Otp';
 import LogOut from '../Components/Constants/LogOut';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
@@ -18,6 +18,7 @@ import SelectionPage from '../Pages/SelectionPage';
 import FreelancerRegister from '../Pages/FreelancerRegister';
 import Cprofile from '../Components/Client/Cprofile';
 import Fprofile from '../Components/Freelancer/Fprofile';
+import Navbar from '../Components/Constants/Navbar';
 import AdminHome from '../Components/Admin/AdminHome';
 import AdminLogin from '../Components/Admin/AdminLogin';
 
@@ -34,6 +35,7 @@ const router = () => {
   if (!adminAuth) {
     return (
       <>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/select" element={<SelectionPage />} />
@@ -56,7 +58,10 @@ const router = () => {
             path="/fprofile"
             element={FAuth ? <Fprofile /> : userAuth ? <Cprofile /> : <Login />}
           />
-
+          <Route
+            path="/verifyotp/:id"
+            element={FAuth ? <Fprofile /> : userAuth ? <Cprofile /> : <Otp />}
+          />
           <Route path="/logout" element={<LogOut />} />
           <Route path="*" element={<Home />} />
         </Routes>

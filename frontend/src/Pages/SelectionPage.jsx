@@ -9,7 +9,6 @@
 import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../Components/Constants/Navbar';
 
 function SelectionPage() {
   const navigate = useNavigate();
@@ -58,7 +57,6 @@ function SelectionPage() {
   };
   return (
     <div>
-      <Navbar />
       <div className="md:mt-12 mt-10 h-screen">
         <div className="text-center ">
           <h3 class="mb-5 inline-block text-3xl md:text-4xl font-bold  text-gray-900 dark:text-white">

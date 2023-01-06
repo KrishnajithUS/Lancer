@@ -9,7 +9,6 @@ import { useFormik } from 'formik';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Navbar from '../Constants/Navbar';
 import { cprofileSchema } from '../../schemas';
 import useAxios from '../../Axios/useAxios';
 import { userDetails } from '../../Redux/reducer';
@@ -131,7 +130,6 @@ function Cprofile() {
   console.log(errors);
   return (
     <div className="w-full">
-      <Navbar />
       {message && <Alert />}
       <div className="flex  justify-center items-center  h-48 mx-4 mt-2  bg-zinc-200 rounded-lg ">
         <div className="rounded-full">
@@ -325,8 +323,8 @@ function Cprofile() {
                             onChange={handleChange}
                             onBlur={handleBlur}
                           />
-                          {errors.confirm_new_password
-                          && touched.confirm_new_password ? (
+                          {errors.confirm_new_password &&
+                          touched.confirm_new_password ? (
                             <p className="form-error text-red-600">
                               {errors.confirm_new_password}
                             </p>

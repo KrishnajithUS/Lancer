@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Navbar from '../Constants/Navbar';
+
 import profile1 from '../../Assets/profile1.svg';
 
 import Personal from './ProfileComponents/Personal';
@@ -50,7 +50,6 @@ function Fprofile() {
   }, [dispatch]);
   return (
     <div>
-      <Navbar />
       <div className="m-4 md:m-8">
         <div className="grid grid-cols-3  gap-4  ">
           <div className=" col-span-3 md:col-span-1 w-full order-1  ">
