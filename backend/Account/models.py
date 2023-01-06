@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -58,7 +58,7 @@ class User(AbstractBaseUser):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
     phone_number=models.CharField(max_length=50)
-    otp_interval = models.PositiveIntegerField(blank=True, null=True)
+    expiration_time = models.DateTimeField(default=datetime.datetime.now)
     new_password=models.CharField(max_length=20,blank=True)
     confirm_new_password=models.CharField(max_length=20,blank=True)
     is_verified=models.BooleanField(default=False)
@@ -92,7 +92,9 @@ class User(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
-    
+    def save(self, *args, **kwargs):
+        self.expiration_time = datetime.datetime.now() + datetime.timedelta(minutes=3)
+        super().save(*args, **kwargs)
   
 
 
