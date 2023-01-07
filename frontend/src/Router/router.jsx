@@ -21,6 +21,7 @@ import Fprofile from '../Components/Freelancer/Fprofile';
 import Navbar from '../Components/Constants/Navbar';
 import AdminHome from '../Components/Admin/AdminHome';
 import AdminLogin from '../Components/Admin/AdminLogin';
+import Post from '../Components/Freelancer/Post';
 
 const router = () => {
   const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
@@ -62,7 +63,9 @@ const router = () => {
             path="/verifyotp/:id"
             element={FAuth ? <Fprofile /> : userAuth ? <Cprofile /> : <Otp />}
           />
+          <Route path="/post" element={<Post />} />
           <Route path="/logout" element={<LogOut />} />
+
           <Route path="*" element={<Home />} />
         </Routes>
         <Footer />

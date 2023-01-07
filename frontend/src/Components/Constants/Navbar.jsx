@@ -43,23 +43,23 @@ const Navbar = () => {
                       {isAuth ? (
                         <Link to="/logout">
                           <div className="mr-4">
-                            <a
-                              href="#"
-                              className="font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
+                            <button
+                              type="button"
+                              className="rounded-full font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
                             >
                               LogOut
-                            </a>
+                            </button>
                           </div>
                         </Link>
                       ) : FisAuth ? (
                         <Link to="/logout">
                           <div className="mr-4">
-                            <a
-                              href="#"
-                              className="font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
+                            <button
+                              type="button"
+                              className=" rounded-full font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
                             >
                               LogOut
-                            </a>
+                            </button>
                           </div>
                         </Link>
                       ) : (
@@ -147,12 +147,12 @@ const Navbar = () => {
                 <div className="md:hidden" id="mobile-menu">
                   <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
                     <Link to="/logOut">
-                      <a
-                        href="#"
-                        className="button-new text-white block px-3 py-2   text-base font-medium"
+                      <button
+                        type="button"
+                        className="button-new rounded-full  text-white block px-3 py-2   text-base font-medium"
                       >
                         LogOut
-                      </a>
+                      </button>
                     </Link>
                   </div>
                 </div>
@@ -160,12 +160,12 @@ const Navbar = () => {
                 <div className="md:hidden" id="mobile-menu">
                   <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
                     <Link to="/logOut">
-                      <a
-                        href="#"
-                        className="button-new text-white block px-3 py-2   text-base font-medium"
+                      <button
+                        type="button"
+                        className=" rounded-full button-new text-white block px-3 py-2   text-base font-medium"
                       >
                         LogOut
-                      </a>
+                      </button>
                     </Link>
                   </div>
                 </div>

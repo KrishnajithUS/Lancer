@@ -76,7 +76,7 @@ function SelectionPage() {
               />
               <label
                 for="hosting-small"
-                class="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-purple-500 peer-checked:border-purple-600 peer-checked:text-purple-600 hover:text-gray-600 hover:bg-gray-100 dark:text-black dark:bg-gray-300 dark:hover:bg-black"
+                class="inline-flex justify-between items-center p-5 w-full text-black bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-purple-500 peer-checked:border-purple-600 peer-checked:text-black hover:text-gray-600 hover:bg-gray-100 dark:text-black dark:bg-gray-300 dark:hover:bg-black"
               >
                 <div class="block ">
                   <div class="w-full md:h-24 flex items-center justify-center">
@@ -108,7 +108,7 @@ function SelectionPage() {
               />
               <label
                 for="hosting-big"
-                class="inline-flex justify-between items-center p-5 w-full text-black bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-pruple-300 dark:border-gray-700 dark:peer-checked:text-purple-500 peer-checked:border-purple-600 peer-checked:text-purple-600 hover:text-gray-600 hover:bg-gray-100 dark:text-black dark:bg-gray-300 dark:hover:bg-black"
+                class="inline-flex justify-between items-center p-5 w-full text-black bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-purple-500 peer-checked:border-purple-600 peer-checked:text-black hover:text-gray-600 hover:bg-gray-100 dark:text-black dark:bg-gray-300 dark:hover:bg-black"
               >
                 <div class="block">
                   <div class="w-full md:h-24 flex items-center justify-center ">

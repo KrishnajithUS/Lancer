@@ -37,6 +37,7 @@ function Card({ data }) {
   };
   const handleClickL3 = () => {
     setExpState('showexp2');
+    console.log('experience', expState);
   };
   const handleClickL = () => {
     dispatch(modalStatusN('showmodal'));
@@ -180,7 +181,7 @@ function Card({ data }) {
                 </p>
               </div>
               <div className="hover:cursor-pointer focus:outline-none focus:border-purple-500  focus:pointer-events-auto  inline-flex items-center text-base font-semibold text-purple-600">
-                <button onClick={() => handleClickL3} type="button">
+                <button onClick={() => handleClickL3()} type="button">
                   <AiFillEdit />
                 </button>
 

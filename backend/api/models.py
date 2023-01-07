@@ -13,16 +13,10 @@ class Client(models.Model):
     def __str__(self):
         return self.user.first_name
 
-
-
-
-class CreatePost(models.Model):
-    pass
-# freelancer and related model creation
 class FreeLancer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title=models.CharField(max_length=20,blank=True,null=True)
-    profile_picture = models.ImageField(blank=True)
+    profile_picture = models.ImageField(upload_to=upload_to,blank=True)
     bio = models.CharField(max_length=60,blank=True,null=True)
     
     social_media_links=models.CharField(max_length=40,blank=True,null=True)
@@ -61,6 +55,21 @@ class Skills(models.Model):
       skills=models.CharField(max_length=20,blank=True,null=True,unique=True)
       def __str__(self):
           return self.skills
+
+class Category(models.Model):
+    pass
+
+
+class CreatePost(models.Model):
+    user=models.ForeignKey(FreeLancer,on_delete=models.CASCADE,default=None)
+    title=models.CharField(max_length=30,blank=True,null=True)
+    cover_image=models.ImageField(upload_to=upload_to,blank=True,null=True)
+    description=models.TextField(max_length=100,blank=True,null=True)
+    price=models.IntegerField(default=None)
+    is_completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
 
 
 

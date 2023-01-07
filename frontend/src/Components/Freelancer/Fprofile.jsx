@@ -9,6 +9,7 @@ import ImageUploader from './ProfileComponents/ImageUploader';
 import Card from './ProfileComponents/Card';
 import useAxios from '../../Axios/useAxios';
 import { FDetails } from '../../Redux/Freducer';
+import Sidebar from './ProfileComponents/Sidebar';
 
 // import EduCard from './ProfileComponents/EduCard';
 
@@ -91,6 +92,9 @@ function Fprofile() {
                         {item.bio ? item.bio : 'NO Bio'}
                       </p>
                     </div>
+                  </div>
+                  <div className="bg-zinc-200 order-3 mb-10  col-span-1 rounded-lg  md:col-start-1 md:col-end-2 ">
+                    <Sidebar />
                   </div>
                 </div>
               );

@@ -39,7 +39,7 @@ function Register() {
         });
 
         if (response.status === 201) {
-          navigate('/verifyotp');
+          navigate(`/verifyotp/${response.data.id}`);
         } else {
           setErrorMessage('A user with same email already exists');
         }

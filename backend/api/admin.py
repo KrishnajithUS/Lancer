@@ -1,4 +1,4 @@
-from .models import Client,FreeLancer,Skills,Experience
+from .models import Client,FreeLancer,Skills,Experience,Education,CreatePost
 from django.contrib import admin
 
 from django.utils.html import format_html
@@ -11,3 +11,5 @@ admin.site.register(Client,ClientAdmin)
 admin.site.register(FreeLancer)
 admin.site.register(Skills)
 admin.site.register(Experience)
+admin.site.register(Education)
+admin.site.register(CreatePost)

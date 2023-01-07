@@ -3,13 +3,14 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import axiosInstance from '../../Axios/axiosPrivate';
 import { OtpShema } from '../../schemas';
 
 function Otp() {
   const params = useParams();
+  const navigate = useNavigate();
   const id = params['id'];
   console.log(id, 'the id is');
   const initialValues = {
@@ -24,15 +25,14 @@ function Otp() {
       validationSchema: OtpShema,
       onSubmit: async (values, actions) => {
         try {
-          await axiosInstance.post(`/register/`, {
+          const response = await axiosInstance.post(`/register/`, {
             verification: true,
             id,
             otp: values.digit1 + values.digit2 + values.digit3 + values.digit4,
-            digit1: values.digit1,
-            digit2: values.digit2,
-            digit3: values.digit3,
-            digit4: values.digit4,
           });
+          if (response.status === 201) {
+            navigate('/login');
+          }
         } catch (err) {
           alert(err);
         }
