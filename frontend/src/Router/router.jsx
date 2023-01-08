@@ -22,6 +22,7 @@ import Navbar from '../Components/Constants/Navbar';
 import AdminHome from '../Components/Admin/AdminHome';
 import AdminLogin from '../Components/Admin/AdminLogin';
 import Post from '../Components/Freelancer/Post';
+import AddPost from '../Components/Freelancer/AddPost';
 
 const router = () => {
   const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
@@ -65,6 +66,7 @@ const router = () => {
           />
           <Route path="/post" element={<Post />} />
           <Route path="/logout" element={<LogOut />} />
+          <Route path="/addpost" element={<AddPost />} />
 
           <Route path="*" element={<Home />} />
         </Routes>

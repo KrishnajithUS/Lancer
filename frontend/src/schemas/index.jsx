@@ -77,6 +77,11 @@ const OtpShema = Yup.object({
   digit3: Yup.number().min(0).required('Please enter a Digit'),
   digit4: Yup.number().min(0).required('Please enter a Digit'),
 });
+const AddPostSchema = Yup.object({
+  title: Yup.string().min(5).max(20).required('Enter Your Post Title'),
+  description: Yup.string().min(10).max(50).required('Please enter Description'),
+  price: Yup.number().min(2).required('Price is not acceptable'),
+});
 
 export {
   loginSchema,
@@ -85,4 +90,5 @@ export {
   cprofileSchema,
   ExperienceSchema,
   OtpShema,
+  AddPostSchema,
 };

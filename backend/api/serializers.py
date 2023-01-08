@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Client, CreatePost, Education, FreeLancer, Skills, Experience
+from .models import Client, CreatePost, Education, FreeLancer, Skills, Experience,Category,SubCategory
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import exceptions
 import hashlib
@@ -318,10 +318,20 @@ class EduSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Category
+        fields=["category_name"]
+class SubCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=SubCategory
+        fields=["subcategory_name"]
 class PostSerializer(serializers.ModelSerializer):
+    category=CategorySerializer(many=False, required=False)
+    sub_category=SubCategorySerializer(many=False)
     class Meta:
         model = CreatePost
-        fields = ["id", "title", "cover_image", "description"]
+        fields = ["id", "title", "cover_image", "description","category","sub_category"]
 
     def create(self, validated_data):
         freelancer = FreeLancer.objects.get(user=self.context["request"].user)
@@ -346,3 +356,6 @@ class PostSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+

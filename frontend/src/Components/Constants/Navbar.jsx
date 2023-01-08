@@ -14,7 +14,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="sticky top-0 z-50  shadow-sm shadow-purple-400">
+    <div className="sticky top-0 mb-0 z-50  shadow-sm shadow-purple-400">
       <header>
         <div className="">
           <nav className="bg-white font-sans  ">
@@ -85,7 +85,7 @@ const Navbar = () => {
                     </div>
                   </div>
                 </div>
-                <div className="-mr-2 flex md:hidden">
+                <div className="-mr-2 flex  md:hidden">
                   <button
                     onClick={() => {
                       return setIsOpen(!isOpen);

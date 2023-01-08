@@ -51,13 +51,13 @@ function Fprofile() {
   }, [dispatch]);
   return (
     <div>
-      <div className="m-4 md:m-8">
-        <div className="grid grid-cols-3  gap-4  ">
+      <div className="m-4 mt-0  md:m-8">
+        <div className="grid grid-cols-3  gap-4 ">
           <div className=" col-span-3 md:col-span-1 w-full order-1  ">
             {dataHandler.map((item) => {
               return (
-                <div className="grid grid-cols-1 gap-4">
-                  <div className="col-span-1  bg-zinc-200 rounded-lg  ">
+                <div className="grid  grid-cols-1 gap-4">
+                  <div className="col-span-1 shadow-2xl bg-white rounded-lg  ">
                     <div className="flex flex-col align-center items-center pb-2">
                       <img
                         className="w-24 h-24 mt-2 rounded-full "
@@ -81,8 +81,8 @@ function Fprofile() {
                     </div>
                   </div>
 
-                  <div className="bg-zinc-200 order-3 mb-10 h-24 col-span-1 rounded-lg  md:col-start-1 md:col-end-2 ">
-                    <div className="bg-zinc-200 p-6 border border-white-200 rounded-lg drop-shadow-x dark:border-white-700">
+                  <div className="shadow-2xl bg-white order-3 mb-10 h-24 col-span-1 rounded-lg  md:col-start-1 md:col-end-2 ">
+                    <div className="shadow-2xl bg-white p-6 border border-white-200 rounded-lg drop-shadow-x dark:border-white-700">
                       <p>
                         <h5 className="mb-2 text-lg  font-bold dark:text-black">
                           Bio
@@ -93,7 +93,7 @@ function Fprofile() {
                       </p>
                     </div>
                   </div>
-                  <div className="bg-zinc-200 order-3 mb-10  col-span-1 rounded-lg  md:col-start-1 md:col-end-2 ">
+                  <div className=" bg-white order-3 shadow-2xl mb-10  col-span-1 rounded-lg  md:col-start-1 md:col-end-2 ">
                     <Sidebar />
                   </div>
                 </div>

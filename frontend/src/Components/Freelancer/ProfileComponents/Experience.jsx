@@ -116,7 +116,7 @@ function Experience({ addnew, setExpState, expState, experience }) {
           tabIndex={-1}
           className=" fixed flex justify-center items-center top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full"
         >
-          <div className="bg-zinc-200 shadow-lg border  md:h-[100%] border-gray-500 relative  rounded-lg">
+          <div className="shadow-2xl bg-white shadow-lg border  md:h-[100%] border-gray-500 relative  rounded-lg">
             <div className="relative m-4 ">
               <button
                 onClick={handleChangeL2}

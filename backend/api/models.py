@@ -57,19 +57,38 @@ class Skills(models.Model):
           return self.skills
 
 class Category(models.Model):
-    pass
-
-
+   
+    category_name=models.CharField(max_length=30,blank=True,null=True)
+    def __str__(self):
+        return self.category_name
+class SubCategory(models.Model):
+    subcategory=models.ForeignKey(Category,on_delete=models.CASCADE,default=None)
+    subcategory_name=models.CharField(max_length=30,null=True,blank=True)
+    def __str__(self):
+        return self.subcategory_name
 class CreatePost(models.Model):
     user=models.ForeignKey(FreeLancer,on_delete=models.CASCADE,default=None)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE,default=None)
+    sub_category=models.ForeignKey(SubCategory,on_delete=models.CASCADE,default=None)
+    
     title=models.CharField(max_length=30,blank=True,null=True)
     cover_image=models.ImageField(upload_to=upload_to,blank=True,null=True)
     description=models.TextField(max_length=100,blank=True,null=True)
-    price=models.IntegerField(default=None)
+    keyfeatures=models.CharField(max_length=30,blank=True,null=True)
+    price=models.IntegerField(default=None,blank=True,null=True)
     is_completed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
+
+
+
+    
+        
+    
+
+
+
 
 
 

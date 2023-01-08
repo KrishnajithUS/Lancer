@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-from api.models import Client, Education, FreeLancer, Skills, Experience,CreatePost
+from api.models import Client, Education, FreeLancer, Skills, Experience,CreatePost,Category,SubCategory 
 from .emails import verify_token
 from asgiref.sync import sync_to_async
 from .emails import send_otp
@@ -31,7 +31,8 @@ from .serializers import (
     FreelancerSerializer,
     SkillSerializer,
     EduSerializer,
-    PostSerializer
+    PostSerializer,
+    CategorySerializer
 )
 
 
@@ -405,6 +406,12 @@ class PostView(APIView):
 
     def post(self, request):
         print(request.data)
+        if request.data.get("get_category"):
+            category=Category.objects.all()
+            serializer=CategorySerializer(category,many=True)
+            print(serializer)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+            
         if request.data.get("is_delete"):
             post = CreatePost.objects.filter(pk=request.data["id"])
 

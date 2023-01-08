@@ -88,7 +88,7 @@ function Card({ data }) {
 
   if (data === 'skills') {
     return (
-      <div className="bg-zinc-200 order-4 rounded-lg  col-span-3  md:col-start-2 col-end-4">
+      <div className="bg-zinc-200  order-4 rounded-lg  col-span-3  md:col-start-2 col-end-4">
         <div className="pt-2 pl-3 ">
           <h6 className="text-lg  font-bold dark:text-black">{data}</h6>
         </div>

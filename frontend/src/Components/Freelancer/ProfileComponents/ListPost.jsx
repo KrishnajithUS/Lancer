@@ -20,7 +20,7 @@ function ListPost({ dataHandler }) {
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
             {item?.description}
           </p>
-          <bupurple
+          <button
             type="button"
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white hover:cursor-pointer bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
           >
@@ -38,7 +38,7 @@ function ListPost({ dataHandler }) {
                 clipRule="evenodd"
               />
             </svg>
-          </bupurple>
+          </button>
         </div>
       </div>
     </div>

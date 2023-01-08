@@ -91,7 +91,7 @@ function Skills({ addskill, skills }) {
           tabIndex={-1}
           className="fixed flex justify-center items-center top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full"
         >
-          <div className="bg-zinc-200 md:w-[50%] shadow-lg border  border-gray-500  md:h-[50%] w-full h-[50%] relative  rounded-lg">
+          <div className="shadow-2xl bg-white md:w-[50%]  border  border-gray-500  md:h-[50%] w-full h-[50%] relative  rounded-lg">
             <div className="relative">
               <button
                 onClick={handleChangeL2}

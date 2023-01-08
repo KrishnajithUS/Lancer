@@ -75,7 +75,7 @@ function Personal({ id, api, dispatch, data }) {
   return (
     <>
       {' '}
-      <div className=" bg-zinc-200 order-2 rounded-lg  col-span-3 md:col-start-2 col-end-4">
+      <div className="shadow-2xl bg-white order-2 rounded-lg  col-span-3 md:col-start-2 col-end-4">
         <form onSubmit={handleSubmit}>
           <div className="pt-2 pl-3 ">
             <h6 className="text-lg  font-bold dark:text-black">
@@ -95,7 +95,7 @@ function Personal({ id, api, dispatch, data }) {
                 type="text"
                 name="first_name"
                 autoComplete="off"
-                className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                 placeholder={FirstName}
                 required=""
                 value={values.first_name}
@@ -117,7 +117,7 @@ function Personal({ id, api, dispatch, data }) {
                 type="text"
                 autoComplete="off"
                 name="last_name"
-                className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                 placeholder={lastName}
                 required=""
                 value={values.last_name}
@@ -143,7 +143,7 @@ function Personal({ id, api, dispatch, data }) {
                 type="text"
                 autoComplete="off"
                 name="title"
-                className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                 placeholder={title}
                 required=""
                 value={values.title}
@@ -165,7 +165,7 @@ function Personal({ id, api, dispatch, data }) {
                 type="text"
                 autoComplete="off"
                 name="social_media"
-                className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                 placeholder={social_media}
                 required=""
                 value={values.social_media}
@@ -190,7 +190,7 @@ function Personal({ id, api, dispatch, data }) {
                 autoComplete="off"
                 id="email"
                 name="username"
-                className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                 placeholder={userName}
                 required=""
                 value={values.username}
@@ -212,7 +212,7 @@ function Personal({ id, api, dispatch, data }) {
                 type="email"
                 autoComplete="off"
                 name="email"
-                className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+                className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                 placeholder={email}
                 required=""
                 value={values.email}
@@ -239,7 +239,7 @@ function Personal({ id, api, dispatch, data }) {
               placeholder={bio}
               onChange={handleChange}
               onBlur={handleBlur}
-              className=" focus:border-purple-600 focus:outline-none block w-full p-4 text-white-900 border border-slate-500 rounded-lg bg-white sm:text-md  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+              className="border-2 border-black focus:border-purple-600 focus:outline-none block w-full p-4 text-white-900 border border-slate-500 rounded-lg bg-white sm:text-md  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
             />
             {errors.bio && touched.bio ? (
               <p className="form-error text-red-600">{errors.bio}</p>
@@ -256,7 +256,7 @@ function Personal({ id, api, dispatch, data }) {
               type="password"
               autoComplete="off"
               name="password"
-              className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+              className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
               placeholder="Old Password"
               required=""
               value={values.password}
@@ -278,7 +278,7 @@ function Personal({ id, api, dispatch, data }) {
               type="password"
               autoComplete="off"
               name="new_password"
-              className=" focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+              className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
               placeholder="New Password"
               required=""
               value={values.new_password}
@@ -300,7 +300,7 @@ function Personal({ id, api, dispatch, data }) {
               type="password"
               autoComplete="off"
               name="confirm_new_password"
-              className=" focus:border-purple-600 focus:outline-none  bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
+              className="border-2 border-black focus:border-purple-600 focus:outline-none  bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
               placeholder="confirm password"
               required=""
               value={values.confirm_new_password}
