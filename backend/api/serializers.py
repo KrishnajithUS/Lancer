@@ -330,13 +330,14 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CreatePost
-        fields = ["id", "title", "cover_image", "description","keyfeatures"]
+        fields = ["category","sub_category","id", "title", "cover_image","price","description","keyfeatures"]
 
     def create(self, validated_data):
-        print(validated_data)
-
-       
-        post = CreatePost(**validated_data)
+        print("crerte method",validated_data)
+        freelancer = FreeLancer.objects.get(user=self.context["request"].user)
+        # category=Category.objects.get(pk=validated_data['category'])
+        # subcategory=SubCategory.objects.get(pk=validated_data['sub_category'],subcategory=category)
+        post=CreatePost(user=freelancer,category=validated_data['category'],sub_category=validated_data['sub_category'],title=validated_data["title"],cover_image=validated_data["cover_image"],description=validated_data["description"],keyfeatures=validated_data["keyfeatures"],price=validated_data["price"])
         post.save()
         return post
 

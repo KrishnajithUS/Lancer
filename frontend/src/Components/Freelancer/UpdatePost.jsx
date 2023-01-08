@@ -1,11 +1,17 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-unused-vars */
+/* eslint-disable dot-notation */
 /* eslint-disable no-extra-boolean-cast */
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { userParams, useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import useAxios from '../../Axios/useAxios';
 import { AddPostSchema } from '../../schemas';
 
-function AddPost() {
+function UpdatePost() {
+  const params = useParams();
+  const id = params['id'];
+
   const api = useAxios();
   const [categoryList, SetCategoryList] = useState([]);
   const [subcategoryList, SetsubCategoryList] = useState([]);
@@ -21,9 +27,7 @@ function AddPost() {
   };
 
   const getCategory = async () => {
-    const Response = await api.post(`/cpost/`, {
-      get_category: true,
-    });
+    const Response = await api.get(`/cpost/`);
     SetCategoryList(Response.data);
   };
   const getSubCategory = async () => {
@@ -37,6 +41,19 @@ function AddPost() {
   // useEffect(() => {
   //   getCategory();
   // }, []);
+  const [dataHandler, setDataHandler] = useState([]);
+  const postDetails = async () => {
+    try {
+      const response = await api.post(`/cpost/`, {
+        id,
+      });
+      console.log('response', response.data);
+
+      setDataHandler(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleChangeLL = (e) => {
     console.log('id', e.target.value);
     setSelect(e.target.value);
@@ -46,7 +63,9 @@ function AddPost() {
     subsetSelect(e.target.value);
     getSubCategory();
   };
-
+  useEffect(() => {
+    postDetails();
+  }, []);
   const navigate = useNavigate();
   const {
     values,
@@ -70,7 +89,7 @@ function AddPost() {
       formData.append('sub_category', subselect);
       formData.append('keyfeatures', values.features);
       try {
-        const response = await api.post(`/cpost/`, formData);
+        const response = await api.put(`/cpost/`, formData);
 
         if (response.status === 201) {
           navigate('/post');
@@ -308,4 +327,4 @@ function AddPost() {
   );
 }
 
-export default AddPost;
+export default UpdatePost;

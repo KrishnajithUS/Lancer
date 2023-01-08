@@ -407,20 +407,19 @@ class PostView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        # print(request.data)
+        print(request.data)
         if request.data.get("get_category"):
             category=Category.objects.all()
             serializer=CategorySerializer(category,many=True)
-            print(serializer)
+          
             return Response(serializer.data,status=status.HTTP_200_OK)
         if request.data.get("get_sub_category"):
-            print(request.data)
             category=Category.objects.get(pk=request.data.get('category'))
-            print(category)
+         
             subcategory=SubCategory.objects.filter(subcategory=category)
-            print(subcategory)
+          
             serializer=SubCategorySerializer(subcategory,many=True)
-            print(serializer)
+          
             return Response(serializer.data,status=status.HTTP_200_OK)
             
         if request.data.get("is_delete"):
@@ -430,15 +429,10 @@ class PostView(APIView):
             return Response(
                 {"details": "deleted successfully"}, status=status.HTTP_200_OK
             )
-        freelancer = FreeLancer.objects.get(user=request.user)
-        print("freelancer",freelancer)
-        category=Category.objects.get(pk=request.data['category'])
-        print("category",category)
-        subcategory=SubCategory.objects.get(pk=request.data['sub_category'],subcategory=category)
-        print('subcategory',subcategory)
-        CreatePost.objects.create(user=freelancer,category=category,sub_category=subcategory,title=request.data["title"],cover_image=request.data["cover_image"],description=request.data["description"],keyfeatures=request.data["keyfeatures"],price=request.data["price"])
-     
+       
+        print('request comes here',request.data)
         serializer = PostSerializer(data=request.data, context={"request": request})
+        print(serializer)
 
         if serializer.is_valid():
             serializer.save()
