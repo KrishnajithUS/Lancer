@@ -133,7 +133,7 @@ function Skills({ addskill, skills }) {
                   <input
                     type="text"
                     name="skills"
-                    className=" focus:border-purple-600 focus:outline-none bg-white text-white-900 text-sm rounded-lg block w-full p-2.5   dark:placeholder-slate-400 dark:text-black"
+                    className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white text-white-900 text-sm rounded-lg block w-full p-2.5   dark:placeholder-slate-400 dark:text-black"
                     placeholder=""
                     required=""
                     value={values.skills}

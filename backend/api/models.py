@@ -78,8 +78,8 @@ class CreatePost(models.Model):
     price=models.IntegerField(default=None,blank=True,null=True)
     is_completed = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.title
+    # def __str__(self):
+    #     return self.title
 
 
 

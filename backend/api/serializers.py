@@ -321,21 +321,22 @@ class EduSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model=Category
-        fields=["category_name"]
+        fields=["id","category_name"]
 class SubCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model=SubCategory
-        fields=["subcategory_name"]
+        fields=["id","subcategory_name"]
 class PostSerializer(serializers.ModelSerializer):
-    category=CategorySerializer(many=False, required=False)
-    sub_category=SubCategorySerializer(many=False)
+
     class Meta:
         model = CreatePost
-        fields = ["id", "title", "cover_image", "description","category","sub_category"]
+        fields = ["id", "title", "cover_image", "description","keyfeatures"]
 
     def create(self, validated_data):
-        freelancer = FreeLancer.objects.get(user=self.context["request"].user)
-        post = CreatePost(user=freelancer, **validated_data)
+        print(validated_data)
+
+       
+        post = CreatePost(**validated_data)
         post.save()
         return post
 
