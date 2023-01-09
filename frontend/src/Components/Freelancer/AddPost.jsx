@@ -18,6 +18,7 @@ function AddPost() {
     description: '',
     price: '',
     features: '',
+    specialization: '',
   };
 
   const getCategory = async () => {
@@ -32,8 +33,9 @@ function AddPost() {
       category: select,
     });
     SetsubCategoryList(response.data);
-    console.log(response);
+    console.log(response.data);
   };
+  console.log(categoryList);
   // useEffect(() => {
   //   getCategory();
   // }, []);
@@ -68,6 +70,7 @@ function AddPost() {
       formData.append('price', values.price);
       formData.append('category', select);
       formData.append('sub_category', subselect);
+      formData.append('specialization', values.specialization);
       formData.append('keyfeatures', values.features);
       try {
         const response = await api.post(`/cpost/`, formData);
@@ -234,7 +237,7 @@ function AddPost() {
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                    Price
+                    Starting Price
                   </label>
                   <input
                     type="text"
@@ -288,6 +291,36 @@ function AddPost() {
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                     placeholder="Description About Your Post"
+                    required
+                  />
+                </div>
+                <div className="col-span-full ">
+                  <label className="block mb-2 mt-2 text-sm font-medium text-gray-900 ">
+                    Specialization
+                  </label>
+                  <input
+                    type="text"
+                    id="first_name"
+                    name="specialization"
+                    placeholder="specialization of your sevice"
+                    value={values.specialization}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="
+
+                              w-full
+                              px-3 py-2
+                              text-sm
+                              border-slate-800
+
+                              text-gray-700
+                              bg-white bg-clip-padding
+
+                              transition
+                              ease-in-out
+                              border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
+
+                              focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                     required
                   />
                 </div>

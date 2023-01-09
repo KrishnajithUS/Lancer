@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 function ListPost({ dataHandler }) {
   console.log(dataHandler);
   return dataHandler.map((item) => (
-    <div className="md:col-span-1 col-span-3  mb-56 ">
-      <div className="  h-full m-5  bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <div className="md:col-span-2 col-span-4  md:mb-56 ">
+      <div className=" mb:10 md:mb- h-full m-5  bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <div className="m-2">
           <img
             className="rounded-t-lg w-full "
@@ -31,8 +31,13 @@ function ListPost({ dataHandler }) {
               </p>
             </div>
             <div className="text-white mb-2">
-              <span>Price :</span>
-              <span> 600 &#8377;</span>
+              <span>Starting Price :</span>
+              <span>
+                {' '}
+                {item?.price}
+                {' '}
+                &#8377;
+              </span>
             </div>
             <div>
               <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 dark:text-white">
@@ -42,10 +47,18 @@ function ListPost({ dataHandler }) {
                 {item.keyfeatures}
               </p>
             </div>
+            <div>
+              <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 dark:text-white">
+                Specialization
+              </h5>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-0">
+                {item.specialization}
+              </p>
+            </div>
           </div>
           <div className="flex justify-between">
             <div>
-              <Link to={`updatepost/${item.id}`}>
+              <Link to={`/updatepost/${item.id}`}>
                 <button
                   type="button"
                   className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white hover:cursor-pointer bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"

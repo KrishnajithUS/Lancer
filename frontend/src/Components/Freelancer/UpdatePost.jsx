@@ -24,10 +24,13 @@ function UpdatePost() {
     description: '',
     price: '',
     features: '',
+    specialization: '',
   };
 
   const getCategory = async () => {
-    const Response = await api.get(`/cpost/`);
+    const Response = await api.post(`/cpost/`, {
+      get_category: true,
+    });
     SetCategoryList(Response.data);
   };
   const getSubCategory = async () => {
@@ -36,8 +39,9 @@ function UpdatePost() {
       category: select,
     });
     SetsubCategoryList(response.data);
-    console.log(response);
+    console.log(response.data);
   };
+  console.log(categoryList);
   // useEffect(() => {
   //   getCategory();
   // }, []);
@@ -46,6 +50,7 @@ function UpdatePost() {
     try {
       const response = await api.post(`/cpost/`, {
         id,
+        is_update: true,
       });
       console.log('response', response.data);
 
@@ -54,6 +59,8 @@ function UpdatePost() {
       console.log(err);
     }
   };
+  console.log('data handler', dataHandler.categorydata);
+
   const handleChangeLL = (e) => {
     console.log('id', e.target.value);
     setSelect(e.target.value);
@@ -80,18 +87,21 @@ function UpdatePost() {
     validationSchema: AddPostSchema,
 
     onSubmit: async (values, action) => {
+      console.log(values.file);
       const formData = new FormData();
+      formData.append('id', dataHandler?.id);
       formData.append('title', values.title);
       formData.append('cover_image', values.file);
       formData.append('description', values.description);
       formData.append('price', values.price);
       formData.append('category', select);
       formData.append('sub_category', subselect);
+      formData.append('specialization', values.specialization);
       formData.append('keyfeatures', values.features);
       try {
         const response = await api.put(`/cpost/`, formData);
 
-        if (response.status === 201) {
+        if (response.status === 201 || response.status === 200) {
           navigate('/post');
         } else {
           alert('not valid credentials');
@@ -103,15 +113,35 @@ function UpdatePost() {
       action.resetForm();
     },
   });
+  const handleDelete = async () => {
+    try {
+      await api.post(`/cpost/`, {
+        id: dataHandler.id ? dataHandler.id : '',
+        is_delete: true,
+      });
+      navigate('/post');
+    } catch (err) {
+      console.log(err);
+    }
+  };
   console.log(setFieldValue);
   console.log(errors);
   return (
     <div className=" w-full md:h-full h-screen">
       <div className="grid grid-cols-10 gap-4 m-4 md:m-10">
         <div className="col-start-2 col-span-8 ">
-          <h1 className="text-black font-bold text-xl md:text-3xl  mb-2">
-            ADD POST
-          </h1>
+          <div className="flex justify-between">
+            <div>
+              <h1 className="text-black font-bold text-xl md:text-3xl  mb-2">
+                EDIT POST
+              </h1>
+            </div>
+            <div>
+              <button onClick={handleDelete} type="button">
+                Delete
+              </button>
+            </div>
+          </div>
 
           <div className=" p-4">
             <form onSubmit={handleSubmit}>
@@ -124,6 +154,7 @@ function UpdatePost() {
                     type="text"
                     id="first_name"
                     name="title"
+                    placeholder={dataHandler.title}
                     value={values.title}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -142,7 +173,6 @@ function UpdatePost() {
                               border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
-                    placeholder="Post Title"
                     required
                   />
                 </div>
@@ -170,7 +200,6 @@ function UpdatePost() {
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                     type="file"
                     name="file"
-                    id="file"
                     onChange={(event) => {
                       handleChange(event);
                       setFieldValue('file', event.currentTarget.files[0]);
@@ -178,10 +207,12 @@ function UpdatePost() {
                     required
                   />
                 </div>
+
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 ">
                     category
                   </label>
+                  <p className="mb-2">{dataHandler.categorydata}</p>
                   <select
                     required
                     onClick={handleChangeLL}
@@ -203,6 +234,8 @@ function UpdatePost() {
                   <label className="block mb-2 text-sm font-medium text-gray-900 ">
                     sub category
                   </label>
+                  <p className="mb-2">{dataHandler.subcategorydata}</p>
+
                   <select
                     required
                     onClick={handleChangeN}
@@ -247,13 +280,13 @@ function UpdatePost() {
                               border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
-                    placeholder="Post Title"
+                    placeholder={dataHandler.keyfeatures}
                     required
                   />
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                    Price
+                    Starting Price
                   </label>
                   <input
                     type="text"
@@ -276,7 +309,37 @@ function UpdatePost() {
                               border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
-                    placeholder="Enter Your Price  &#8377;"
+                    placeholder={`\u20B9 ${dataHandler.price}`}
+                    required
+                  />
+                </div>
+                <div className="col-span-full ">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                    Specialization
+                  </label>
+                  <input
+                    type="text"
+                    id="first_name"
+                    name="specialization"
+                    placeholder={dataHandler.specialization}
+                    value={values.specialization}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="
+
+                              w-full
+                              px-3 py-2
+                              text-sm
+                              border-slate-800
+
+                              text-gray-700
+                              bg-white bg-clip-padding
+
+                              transition
+                              ease-in-out
+                              border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
+
+                              focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                     required
                   />
                 </div>
@@ -306,7 +369,7 @@ function UpdatePost() {
                              rounded shadow appearance-none focus:outline-none focus:shadow-outline
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
-                    placeholder="Description About Your Post"
+                    placeholder={`${dataHandler.description}`}
                     required
                   />
                 </div>

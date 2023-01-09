@@ -22,8 +22,8 @@ function Post() {
   console.log(dataHandler, 'the post data');
   return (
     <div className="m-10">
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-3">
+      <div className="grid grid-cols-4 gap-4 ">
+        <div className="col-span-4">
           <PostHeading />
         </div>
 

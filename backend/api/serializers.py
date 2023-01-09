@@ -327,37 +327,44 @@ class SubCategorySerializer(serializers.ModelSerializer):
         model=SubCategory
         fields=["id","subcategory_name"]
 class PostSerializer(serializers.ModelSerializer):
+    categorydata = serializers.CharField(
+    source="category.category_name", read_only=True, required=False
+)
+    subcategorydata = serializers.CharField(
+source="sub_category.subcategory_name", read_only=True, required=False
+)
 
     class Meta:
         model = CreatePost
-        fields = ["category","sub_category","id", "title", "cover_image","price","description","keyfeatures"]
+        fields = ["id","category","sub_category","id","specialization","title", "cover_image","price","description","keyfeatures","subcategorydata","categorydata"]
 
     def create(self, validated_data):
         print("crerte method",validated_data)
         freelancer = FreeLancer.objects.get(user=self.context["request"].user)
         # category=Category.objects.get(pk=validated_data['category'])
         # subcategory=SubCategory.objects.get(pk=validated_data['sub_category'],subcategory=category)
-        post=CreatePost(user=freelancer,category=validated_data['category'],sub_category=validated_data['sub_category'],title=validated_data["title"],cover_image=validated_data["cover_image"],description=validated_data["description"],keyfeatures=validated_data["keyfeatures"],price=validated_data["price"])
+        post=CreatePost(user=freelancer,category=validated_data['category'],sub_category=validated_data['sub_category'],title=validated_data["title"],cover_image=validated_data["cover_image"],specialization=validated_data["specialization"],description=validated_data["description"],keyfeatures=validated_data["keyfeatures"],price=validated_data["price"])
         post.save()
         return post
 
-    def update(self, instance, validated_data):
-        print("hoi")
-        if validated_data.get("title", None):
-            instance.title = validated_data.get("title", instance.title)
-        if validated_data.get("cover_image", None):
-            instance.cover_image = validated_data.get("cover_image", instance.cover_image)
-        if validated_data.get("description", None):
-            instance.description = validated_data.get(
-                "description", instance.description
-            )
-        if validated_data.get("price", None):
-            instance.price = validated_data.get(
-                "price", instance.price
-            )
-
-        instance.save()
-        return instance
+    # def update(self, instance, validated_data):
+    #     print("hoi")
+    #     # if validated_data.get("title", None):
+    #     #     instance.title = validated_data.get("title", instance.title)
+    #     # if validated_data.get("cover_image", None):
+    #     #     instance.cover_image = validated_data.get("cover_image", instance.cover_image)
+    #     # if validated_data.get("description", None):
+    #     #     instance.description = validated_data.get(
+    #     #         "description", instance.description
+    #     #     )
+    #     # if validated_data.get("price", None):
+    #     #     instance.price = validated_data.get(
+    #     #         "price", instance.price
+    #     #     )
+    #     print(validated_data)
+    #     instance(**validated_data)
+    #     instance.save()
+    #     return instance
 
 
 

@@ -407,7 +407,7 @@ class PostView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        print(request.data)
+        
         if request.data.get("get_category"):
             category=Category.objects.all()
             serializer=CategorySerializer(category,many=True)
@@ -429,6 +429,18 @@ class PostView(APIView):
             return Response(
                 {"details": "deleted successfully"}, status=status.HTTP_200_OK
             )
+        if request.data.get("is_update"):
+            user = request.user
+
+            freelancer = FreeLancer.objects.get(user=user)
+
+            post = CreatePost.objects.get(pk=request.data["id"],user=freelancer)
+            # skills may be multiple objets
+            # so we need to use many= True to serialize that object
+            serializer = PostSerializer(post, many=False)
+            print(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
        
         print('request comes here',request.data)
         serializer = PostSerializer(data=request.data, context={"request": request})
@@ -451,7 +463,7 @@ class PostView(APIView):
         # skills may be multiple objets
         # so we need to use many= True to serialize that object
         serializer = PostSerializer(post, many=True)
-        print(serializer.data)
+      
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request):

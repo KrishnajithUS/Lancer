@@ -70,11 +70,11 @@ class CreatePost(models.Model):
     user=models.ForeignKey(FreeLancer,on_delete=models.CASCADE,default=None)
     category=models.ForeignKey(Category,on_delete=models.CASCADE,default=None)
     sub_category=models.ForeignKey(SubCategory,on_delete=models.CASCADE,default=None)
-    
+    specialization=models.CharField(max_length=200,blank=True,null=True)
     title=models.CharField(max_length=30,blank=True,null=True)
     cover_image=models.ImageField(upload_to=upload_to,blank=True,null=True)
-    description=models.TextField(max_length=100,blank=True,null=True)
-    keyfeatures=models.CharField(max_length=30,blank=True,null=True)
+    description=models.TextField(max_length=800,blank=True,null=True)
+    keyfeatures=models.CharField(max_length=200,blank=True,null=True)
     price=models.IntegerField(default=None,blank=True,null=True)
     is_completed = models.BooleanField(default=False)
 

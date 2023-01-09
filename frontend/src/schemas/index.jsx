@@ -79,7 +79,7 @@ const OtpShema = Yup.object({
 });
 const AddPostSchema = Yup.object({
   title: Yup.string().min(5).max(20).required('Enter Your Post Title'),
-  description: Yup.string().min(10).max(50).required('Please enter Description'),
+  description: Yup.string().min(10).max(800).required('Please enter Description'),
   price: Yup.number().min(2).required('Price is not acceptable'),
 });
 
