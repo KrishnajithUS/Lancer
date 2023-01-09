@@ -173,7 +173,6 @@ function UpdatePost() {
                               border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
-                    required
                   />
                 </div>
                 <div>
@@ -204,7 +203,6 @@ function UpdatePost() {
                       handleChange(event);
                       setFieldValue('file', event.currentTarget.files[0]);
                     }}
-                    required
                   />
                 </div>
 
@@ -214,7 +212,6 @@ function UpdatePost() {
                   </label>
                   <p className="mb-2">{dataHandler.categorydata}</p>
                   <select
-                    required
                     onClick={handleChangeLL}
                     className=" text-gray-900  border-2 border-black  focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                   >
@@ -237,7 +234,6 @@ function UpdatePost() {
                   <p className="mb-2">{dataHandler.subcategorydata}</p>
 
                   <select
-                    required
                     onClick={handleChangeN}
                     className=" text-gray-900  border-2 border-black   focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                   >
@@ -281,7 +277,6 @@ function UpdatePost() {
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                     placeholder={dataHandler.keyfeatures}
-                    required
                   />
                 </div>
                 <div>
@@ -310,7 +305,6 @@ function UpdatePost() {
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                     placeholder={`\u20B9 ${dataHandler.price}`}
-                    required
                   />
                 </div>
                 <div className="col-span-full ">
@@ -340,7 +334,6 @@ function UpdatePost() {
                               border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
-                    required
                   />
                 </div>
                 <div className="col-span-full ">
@@ -370,7 +363,6 @@ function UpdatePost() {
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                     placeholder={`${dataHandler.description}`}
-                    required
                   />
                 </div>
               </div>

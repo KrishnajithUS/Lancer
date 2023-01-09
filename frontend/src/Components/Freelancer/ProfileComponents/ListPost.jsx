@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function ListPost({ dataHandler }) {
   console.log(dataHandler);
   return dataHandler.map((item) => (
-    <div className="md:col-span-2 col-span-4 ">
+    <div className="md:col-span-2 col-span-4 mt-5">
       <div className=" h-full  m-5 md:mb-0 md:m-5 bg-gray-50 border border-gray-100  rounded-lg shadow-lg shadow-gray-700 ">
         <div className="m-2">
           <img

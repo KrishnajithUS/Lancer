@@ -11,6 +11,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
 from api.models import Client, Education, FreeLancer, Skills, Experience,CreatePost,Category,SubCategory 
 from .emails import verify_token
+import aiohttp
 from asgiref.sync import sync_to_async
 from .emails import send_otp
 
