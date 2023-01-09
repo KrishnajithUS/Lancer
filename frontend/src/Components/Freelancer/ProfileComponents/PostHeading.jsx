@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function PostHeading() {
   return (
-    <div className="flex flex-col items-center mb-8  justify-center">
+    <div className="flex flex-col items-center md:mb-8  justify-center">
       <div className="">
         <h2 className="mb-2 text-black text-3xl lg:text-4xl tracking-tight font-extrabold">
           Your Posts

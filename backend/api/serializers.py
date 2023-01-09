@@ -116,6 +116,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         password = validated_data.get("password", None)
         new_password = validated_data.get("new_password", None)
         first_name = validated_data.get("first_name", None)
+        username=validated_data.get("username",None)
         print(first_name)
         last_name = validated_data.get("last_name", None)
         email = validated_data.get("email", None)
@@ -137,7 +138,8 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             instance.last_name = validated_data.get("last_name", instance.last_name)
         if email:
             instance.email = validated_data.get("email", instance.email)
-
+        if username:
+            instance.username=validated_data.get("username",instance.username)
         instance.save()
         return instance
 

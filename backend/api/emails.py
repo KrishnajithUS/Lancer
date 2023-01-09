@@ -24,7 +24,7 @@ def send_otp(email):
             user_obj.otp=otp_number
             user_obj.otp_interval = 120
             user_obj.save()
-            # send_mail(subject,message,email_from,[email])
+            send_mail(subject,message,email_from,[email])
             return True
         
             

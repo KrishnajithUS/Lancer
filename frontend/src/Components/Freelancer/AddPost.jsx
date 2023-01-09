@@ -231,7 +231,7 @@ function AddPost() {
                               border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
-                    placeholder="Post Title"
+                    placeholder="Add Extra Features of Your Service"
                     required
                   />
                 </div>

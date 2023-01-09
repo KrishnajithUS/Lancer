@@ -43,24 +43,24 @@ function Otp() {
     <div className="">
       <>
         <div className=" flex  items-center m-10 flex-col justify-center overflow-hidden bg-gray-50 py-12">
-          <div className="bg-white px-6 pt-10 pb-9 drop-shadow-2xl mx-auto w-full max-w-lg rounded-2xl">
-            <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
+          <div className="bg-white border border-gray-400 px-6 pt-10 pb-9 drop-shadow-2xl mx-auto w-full max-w-lg rounded-2xl">
+            <div className="mx-auto flex w-full max-w-md flex-col space-y-8 mb-0">
               <div className="flex flex-col items-center justify-center text-center space-y-2">
                 <div className="font-semibold text-3xl">
                   <p>Email Verification</p>
                 </div>
                 <div className="flex flex-row text-sm font-medium text-gray-400">
-                  <p>We have sent a code to your email ba**@dipainhouse.com</p>
+                  <p>We have sent a code to your email </p>
                 </div>
               </div>
               <div>
                 <form onSubmit={handleSubmit} action="">
-                  <div className="flex flex-col space-y-16">
+                  <div className="flex flex-col space-y-8">
                     <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
                       <div className="w-16 h-16 ">
                         <input
-                          pattern="[0-9]+"
-                          className="w-full h-full flex flex-col border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl items-center justify-center text-center px-5 outline-none rounded-xl shadow-lg text-lg bg-white "
+                          maxLength="1"
+                          className="border-2 border-black w-full h-full flex flex-col border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl items-center justify-center text-center px-5 outline-none rounded-xl shadow-lg text-lg bg-white "
                           type="text"
                           name="digit1"
                           id=""
@@ -76,8 +76,8 @@ function Otp() {
                       </div>
                       <div className="w-16 h-16 ">
                         <input
-                          pattern="[0-9]+"
-                          className="w-full h-full flex flex-col  border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl items-center justify-center text-center px-5 outline-none rounded-xl text-lg bg-white "
+                          maxLength="1"
+                          className="border-2 border-black w-full h-full flex flex-col  border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl items-center justify-center text-center px-5 outline-none rounded-xl text-lg bg-white "
                           type="text"
                           name="digit2"
                           id=""
@@ -93,8 +93,8 @@ function Otp() {
                       </div>
                       <div className="w-16 h-16 ">
                         <input
-                          pattern="[0-9]+"
-                          className="w-full h-full   border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl text-lg bg-white "
+                          maxLength="1"
+                          className="border-2 border-black w-full h-full   border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl text-lg bg-white "
                           type="text"
                           name="digit3"
                           id=""
@@ -110,8 +110,8 @@ function Otp() {
                       </div>
                       <div className="w-16 h-16 ">
                         <input
-                          pattern="[0-9]+"
-                          className="w-full h-full  border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl text-lg bg-white "
+                          maxLength="1"
+                          className="border-2 border-black w-full h-full  border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl text-lg bg-white "
                           type="text"
                           name="digit4"
                           id=""
@@ -126,11 +126,11 @@ function Otp() {
                         ) : null}
                       </div>
                     </div>
-                    <div className="flex flex-col  m-10 space-y-5">
-                      <div>
+                    <div className="flex flex-col m-24 mt-0 ">
+                      <div className="mt-0 ">
                         <button
                           type="submit"
-                          className="flex  flex-row text-xl items-center justify-center text-center w-full border hover:-translate-y-1 hover:scale-100 hover:bg-purple-500 duration-300 rounded-xl outline-none py-5 bg-purple-700 border-none text-white text-sm shadow-sm"
+                          className="flex  flex-row md:text-md text-sm items-center justify-center text-center w-full border hover:-translate-y-1 hover:scale-100 hover:bg-purple-500 duration-300 rounded-xl outline-none py-5 bg-purple-700 border-none text-white text-sm shadow-sm"
                         >
                           Verify Account
                         </button>

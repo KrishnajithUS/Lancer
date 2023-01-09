@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 function ListPost({ dataHandler }) {
   console.log(dataHandler);
   return dataHandler.map((item) => (
-    <div className="md:col-span-2 col-span-4  md:mb-56 ">
-      <div className=" mb:10 md:mb- h-full m-5  bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <div className="md:col-span-2 col-span-4 ">
+      <div className=" h-full  m-5 md:mb-0 md:m-5 bg-gray-50 border border-gray-100  rounded-lg shadow-lg shadow-gray-700 ">
         <div className="m-2">
           <img
             className="rounded-t-lg w-full "
@@ -16,21 +16,21 @@ function ListPost({ dataHandler }) {
         <div className="p-5">
           <div className="flex flex-col">
             <div>
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
                 {item?.title}
               </h5>
             </div>
             <div>
-              <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 dark:text-white">
+              <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 ">
                 Description
               </h5>
             </div>
             <div>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <p className="mb-3 font-normal text-gray-700 ">
                 {item?.description}
               </p>
             </div>
-            <div className="text-white mb-2">
+            <div className="text-dark mb-2">
               <span>Starting Price :</span>
               <span>
                 {' '}
@@ -40,18 +40,18 @@ function ListPost({ dataHandler }) {
               </span>
             </div>
             <div>
-              <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 dark:text-white">
+              <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 ">
                 Key Features
               </h5>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-0">
+              <p className="mb-3 font-normal text-gray-700  mt-0">
                 {item.keyfeatures}
               </p>
             </div>
             <div>
-              <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 dark:text-white">
+              <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 ">
                 Specialization
               </h5>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-0">
+              <p className="mb-3 font-normal text-gray-700  mt-0">
                 {item.specialization}
               </p>
             </div>
@@ -61,7 +61,7 @@ function ListPost({ dataHandler }) {
               <Link to={`/updatepost/${item.id}`}>
                 <button
                   type="button"
-                  className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white hover:cursor-pointer bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+                  className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white hover:cursor-pointer bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 "
                 >
                   Update
                   <svg
@@ -83,7 +83,7 @@ function ListPost({ dataHandler }) {
             <div>
               <button
                 type="button"
-                className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white hover:cursor-pointer bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+                className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white hover:cursor-pointer bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 "
               >
                 Publish
                 <svg
