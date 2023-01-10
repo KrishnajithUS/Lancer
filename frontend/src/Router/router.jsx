@@ -28,6 +28,7 @@ import AddPost from '../Components/Freelancer/AddPost';
 import UpdatePost from '../Components/Freelancer/UpdatePost';
 import Packages from '../Components/Freelancer/Packages';
 import PostDetailPage from '../Components/Client/ServicePage/PostDetailPage';
+import PublicProfile from '../Components/Freelancer/PublicProfile';
 
 const router = () => {
   const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
@@ -69,6 +70,7 @@ const router = () => {
             path="/verifyotp/:id"
             element={FAuth ? <Fprofile /> : userAuth ? <Cprofile /> : <Otp />}
           />
+          <Route path="/publicprofile" element={<PublicProfile />} />
           <Route path="/services" element={<Service />} />
           <Route path="/post" element={<Post />} />
           <Route path="/logout" element={<LogOut />} />
@@ -76,6 +78,7 @@ const router = () => {
           <Route path="/updatepost/:id" element={<UpdatePost />} />
           <Route path="/packages" element={<Packages />} />
           <Route path="/postDetails" element={<PostDetailPage />} />
+
           <Route path="*" element={<Home />} />
         </Routes>
         <Footer />

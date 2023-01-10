@@ -307,35 +307,7 @@ function UpdatePost() {
                     placeholder={`\u20B9 ${dataHandler.price}`}
                   />
                 </div>
-                <div className="col-span-full ">
-                  <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                    Specialization
-                  </label>
-                  <input
-                    type="text"
-                    id="first_name"
-                    name="specialization"
-                    placeholder={dataHandler.specialization}
-                    value={values.specialization}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className="
 
-                              w-full
-                              px-3 py-2
-                              text-sm
-                              border-slate-800
-
-                              text-gray-700
-                              bg-white bg-clip-padding
-
-                              transition
-                              ease-in-out
-                              border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
-
-                              focus:text-gray-700 focus:bg-white focus:border-purple-600 "
-                  />
-                </div>
                 <div className="col-span-full ">
                   <label className="block mb-2  text-sm font-medium text-gray-900 ">
                     Description
@@ -363,6 +335,35 @@ function UpdatePost() {
 
                               focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                     placeholder={`${dataHandler.description}`}
+                  />
+                </div>
+                <div className="col-span-full ">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                    Specialization
+                  </label>
+                  <input
+                    type="text"
+                    id="first_name"
+                    name="specialization"
+                    placeholder={dataHandler.specialization}
+                    value={values.specialization}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="
+
+                              w-full
+                              px-3 py-2
+                              text-sm
+                              border-slate-800
+
+                              text-gray-700
+                              bg-white bg-clip-padding
+
+                              transition
+                              ease-in-out
+                              border-2 rounded shadow appearance-none focus:outline-none focus:shadow-outline
+
+                              focus:text-gray-700 focus:bg-white focus:border-purple-600 "
                   />
                 </div>
               </div>

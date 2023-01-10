@@ -40,7 +40,7 @@ const cprofileSchema = Yup.object({
     'Enter correct url!'
   ),
   title: Yup.string().min(5).max(20),
-  bio: Yup.string().min(15).max(60),
+  bio: Yup.string().min(15).max(200),
   skills: Yup.string().max(20),
   new_password: Yup.string().min(6),
   confirm_new_password: Yup.string().oneOf(

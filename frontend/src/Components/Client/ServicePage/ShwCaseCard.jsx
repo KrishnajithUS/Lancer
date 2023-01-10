@@ -5,10 +5,10 @@ import profile1 from '../../../Assets/profile1.svg';
 
 function ShwCaseCard() {
   return (
-    <div className="mt-10 ml-4 ">
+    <div className="mt-10 ml-4 mr-4 ">
       <div className="grid grid-cols-9 gap-4">
         <div className="md:col-span-2 col-span-full">
-          <div className="w-full p-6 rounded  bg-gray-50 border border-gray-100  rounded-lg shadow-lg shadow-gray-700">
+          <div className="w-full p-6 rounded  bg-gray-50 border border-gray-300  rounded-lg shadow-lg shadow-gray-700">
             <div className="space-y-2 py-4 overflow-y-auto  ">
               <h2 className="text-md font-bold tracking-widest uppercase dark:text-black">
                 Filter
@@ -42,7 +42,7 @@ function ShwCaseCard() {
             </div>
           </div>
         </div>
-        <div className="md:col-span-4 col-start-2 col-end-9">
+        <div className="md:col-span-4 col-start-2 col-end-9 border-gray-300">
           <div className="block md:max-w-sm w-full  p-2 bg-white  bg-gray-50 border border-gray-100  rounded-lg shadow-lg shadow-gray-700">
             <div className="h-60 w-full rounded-lg bg-white border border-2">Post image</div>
             <div className="flex flex-col ">

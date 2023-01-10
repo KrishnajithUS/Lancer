@@ -83,29 +83,26 @@ const Navbar = () => {
                               </div>
                             </div>
                             <ul
-                              className="py-1 text-sm text-gray-700 "
+                              className="py-1  text-sm text-gray-700 "
                               aria-labelledby="dropdownUserAvatarButton"
                             >
                               <li>
                                 <Link
                                   href="#"
-                                  className="block px-4 py-2 hover:bg-purple-300  "
+                                  className="hover:text-green-600 block px-4 py-2   "
                                 >
                                   Discover Services
                                 </Link>
                               </li>
                               <li>
-                                <Link
-                                  href="#"
-                                  className="block px-4 py-2 hover:bg-purple-300 "
-                                >
+                                <Link className=" block hover:text-green-600 px-4 py-2 ">
                                   Profile
                                 </Link>
                               </li>
                               <li>
                                 <Link
                                   to="/logout"
-                                  className="block px-4 py-2 hover:bg-purple-300  "
+                                  className="block px-4 py-2 hover:text-green-600 "
                                 >
                                   Logout
                                 </Link>
@@ -209,13 +206,13 @@ const Navbar = () => {
                 <div className="md:hidden" id="mobile-menu">
                   <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
                     <ul
-                      className="py-1 text-sm text-gray-700 "
+                      className="py-1  text-sm text-gray-700 "
                       aria-labelledby="dropdownUserAvatarButton"
                     >
                       <li>
                         <Link
                           href="#"
-                          className="block px-4 py-2 hover:bg-purple-300  "
+                          className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300  "
                         >
                           Discover Services
                         </Link>
@@ -223,7 +220,7 @@ const Navbar = () => {
                       <li>
                         <Link
                           href="#"
-                          className="block px-4 py-2 hover:bg-purple-300 "
+                          className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300 "
                         >
                           Profile
                         </Link>
@@ -231,7 +228,7 @@ const Navbar = () => {
                       <li>
                         <Link
                           to="/logout"
-                          className="block px-4 py-2 hover:bg-purple-300  "
+                          className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300  "
                         >
                           Logout
                         </Link>

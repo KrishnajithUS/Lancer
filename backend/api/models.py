@@ -17,7 +17,7 @@ class FreeLancer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title=models.CharField(max_length=20,blank=True,null=True)
     profile_picture = models.ImageField(upload_to=upload_to,blank=True)
-    bio = models.CharField(max_length=60,blank=True,null=True)
+    bio = models.CharField(max_length=200,blank=True,null=True)
     
     social_media_links=models.CharField(max_length=40,blank=True,null=True)
     

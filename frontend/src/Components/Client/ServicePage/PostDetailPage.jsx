@@ -4,11 +4,11 @@ import PostSection from './Components/PostSection';
 
 function PostDetailPage() {
   return (
-    <div className="grid grid-cols-10">
-      <div className="col-span-4 mt-5">
+    <div className="grid grid-cols-10 gap-4 ">
+      <div className="md:col-span-4 col-span-full md:order-1 order-2 ml-5 mr-5 mt-5">
         <ContactSection />
       </div>
-      <div className="col-span-6">
+      <div className="md:col-span-6 md:order-2 order-1 col-span-full ">
         <PostSection />
       </div>
     </div>

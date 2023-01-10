@@ -3,7 +3,7 @@ import React from 'react';
 function PostSection() {
   return (
     <div className="  flex justify-end">
-      <div className="md:col-span-2 w-[100%] col-span-4 h-full lg:m-5 lg:mt-0 mb-20 ">
+      <div className="md:col-span-2 w-[100%] col-span-4 h-full lg:m-5 lg:mt-0 md:mb-20 ">
         <div className="flex flex-col jusfity-center h-full  m-5 md:mb-0 md:m-5 bg-gray-50 border border-gray-300  rounded-lg shadow-lg shadow-gray-700 ">
           <div className="m-5 border-2 border-gray-200 shadow-xl md:m-10   lg:24">
             <img
