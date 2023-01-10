@@ -2,7 +2,7 @@ import React from 'react';
 
 function ContactSection({ status }) {
   return (
-    <div className="w-full  mb-20 md:mb-0 bg-gray-50 border border-gray-300  rounded-lg shadow-lg shadow-gray-700  ">
+    <div className="w-full  mb-20 md:mb-14 bg-gray-50 border border-gray-300  rounded-lg shadow-lg shadow-gray-700  ">
       <div className="flex  flex-col items-center pt-4 pb-10">
         <img
           className="w-24 h-24 mb-3 rounded-full shadow-lg"

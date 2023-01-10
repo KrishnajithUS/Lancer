@@ -12,7 +12,7 @@ function PostSection() {
               alt="img"
             />
           </div>
-          <div className="p-5">
+          <div className="p-5  ">
             <div className="flex flex-col">
               <div>
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">

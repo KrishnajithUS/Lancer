@@ -479,7 +479,21 @@ class PostView(APIView):
             print(serializer.data)
             return Response({"details": "updated"}, status=status.HTTP_200_OK)
         return Response(serializer.errors)
-
+#Public Profile data
+class PublicProfileView(APIView):
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        print(request.data)
+        user=User.objects.get(pk=request.data.get("id"))
+        print(user)
+        freelancer=FreeLancer.objects.get(user=user)   
+        print(freelancer)
+        if freelancer is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        serializer=FreelancerSerializer(freelancer)
+        print(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    
 # logout
 
 

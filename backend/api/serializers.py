@@ -3,6 +3,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Client, CreatePost, Education, FreeLancer, Skills, Experience,Category,SubCategory
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import exceptions
+
 import hashlib
 from .emails import send_otp
 
@@ -135,41 +136,6 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         return instance
 
 
-class FreelancerSerializer(serializers.ModelSerializer):
-    user = UserUpdateSerializer(many=False, required=False)
-
-    class Meta:
-        model = FreeLancer
-        fields = ["user", "title", "profile_picture", "bio", "social_media_links"]
-        partial = True
-
-    def update(self, instance, validated_data):
-        try:
-            user_data = validated_data.pop("user")
-        except:
-            pass
-        if validated_data.get("title", None):
-            instance.title = validated_data.get("title", instance.title)
-        if validated_data.get("bio", None):
-            instance.bio = validated_data.get("bio", instance.bio)
-        if validated_data.get("social_media_links", None):
-            instance.social_media_links = validated_data.get(
-                "social_media_links", instance.bio
-            )
-        if validated_data.get("profile_picture", None):
-            instance.profile_picture = validated_data.get(
-                "profile_picture", instance.profile_picture
-            )
-        instance.save()
-        # pop out the data from user dictionary
-        try:
-            user = UserUpdateSerializer(instance=instance.user, data=user_data)
-
-            user.is_valid(raise_exception=True)
-            user.save()
-        except:
-            pass
-        return instance
 
 
 class UserSerializerWithToken(UserSerializer):
@@ -361,3 +327,56 @@ source="sub_category.subcategory_name", read_only=True, required=False
 
 
 
+class FreelancerSerializer(serializers.ModelSerializer):
+    user = UserUpdateSerializer(many=False, required=False)
+    education = serializers.SerializerMethodField()
+    experience = serializers.SerializerMethodField()
+    skills=serializers.SerializerMethodField()
+    class Meta:
+        model = FreeLancer
+        fields = ["user","education","experience","skills","title", "profile_picture", "bio", "social_media_links"]
+        partial = True
+    def get_education(self, obj):
+        """Return the related education instances for the FreeLancer instance"""
+        print("object",obj)
+        education_qs = obj.education_set.all()
+        print(education_qs,"inside custm method")
+        return EduSerializer(education_qs, many=True, context=self.context).data
+
+    def get_experience(self, obj):
+        """Return the related experience instances for the FreeLancer instance"""
+        experience_qs = obj.experience_set.all()
+        return ExpSerializer(experience_qs, many=True, context=self.context).data
+    def get_skills(self, obj):
+        """Return the related experience instances for the FreeLancer instance"""
+        skills_qs = obj.skills_set.all()
+        return SkillSerializer(skills_qs, many=True, context=self.context).data
+
+
+    def update(self, instance, validated_data):
+        try:
+            user_data = validated_data.pop("user")
+        except:
+            pass
+        if validated_data.get("title", None):
+            instance.title = validated_data.get("title", instance.title)
+        if validated_data.get("bio", None):
+            instance.bio = validated_data.get("bio", instance.bio)
+        if validated_data.get("social_media_links", None):
+            instance.social_media_links = validated_data.get(
+                "social_media_links", instance.bio
+            )
+        if validated_data.get("profile_picture", None):
+            instance.profile_picture = validated_data.get(
+                "profile_picture", instance.profile_picture
+            )
+        instance.save()
+        # pop out the data from user dictionary
+        try:
+            user = UserUpdateSerializer(instance=instance.user, data=user_data)
+
+            user.is_valid(raise_exception=True)
+            user.save()
+        except:
+            pass
+        return instance
