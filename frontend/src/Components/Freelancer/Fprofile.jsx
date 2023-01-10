@@ -60,7 +60,7 @@ function Fprofile() {
                   <div className="col-span-1 shadow-2xl bg-white rounded-lg  ">
                     <div className="flex flex-col align-center items-center pb-2">
                       <img
-                        className="w-24 h-24 mt-2 rounded-full "
+                        className="w-30 h-30 mt-2 rounded-full "
                         src={
                           item.fprofile_picture
                             ? `http://localhost:8000${item.fprofile_picture}`

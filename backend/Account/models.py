@@ -65,7 +65,7 @@ class User(AbstractBaseUser):
     otp=models.CharField(max_length=40,blank=True,null=True)
     is_staff = models.BooleanField(default=False) # a admin user; non super-user
     is_admin = models.BooleanField(default=False) # a superuser
-    is_user=models.BooleanField(default=False)
+   
     is_superadmin = models.BooleanField(default=False)
     is_freelancer=models.BooleanField(default=False)
     # notice the absence of a "Password field", that is built in.

@@ -13,6 +13,7 @@ import Otp from '../Components/Constants/Otp';
 import LogOut from '../Components/Constants/LogOut';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
+
 import Register from '../Pages/Register';
 import SelectionPage from '../Pages/SelectionPage';
 import FreelancerRegister from '../Pages/FreelancerRegister';
@@ -20,11 +21,13 @@ import Cprofile from '../Components/Client/Cprofile';
 import Fprofile from '../Components/Freelancer/Fprofile';
 import Navbar from '../Components/Constants/Navbar';
 import AdminHome from '../Components/Admin/AdminHome';
+import Service from '../Components/Client/ServicePage/Service';
 import AdminLogin from '../Components/Admin/AdminLogin';
 import Post from '../Components/Freelancer/Post';
 import AddPost from '../Components/Freelancer/AddPost';
 import UpdatePost from '../Components/Freelancer/UpdatePost';
 import Packages from '../Components/Freelancer/Packages';
+import PostDetailPage from '../Components/Client/ServicePage/PostDetailPage';
 
 const router = () => {
   const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
@@ -66,11 +69,13 @@ const router = () => {
             path="/verifyotp/:id"
             element={FAuth ? <Fprofile /> : userAuth ? <Cprofile /> : <Otp />}
           />
+          <Route path="/services" element={<Service />} />
           <Route path="/post" element={<Post />} />
           <Route path="/logout" element={<LogOut />} />
           <Route path="/addpost" element={<AddPost />} />
           <Route path="/updatepost/:id" element={<UpdatePost />} />
           <Route path="/packages" element={<Packages />} />
+          <Route path="/postDetails" element={<PostDetailPage />} />
           <Route path="*" element={<Home />} />
         </Routes>
         <Footer />

@@ -53,7 +53,6 @@ function Cprofile() {
   const profile_picture = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.profile_picture : null
   );
-  console.log('profile_picture', profile_picture);
 
   const last_name = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.last_name : null
@@ -66,7 +65,7 @@ function Cprofile() {
   const initialValues = {
     first_name: '',
     last_name: '',
-
+    username: '',
     email: '',
     password: '',
     new_password: '',
@@ -104,6 +103,7 @@ function Cprofile() {
 
         const response = await api.put(`/cupdate/`, {
           id,
+          username: values.username,
           first_name: values.first_name,
           last_name: values.last_name,
           email: values.email,
@@ -129,13 +129,13 @@ function Cprofile() {
   console.log(values);
   console.log(errors);
   return (
-    <div className="w-full">
+    <div className="w-full h-screen">
       {message && <Alert />}
       <div className="flex  justify-center items-center  h-48 mx-4 mt-2  bg-zinc-200 rounded-lg ">
         <div className="rounded-full">
           <img
             src={`${mediaBase}${profile_picture}`}
-            className="rounded-full w-24 h-24"
+            className="rounded-full w-40 h-40"
             alt="Avatar"
           />
         </div>
@@ -152,7 +152,7 @@ function Cprofile() {
                 <span className="pl-3">{username}</span>
               </div>
               <div className="col-start-1 col-end-7 md:col-span-3">
-                <span>first_name:</span>
+                <span>First Name:</span>
                 <span className="col-start-1 col-end-7 pl-2">{first_name}</span>
               </div>
               <div className="col-start-1 col-end-7 md:col-span-3">
@@ -225,6 +225,24 @@ function Cprofile() {
                           {errors.last_name && touched.last_name ? (
                             <p className="form-error text-red-600">
                               {errors.last_name}
+                            </p>
+                          ) : null}
+                          <label className="block text-black text-sm font-bold mb-1">
+                            Username
+                          </label>
+                          <input
+                            className="border-slate-800 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            name="username"
+                            type="text"
+                            placeholder={username}
+                            value={values.username}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                          />
+
+                          {errors.username && touched.username ? (
+                            <p className="form-error text-red-600">
+                              {errors.username}
                             </p>
                           ) : null}
                           <label className="block text-black text-sm font-bold mb-1">

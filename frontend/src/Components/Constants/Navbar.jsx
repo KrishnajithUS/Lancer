@@ -1,3 +1,11 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable camelcase */
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
+/* eslint-disable comma-dangle */
+/* eslint-disable indent */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
@@ -10,15 +18,23 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isAuth = useSelector((state) => state.user.user.isLoggedIn);
   const FisAuth = useSelector(
-    (state) => state.freelancer.Freelancer.isLoggedIn,
+    (state) => state.freelancer.Freelancer.isLoggedIn
   );
-
+  const username = useSelector((state) =>
+    state.user.userDetails ? state.user.userDetails.username : null
+  );
+  const email = useSelector((state) =>
+    state.user.userDetails ? state.user.userDetails.email : null
+  );
+  const profile_picture = useSelector((state) =>
+    state.user.userDetails ? state.user.userDetails.profile_picture : null
+  );
   return (
     <div className="sticky top-0 mb-0 z-50  shadow-sm shadow-purple-400">
       <header>
         <div className="">
           <nav className="bg-white font-sans  ">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
+            <div className="w-full mx-auto px-4  ">
               <div className="flex items-center justify-end h-16 ">
                 <div className="flex items-center">
                   <div className="absolute left-1">
@@ -31,8 +47,8 @@ const Navbar = () => {
                         !isAuth
                           ? 'ml-10 flex w-full  items-baseline space-x-4'
                           : !FisAuth
-                            ? 'ml-10 flex w-full  items-baseline space-x-4'
-                            : ' flex w-full  items-baseline space-x-4'
+                          ? 'flex  w-full items-center justify-end space-x-4 '
+                          : ' flex w-full  items-baseline space-x-4'
                       }
                     >
                       <input
@@ -41,16 +57,62 @@ const Navbar = () => {
                         className="lg:w-full w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
                       />
                       {isAuth ? (
-                        <Link to="/logout">
-                          <div className="mr-4">
-                            <button
-                              type="button"
-                              className="rounded-full font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
+                        <>
+                          <button
+                            id="dropdownUserAvatarButton"
+                            data-dropdown-toggle="dropdownAvatar"
+                            className="flex  text-sm bg-gray-800 rounded-full md:mr-0  focus:ring-4 focus:ring-gray-300 "
+                            type="button"
+                          >
+                            <span className="sr-only">Open user menu</span>
+                            <img
+                              className="w-8 h-8 rounded-full"
+                              src={`http://localhost:8000${profile_picture}`}
+                              alt="ph"
+                            />
+                          </button>
+
+                          <div
+                            id="dropdownAvatar"
+                            className="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 "
+                          >
+                            <div className="px-4 py-3 text-sm text-gray-900 ">
+                              <div>{username}</div>
+                              <div className="font-medium truncate">
+                                {email}
+                              </div>
+                            </div>
+                            <ul
+                              className="py-1 text-sm text-gray-700 "
+                              aria-labelledby="dropdownUserAvatarButton"
                             >
-                              LogOut
-                            </button>
+                              <li>
+                                <Link
+                                  href="#"
+                                  className="block px-4 py-2 hover:bg-purple-300  "
+                                >
+                                  Discover Services
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  href="#"
+                                  className="block px-4 py-2 hover:bg-purple-300 "
+                                >
+                                  Profile
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to="/logout"
+                                  className="block px-4 py-2 hover:bg-purple-300  "
+                                >
+                                  Logout
+                                </Link>
+                              </li>
+                            </ul>
                           </div>
-                        </Link>
+                        </>
                       ) : FisAuth ? (
                         <Link to="/logout">
                           <div className="mr-4">
@@ -146,14 +208,35 @@ const Navbar = () => {
               {isAuth ? (
                 <div className="md:hidden" id="mobile-menu">
                   <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
-                    <Link to="/logOut">
-                      <button
-                        type="button"
-                        className="button-new rounded-full  text-white block px-3 py-2   text-base font-medium"
-                      >
-                        LogOut
-                      </button>
-                    </Link>
+                    <ul
+                      className="py-1 text-sm text-gray-700 "
+                      aria-labelledby="dropdownUserAvatarButton"
+                    >
+                      <li>
+                        <Link
+                          href="#"
+                          className="block px-4 py-2 hover:bg-purple-300  "
+                        >
+                          Discover Services
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="#"
+                          className="block px-4 py-2 hover:bg-purple-300 "
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/logout"
+                          className="block px-4 py-2 hover:bg-purple-300  "
+                        >
+                          Logout
+                        </Link>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               ) : FisAuth ? (

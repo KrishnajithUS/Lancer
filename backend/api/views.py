@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
 from api.models import Client, Education, FreeLancer, Skills, Experience,CreatePost,Category,SubCategory 
 from .emails import verify_token
-import aiohttp
+import asyncio
 from asgiref.sync import sync_to_async
 from .emails import send_otp
 
@@ -92,7 +92,7 @@ class RegisterView(APIView):
                 serializer.save()
                 print(serializer.data["email"])
                 try:
-                    send_otp(request.data.get("email"))
+                  send_otp(request.data.get("email"))
                 except:
                     pass
                 data = serializer.data

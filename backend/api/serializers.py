@@ -13,24 +13,15 @@ User = get_user_model()
 # unique username creator
 def generate_username(email):
     # Split the email address into the username and domain
-    username, domain = email.split("@")
+    username= email.split("@")[0]
 
     # Generate a unique number for the username
-    unique_number = generate_unique_number(username)
+   
 
     # Return the username with the unique number appended
-    return username + str(unique_number)
+    return username 
 
 
-def generate_unique_number(username):
-    # Hash the username to create a unique ID
-    hashed_username = hashlib.sha1(username.encode("utf-8")).hexdigest()
-
-    # Convert the hash to an integer
-    unique_number = int(hashed_username, 16)
-
-    # Return the unique number
-    return unique_number
 
 
 class UserSerializer(serializers.ModelSerializer):
