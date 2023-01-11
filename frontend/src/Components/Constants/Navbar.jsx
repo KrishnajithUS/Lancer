@@ -66,7 +66,7 @@ const Navbar = () => {
                           >
                             <span className="sr-only">Open user menu</span>
                             <img
-                              className="w-8 h-8 rounded-full"
+                              className="w-10 h-10 rounded-full"
                               src={`http://localhost:8000${profile_picture}`}
                               alt="ph"
                             />

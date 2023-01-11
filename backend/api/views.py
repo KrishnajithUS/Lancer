@@ -15,7 +15,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
 import asyncio
 from asgiref.sync import sync_to_async
-from .emails import send_otp
+from .tasks import send_otp
 
 User = get_user_model()
 from rest_framework.parsers import JSONParser
@@ -94,7 +94,7 @@ class RegisterView(APIView):
                 serializer.save()
                 print(serializer.data["email"])
                 try:
-                  send_otp(request.data.get("email"))
+                  send_otp.delay((request.data.get("email")))
                 except:
                     pass
                 data = serializer.data
