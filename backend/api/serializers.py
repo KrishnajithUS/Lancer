@@ -290,7 +290,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(source="")
+    
 
     class Meta:
         model = SubCategory
@@ -299,7 +299,7 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.user.first_name", read_only=True, required=False)
-
+    user_id=serializers.CharField(source="user.user.id", read_only=True, required=False)
     categorydata = serializers.CharField(
         source="category.category_name", read_only=True, required=False
     )
@@ -319,6 +319,7 @@ class PostSerializer(serializers.ModelSerializer):
             "first_name",
             "bio",
            "profile_picture",
+           "user_id",
             "id",
             "category",
             "sub_category",

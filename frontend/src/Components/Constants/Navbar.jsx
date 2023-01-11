@@ -88,14 +88,14 @@ const Navbar = () => {
                             >
                               <li>
                                 <Link
-                                  href="#"
+                                  to="/services"
                                   className="hover:text-green-600 block px-4 py-2   "
                                 >
                                   Discover Services
                                 </Link>
                               </li>
                               <li>
-                                <Link className=" block hover:text-green-600 px-4 py-2 ">
+                                <Link to="/cprofile" className=" block hover:text-green-600 px-4 py-2 ">
                                   Profile
                                 </Link>
                               </li>
@@ -211,7 +211,7 @@ const Navbar = () => {
                     >
                       <li>
                         <Link
-                          href="#"
+                          to="/services"
                           className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300  "
                         >
                           Discover Services
@@ -219,7 +219,7 @@ const Navbar = () => {
                       </li>
                       <li>
                         <Link
-                          href="#"
+                          to="/cprofile"
                           className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300 "
                         >
                           Profile

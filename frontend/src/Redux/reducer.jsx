@@ -1,3 +1,6 @@
+/* eslint-disable operator-linebreak */
+/* eslint-disable camelcase */
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -5,6 +8,7 @@ const initialState = {
   token: {},
   userDetails: {},
   modelStatus: {},
+  freelancer_id: {},
 };
 
 export const userSlice = createSlice({
@@ -48,6 +52,14 @@ export const userSlice = createSlice({
         token,
       };
     },
+    setFreelancer: (state, action) => {
+      console.log(action.payload, 'this is reducer');
+      const freelancer_id = action.payload;
+      return {
+        ...state,
+        freelancer_id,
+      };
+    },
     setToken: (state, action) => {
       console.log('token acess', action.payload);
       console.log('refresh acess', action.payload.token.refresh);
@@ -64,6 +76,7 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { logOut, userDetails, userData, setToken } = userSlice.actions;
+export const { logOut, userDetails, userData, setToken, setFreelancer } =
+  userSlice.actions;
 
 export default userSlice.reducer;

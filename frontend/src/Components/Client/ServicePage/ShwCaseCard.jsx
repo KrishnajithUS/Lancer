@@ -6,15 +6,23 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFreelancer } from '../../../Redux/reducer';
 import profile1 from '../../../Assets/profile1.svg';
 import PostDetailPage from './PostDetailPage';
 
 function ShwCaseCard({ post, ChangePage, page }) {
   const page1 = page;
+
+  const dispatch = useDispatch();
   const [detailView, setDetailView] = useState(false);
   const [singlePost, setSinglePost] = useState(false);
+
+  console.log(useSelector((state) => state));
   const handleChange = (item) => {
-    setSinglePost(item)
+    setSinglePost(item);
+    dispatch(setFreelancer(item));
+
     setDetailView(true);
   };
   const handleChangeL = () => {

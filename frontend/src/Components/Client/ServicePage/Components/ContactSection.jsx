@@ -1,7 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function ContactSection({ status, dataN, post }) {
-  console.log(post);
   if (status) {
     return (
       <div className="w-full  mb-20 md:mb-14 bg-gray-50 border border-gray-300  rounded-lg shadow-lg shadow-gray-700  ">
@@ -36,10 +36,10 @@ function ContactSection({ status, dataN, post }) {
             )}
           </div>
 
-          <div>
-            <div className="flex flex-col mt-4 p-4  w-full rounded-lg  border-gray-200">
-              <div className="flex-initial w-50 font-bold text-lg">Bio</div>
-              <div className="w-full m-2 text-center">
+          <div className="">
+            <div className="flex flex-col items-center mt-4 p-4  w-full rounded-lg  border-gray-200">
+              <div className="font-bold flex-auto w text-lg">Bio</div>
+              <div className="m-2 flex-auto w text-center">
                 <h3>{dataN.bio}</h3>
               </div>
             </div>
@@ -72,12 +72,14 @@ function ContactSection({ status, dataN, post }) {
           {status ? (
             ''
           ) : (
-            <button
-              type="button"
-              className="inline-flex items-center px-4 hover:text-white py-2 text-sm font-medium text-center text-gray-900 bg-white border border-green-700 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-gray-200"
-            >
-              View Profile
-            </button>
+            <Link to="/publicprofile">
+              <button
+                type="button"
+                className="inline-flex items-center px-4 hover:text-white py-2 text-sm font-medium text-center text-gray-900 bg-white border border-green-700 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-gray-200"
+              >
+                View Profile
+              </button>
+            </Link>
           )}
         </div>
 

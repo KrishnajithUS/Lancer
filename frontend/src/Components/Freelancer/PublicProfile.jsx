@@ -11,24 +11,22 @@ function PublicProfile() {
   const [skill, setSkill] = useState([]);
   const api = useAxios();
   const FreelancerId = useSelector((state) => state.freelancer.Freelancer?.id);
+  const id = useSelector((state) => state.user.freelancer_id?.user_id);
+  console.log(useSelector((state) => state));
   const data = async () => {
     try {
       const response = await api.post(`publicprofile/`, {
-        id: FreelancerId,
+        id: FreelancerId || id,
       });
       console.log(response);
-      setData(response.data);
-      setEduData(response.data.education);
-      setExpData(response.data.experience);
-      setSkill(response.data.skills);
+      setData(response?.data);
+      setEduData(response.data?.education);
+      setExpData(response.data?.experience);
+      setSkill(response.data?.skills);
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(dataN);
-  console.log(eduData);
-  console.log(skill);
-  console.log(expData);
 
   useEffect(() => {
     data();
@@ -36,7 +34,7 @@ function PublicProfile() {
   console.log(FreelancerId, 'the freelancer id');
 
   return (
-    <div className="grid grid-cols-10 gap-4 ">
+    <div className="grid grid-cols-10 gap-4 mb-10">
       <div className="md:col-span-4 col-span-full  ml-5 mr-5 mt-5">
         <ContactSection dataN={dataN || ''} status />
       </div>

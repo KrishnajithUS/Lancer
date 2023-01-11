@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ContactSection from './Components/ContactSection';
 import PostSection from './Components/PostSection';
 
-function PostDetailPage({ post, setDetailView }) {
-  useEffect(() => {
-    return () => {
-      setDetailView(true);
-    };
-  }, [setDetailView]);
+function PostDetailPage({ post }) {
+  // useEffect(() => {
+  //   return () => {
+  //     setDetailView(true);
+  //   };
+  // }, [setDetailView]);
 
   console.log(post);
   return (
