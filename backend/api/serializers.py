@@ -1,6 +1,15 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Client, CreatePost, Education, FreeLancer, Skills, Experience,Category,SubCategory
+from .models import (
+    Client,
+    CreatePost,
+    Education,
+    FreeLancer,
+    Skills,
+    Experience,
+    Category,
+    SubCategory,
+)
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import exceptions
 
@@ -14,15 +23,12 @@ User = get_user_model()
 # unique username creator
 def generate_username(email):
     # Split the email address into the username and domain
-    username= email.split("@")[0]
+    username = email.split("@")[0]
 
     # Generate a unique number for the username
-   
 
     # Return the username with the unique number appended
-    return username 
-
-
+    return username
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -108,7 +114,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         password = validated_data.get("password", None)
         new_password = validated_data.get("new_password", None)
         first_name = validated_data.get("first_name", None)
-        username=validated_data.get("username",None)
+        username = validated_data.get("username", None)
         print(first_name)
         last_name = validated_data.get("last_name", None)
         email = validated_data.get("email", None)
@@ -131,11 +137,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         if email:
             instance.email = validated_data.get("email", instance.email)
         if username:
-            instance.username=validated_data.get("username",instance.username)
+            instance.username = validated_data.get("username", instance.username)
         instance.save()
         return instance
-
-
 
 
 class UserSerializerWithToken(UserSerializer):
@@ -277,32 +281,75 @@ class EduSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model=Category
-        fields=["id","category_name"]
+        model = Category
+        fields = ["id", "category_name"]
+
+
 class SubCategorySerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source="")
+
     class Meta:
-        model=SubCategory
-        fields=["id","subcategory_name"]
+        model = SubCategory
+        fields = ["id", "subcategory_name"]
+
+
 class PostSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source="user.user.first_name", read_only=True, required=False)
+
     categorydata = serializers.CharField(
-    source="category.category_name", read_only=True, required=False
-)
+        source="category.category_name", read_only=True, required=False
+    )
     subcategorydata = serializers.CharField(
-source="sub_category.subcategory_name", read_only=True, required=False
-)
+        source="sub_category.subcategory_name", read_only=True, required=False
+    )
+    profile_picture = serializers.CharField(
+        source="user.profile_picture", read_only=True, required=False
+    )
+    bio=serializers.CharField(source="user.bio",read_only=True,required=False)
+    user_title=serializers.CharField(source="user.title",read_only=True,required=False)
+
 
     class Meta:
         model = CreatePost
-        fields = ["id","category","sub_category","id","specialization","title", "cover_image","price","description","keyfeatures","subcategorydata","categorydata"]
+        fields = [
+            "first_name",
+            "bio",
+           "profile_picture",
+            "id",
+            "category",
+            "sub_category",
+            
+            "specialization",
+            "title",
+            "user_title",
+            "cover_image",
+            "price",
+            "description",
+            "keyfeatures",
+            "subcategorydata",
+            "categorydata",
+        ]
 
     def create(self, validated_data):
-        print("crerte method",validated_data)
+        print("crerte method", validated_data)
         freelancer = FreeLancer.objects.get(user=self.context["request"].user)
         # category=Category.objects.get(pk=validated_data['category'])
         # subcategory=SubCategory.objects.get(pk=validated_data['sub_category'],subcategory=category)
-        post=CreatePost(user=freelancer,category=validated_data['category'],sub_category=validated_data['sub_category'],title=validated_data["title"],cover_image=validated_data["cover_image"],specialization=validated_data["specialization"],description=validated_data["description"],keyfeatures=validated_data["keyfeatures"],price=validated_data["price"])
+        post = CreatePost(
+            user=freelancer,
+            category=validated_data["category"],
+            sub_category=validated_data["sub_category"],
+            title=validated_data["title"],
+            cover_image=validated_data["cover_image"],
+            specialization=validated_data["specialization"],
+            description=validated_data["description"],
+            keyfeatures=validated_data["keyfeatures"],
+            price=validated_data["price"],
+        )
         post.save()
         return post
 
@@ -326,32 +373,42 @@ source="sub_category.subcategory_name", read_only=True, required=False
     #     return instance
 
 
-
 class FreelancerSerializer(serializers.ModelSerializer):
     user = UserUpdateSerializer(many=False, required=False)
     education = serializers.SerializerMethodField()
     experience = serializers.SerializerMethodField()
-    skills=serializers.SerializerMethodField()
+    skills = serializers.SerializerMethodField()
+
     class Meta:
         model = FreeLancer
-        fields = ["user","education","experience","skills","title", "profile_picture", "bio", "social_media_links"]
+        fields = [
+            "user",
+            "education",
+            "experience",
+            "skills",
+            "title",
+            "profile_picture",
+            "bio",
+            "social_media_links",
+        ]
         partial = True
+
     def get_education(self, obj):
         """Return the related education instances for the FreeLancer instance"""
-        print("object",obj)
+        print("object", obj)
         education_qs = obj.education_set.all()
-        print(education_qs,"inside custm method")
+        print(education_qs, "inside custm method")
         return EduSerializer(education_qs, many=True, context=self.context).data
 
     def get_experience(self, obj):
         """Return the related experience instances for the FreeLancer instance"""
         experience_qs = obj.experience_set.all()
         return ExpSerializer(experience_qs, many=True, context=self.context).data
+
     def get_skills(self, obj):
         """Return the related experience instances for the FreeLancer instance"""
         skills_qs = obj.skills_set.all()
         return SkillSerializer(skills_qs, many=True, context=self.context).data
-
 
     def update(self, instance, validated_data):
         try:

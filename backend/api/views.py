@@ -11,6 +11,8 @@ from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
 from api.models import Client, Education, FreeLancer, Skills, Experience,CreatePost,Category,SubCategory 
 from .emails import verify_token
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import ListAPIView
 import asyncio
 from asgiref.sync import sync_to_async
 from .emails import send_otp
@@ -482,6 +484,8 @@ class PostView(APIView):
 #Public Profile data
 class PublicProfileView(APIView):
     permission_classes=[IsAuthenticated]
+
+        
     def post(self,request):
         print(request.data)
         user=User.objects.get(pk=request.data.get("id"))
@@ -493,7 +497,21 @@ class PublicProfileView(APIView):
         serializer=FreelancerSerializer(freelancer)
         print(serializer.data)
         return Response(serializer.data,status=status.HTTP_200_OK)
+# get all posts
+class setPagination(PageNumberPagination):
+    page_size=2
+class GetAllPostView(ListAPIView):
+    queryset=CreatePost.objects.all()
+    serializer_class=PostSerializer
+    pagination_class=setPagination
     
+    # def get(self,request):
+    #     print(request.data)
+    #     posts=CreatePost.objects.all()
+    #     print(posts)
+    #     serializer=PostSerializer(posts,many=True)
+    #     print(serializer.data)
+    #     return Response(serializer.data,status=status.HTTP_200_OK) 
 # logout
 
 

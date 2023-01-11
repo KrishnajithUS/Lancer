@@ -1,16 +1,47 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import useAxios from '../../Axios/useAxios';
 import ContactSection from '../Client/ServicePage/Components/ContactSection';
 import PublicProfileLeft from './ProfileComponents/PublicProfileLeft';
 
 function PublicProfile() {
+  const [dataN, setData] = useState([]);
+  const [eduData, setEduData] = useState([]);
+  const [expData, setExpData] = useState([]);
+  const [skill, setSkill] = useState([]);
+  const api = useAxios();
+  const FreelancerId = useSelector((state) => state.freelancer.Freelancer?.id);
+  const data = async () => {
+    try {
+      const response = await api.post(`publicprofile/`, {
+        id: FreelancerId,
+      });
+      console.log(response);
+      setData(response.data);
+      setEduData(response.data.education);
+      setExpData(response.data.experience);
+      setSkill(response.data.skills);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(dataN);
+  console.log(eduData);
+  console.log(skill);
+  console.log(expData);
+
+  useEffect(() => {
+    data();
+  }, []);
+  console.log(FreelancerId, 'the freelancer id');
+
   return (
     <div className="grid grid-cols-10 gap-4 ">
       <div className="md:col-span-4 col-span-full  ml-5 mr-5 mt-5">
-        <ContactSection status />
+        <ContactSection dataN={dataN || ''} status />
       </div>
       <div className="md:col-span-6   col-span-full ">
-        <PublicProfileLeft />
+        <PublicProfileLeft skill={skill} eduData={eduData} expData={expData} />
       </div>
     </div>
   );

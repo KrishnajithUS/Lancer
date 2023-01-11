@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PostSection() {
+function PostSection({ post }) {
   return (
     <div className="  flex justify-end">
       <div className="md:col-span-2 w-[100%] col-span-4 h-full lg:m-5 lg:mt-0 md:mb-20 ">
@@ -16,7 +16,7 @@ function PostSection() {
             <div className="flex flex-col">
               <div>
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
-                  Tailwind Design
+                  {post.title}
                 </h5>
               </div>
               <div>
@@ -26,19 +26,24 @@ function PostSection() {
               </div>
               <div>
                 <p className="mb-3 font-normal text-gray-700 ">
-                  I will design tailwind css
+                  {post.description}
                 </p>
               </div>
               <div className="text-dark mb-2">
                 <span>Starting Price :</span>
-                <span> 700 &#8377;</span>
+                <span>
+                  {' '}
+                  {post.price}
+                  {' '}
+                  &#8377;
+                </span>
               </div>
               <div>
                 <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 ">
                   Key Features
                 </h5>
                 <p className="mb-3 font-normal text-gray-700  mt-0">
-                  FasterDeveloper
+                  {post.keyfeatures}
                 </p>
               </div>
               <div>
@@ -46,7 +51,7 @@ function PostSection() {
                   Specialization
                 </h5>
                 <p className="mb-3 font-normal text-gray-700  mt-0">
-                  Travel and tourism
+                  {post.specialization}
                 </p>
               </div>
             </div>

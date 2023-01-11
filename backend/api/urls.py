@@ -12,6 +12,7 @@ urlpatterns = [
     path("block/", views.BlockUnblockView.as_view(), name="block"),
     path("skills/",views.SkillsView.as_view(),name='skills'),
     path("cprofileData/", views.ClientDetailsView.as_view(), name="client_update_view"),
+     path("getallposts/", views.GetAllPostView.as_view(), name="client_update_view"),
     path("eupdate/", views.ExperienceView.as_view(), name="experience_update_view"),
     path("edupdate/", views.EducationView.as_view(), name="education_update_view"),
     path("fupdate/", views.FreelancerUpdateView.as_view(), name="freelancer_update_view"),

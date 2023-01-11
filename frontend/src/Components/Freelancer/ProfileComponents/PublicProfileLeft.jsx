@@ -1,24 +1,6 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import useAxios from '../../../Axios/useAxios';
+import React from 'react';
 
-function PublicProfileLeft() {
-  const api = useAxios();
-  const FreelancerId = useSelector((state) => state.freelancer.Freelancer?.id);
-  const data = async () => {
-    try {
-      const response = await api.post(`publicprofile/`, {
-        id: FreelancerId,
-      });
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    data();
-  }, []);
-  console.log(FreelancerId, 'the freelancer id');
+function PublicProfileLeft({ eduData, expData, skill }) {
   return (
     <div className="md:col-span-2 w-[100%] lg:w-[98%] col-span-4  lg:m-5 lg:mt-0 md:mb-20 ">
       <div className="flex flex-col  jusfity-center h-full  m-5 md:mb-0 md:m-5 bg-gray-50 border border-gray-300  rounded-lg shadow-lg shadow-gray-700 ">
@@ -29,12 +11,22 @@ function PublicProfileLeft() {
                 Experience
               </h5>
             </div>
-
-            <div>
-              <p className="mb-3 font-normal text-gray-700 ">
-                I will design tailwind css
-              </p>
-            </div>
+            {expData.map((item) => (
+              <div className="flex">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
+                    {item.company}
+                  </p>
+                </div>
+                <div className=" min-w-0">
+                  <p className="text-md font-medium text-gray-900 truncate dark:text-black">
+                    {item.no_of_years}
+                    {' '}
+                    years of experience
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -46,12 +38,13 @@ function PublicProfileLeft() {
                 Skills
               </h5>
             </div>
-
-            <div>
-              <p className="mb-3 font-normal text-gray-700 ">
-                I will design tailwind css
-              </p>
-            </div>
+            {skill.map((item) => (
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
+                  {item.skills}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -64,11 +57,24 @@ function PublicProfileLeft() {
               </h5>
             </div>
 
-            <div>
-              <p className="mb-3 font-normal text-gray-700 ">
-                I will design tailwind css
-              </p>
-            </div>
+            {eduData.map((item) => (
+              <div className="flex">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
+                    {item.university}
+                  </p>
+                </div>
+                <div className=" min-w-0">
+                  <p className="text-md font-medium text-gray-900 truncate dark:text-black">
+                    <span className="pr-2">
+                      {' '}
+                      {item.degree}
+                    </span>
+                    <span>{item.field_of_study}</span>
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
