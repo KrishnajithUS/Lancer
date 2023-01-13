@@ -95,6 +95,14 @@ class CreatePost(models.Model):
 #     def remove_connection(self,account):
 #         if account in self.connections.all():
 #             self.connections.remove(account)
+
+class Packages(models.Model):
+    title=models.CharField(max_length=200,blank=True,null=True)
+    no_of_posts=models.IntegerField(default=None,blank=True,null=True)
+    price=models.IntegerField(default=None,blank=True,null=True)
+    description=models.CharField(max_length=200,blank=True,null=True)
+    def __str__(self):
+        return  self.title
     
 
 

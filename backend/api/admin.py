@@ -1,4 +1,4 @@
-from .models import Client,FreeLancer,Skills,Experience,Education,CreatePost,Category,SubCategory
+from .models import Client,FreeLancer,Packages,Skills,Experience,Education,CreatePost,Category,SubCategory
 from django.contrib import admin
 
 from django.utils.html import format_html
@@ -15,3 +15,4 @@ admin.site.register(Education)
 admin.site.register(CreatePost)
 admin.site.register(Category)
 admin.site.register(SubCategory)
+admin.site.register(Packages)

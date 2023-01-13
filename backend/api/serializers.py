@@ -9,6 +9,7 @@ from .models import (
     Experience,
     Category,
     SubCategory,
+    Packages
 )
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import exceptions
@@ -438,3 +439,7 @@ class FreelancerSerializer(serializers.ModelSerializer):
         except:
             pass
         return instance
+class PackageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Packages
+        fields='__all__'

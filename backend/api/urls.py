@@ -20,4 +20,6 @@ urlpatterns = [
     path("cupdate/", views.ClientUpdateView.as_view(), name="client_update_view"),
     path("users/profile/", views.getUserPrfile, name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("packages/",views.PackageView.as_view(), name="packages"),
+
 ]

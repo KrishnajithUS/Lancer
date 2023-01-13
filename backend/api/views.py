@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-from api.models import Client, Education, FreeLancer, Skills, Experience,CreatePost,Category,SubCategory 
+from api.models import Client, Education, FreeLancer, Skills,Packages,Experience,CreatePost,Category,SubCategory 
 from .emails import verify_token
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
@@ -36,7 +36,8 @@ from .serializers import (
     EduSerializer,
     PostSerializer,
     CategorySerializer,
-    SubCategorySerializer
+    SubCategorySerializer,
+    PackageSerializer
     
 )
 
@@ -512,6 +513,22 @@ class GetAllPostView(ListAPIView):
     #     serializer=PostSerializer(posts,many=True)
     #     print(serializer.data)
     #     return Response(serializer.data,status=status.HTTP_200_OK) 
+#get packages
+class PackageView(APIView):
+    def get(self,request):
+        print(request.data)
+        posts=Packages.objects.all()
+        print(posts)
+        serializer=PackageSerializer(posts,many=True)
+        print(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK) 
+    def post(self,request):
+        print(request.data)
+        posts=Packages.objects.get(pk=request.data["id"])
+        print(posts)
+        serializer=PackageSerializer(posts,many=False)
+        print(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK) 
 # logout
 
 
