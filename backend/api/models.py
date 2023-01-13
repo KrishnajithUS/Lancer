@@ -82,9 +82,19 @@ class CreatePost(models.Model):
     #     return self.title
 
 
-
-    
-        
+#connection model 
+# class Connection(models.Model):
+#     freelancer=models.OneToOneField(FreeLancer,on_delete=models.CASCADE,default=None)
+#     connections=models.ManyToManyField(Client,blank=True,related_name="connections")
+#     def __str__(self):
+#         return self.freelancer.user.username
+#     def add_connection(self,account):
+#         if not account in self.connections.all():
+#             self.connections.add(account)
+           
+#     def remove_connection(self,account):
+#         if account in self.connections.all():
+#             self.connections.remove(account)
     
 
 

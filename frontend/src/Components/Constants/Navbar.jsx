@@ -112,7 +112,7 @@ const Navbar = () => {
                         </>
                       ) : FisAuth ? (
                         <Link to="/logout">
-                          <div className="mr-4">
+                          <div className="mr-8">
                             <button
                               type="button"
                               className=" rounded-full font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
@@ -238,7 +238,7 @@ const Navbar = () => {
                 </div>
               ) : FisAuth ? (
                 <div className="md:hidden" id="mobile-menu">
-                  <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
+                  <div className="px-2  pt-2 pb-3 flex justify-center space-y-1 text-center sm:px-3">
                     <Link to="/logOut">
                       <button
                         type="button"

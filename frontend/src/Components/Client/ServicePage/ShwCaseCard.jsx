@@ -88,9 +88,9 @@ function ShwCaseCard({ post, ChangePage, page }) {
                 >
                   {' '}
                   <div className="  hover:cursor-pointer p-2 bg-white  bg-gray-50 border border-gray-100  rounded-lg shadow-lg shadow-gray-700">
-                    <div className="h-auto w-full rounded-lg bg-white border border-2">
+                    <div className=" rounded-lg bg-white border border-2">
                       <img
-                        className=""
+                        className="object-cover h-52 w-full"
                         src={item.cover_image ? `${item.cover_image}` : ''}
                         alt="img"
                       />
@@ -102,7 +102,7 @@ function ShwCaseCard({ post, ChangePage, page }) {
                             className="w-8 h-8 rounded-full"
                             src={
                               item.cover_image
-                                ? `http://localhost:8000${item.profile_picture}`
+                                ? `${item.profile_picture}`
                                 : profile1
                             }
                             alt="img"

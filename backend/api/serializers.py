@@ -306,7 +306,7 @@ class PostSerializer(serializers.ModelSerializer):
     subcategorydata = serializers.CharField(
         source="sub_category.subcategory_name", read_only=True, required=False
     )
-    profile_picture = serializers.CharField(
+    profile_picture = serializers.ImageField(
         source="user.profile_picture", read_only=True, required=False
     )
     bio=serializers.CharField(source="user.bio",read_only=True,required=False)
@@ -379,7 +379,7 @@ class FreelancerSerializer(serializers.ModelSerializer):
     education = serializers.SerializerMethodField()
     experience = serializers.SerializerMethodField()
     skills = serializers.SerializerMethodField()
-
+    profile_picture=serializers.ImageField()
     class Meta:
         model = FreeLancer
         fields = [

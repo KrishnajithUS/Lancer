@@ -31,30 +31,22 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
 INSTALLED_APPS = [
+     "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+     'django.contrib.staticfiles',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'Account',
-    'api',
-     'rest_framework',
-     'django_countries'
-]
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
     'Account',
     'api.apps.ApiConfig',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     "corsheaders",
+    "chat",
+   
 ]
 REST_FRAMEWORK = {
     
@@ -127,7 +119,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'lancer.wsgi.application'
+# WSGI_APPLICATION = 'lancer.wsgi.application'
+ASGI_APPLICATION='lancer.asgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
 
 
 # Database
@@ -175,7 +177,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
