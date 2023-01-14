@@ -2,11 +2,13 @@ import json
 import os
 import razorpay
 from rest_framework import status
+from .models import FreeLancer,Packages
+from Account.models import User
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from payment.constants import PaymentStatus
 from django.conf import settings
-from payment.models import RazorpayPayment
+from payment.models import RazorpayPayment,FreelancerPost,Packages,CreatePost
 
 # Get Razorpay Key id and secret for authorize razorpay client.
 RAZOR_KEY_ID = settings.RAZOR_KEY
@@ -25,13 +27,15 @@ class RazorpayPaymentView(APIView):
 
     @staticmethod
     def post(request, *args, **kwargs):
+        
 
         # Take Order Id from frontend and get all order info from Database.
         # order_id = request.data.get('order_id', None)
 
         # Here We are Using Static Order Details for Demo.
-        name = "Swapnil Pawar"
-        amount = 400
+        user=User.objects.get(id=request.data["user_id"])
+        Freelancer=FreeLancer.objects.get(user=user)
+        amount = request.data["price"]
 
         # Create Order
         razorpay_order = razorpay_client.order.create(
@@ -40,11 +44,11 @@ class RazorpayPaymentView(APIView):
 
         # Save the order in DB
         order = RazorpayPayment.objects.create(
-            name=name, amount=amount, provider_order_id=razorpay_order["id"]
+            Freelancer=Freelancer, amount=amount, provider_order_id=razorpay_order["id"]
         )
 
         data = {
-            "name" : name,
+            "name" : Freelancer.user.first_name,
             "merchantId": RAZOR_KEY_ID,
             "amount": amount,
             "currency" : 'INR' ,
@@ -63,9 +67,9 @@ class RazorpayCallback(APIView):
 
     @staticmethod
     def post(request, *args, **kwargs):
-
+        print(request.data)
         # geting data form request
-        response = request.data.dict()
+        response = request.data["datas"]
 
         """
             if razorpay_signature is present in request 
@@ -84,7 +88,14 @@ class RazorpayCallback(APIView):
                 payment_object.payment_id = response['razorpay_payment_id']
                 payment_object.signature_id = response['razorpay_signature']          
                 payment_object.save()
-
+               
+                Freelancer=FreeLancer.objects.get(user=request.data["user_id"])
+                Freelancer.is_package_active=True
+                Freelancer.save()
+                package=Packages.objects.get(pk=request.data["id"])
+                instance=FreelancerPost(Freelancer=Freelancer,package=package,payment=payment_object)
+                instance.save()
+            
                 return Response({'status': 'Payment Done'}, status=status.HTTP_200_OK)
             else:
                 return Response({'status': 'Signature Mismatch!'}, status=status.HTTP_400_BAD_REQUEST)

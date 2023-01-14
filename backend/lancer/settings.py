@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "chat",
     "payment",
+    
    
 ]
 REST_FRAMEWORK = {

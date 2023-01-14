@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Modals({ setErrorMessage }) {
+function Modals({ setErrorMessage, errorMessage }) {
   return (
     <div>
       <div className="flex relative justify-center items-center">
@@ -26,7 +26,7 @@ function Modals({ setErrorMessage }) {
             <span className="sr-only">Warning icon</span>
           </div>
           <div className="ml-3 text-sm font-normal pt-2">
-            Invalid Credentials
+            {errorMessage}
           </div>
 
           <button

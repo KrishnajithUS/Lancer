@@ -4,9 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import useAxios from '../../Axios/useAxios';
 import { AddPostSchema } from '../../schemas';
+import Modals from '../Constants/Modals';
 
 function AddPost() {
   const api = useAxios();
+  const [errorMessage, setErrorMessage] = useState('');
+
   const [categoryList, SetCategoryList] = useState([]);
   const [subcategoryList, SetsubCategoryList] = useState([]);
   const [subselect, subsetSelect] = useState(null);
@@ -78,20 +81,28 @@ function AddPost() {
         if (response.status === 201) {
           navigate('/post');
         } else {
-          alert('not valid credentials');
+          console.log(response.data);
+          setErrorMessage(response.data.details);
         }
       } catch (error) {
-        alert(error);
+        console.log(error);
+        setErrorMessage(error.response.data.details);
+
         console.log(error);
       }
       action.resetForm();
     },
   });
+  console.log(errorMessage, 'hloooo');
   console.log(setFieldValue);
   console.log(errors);
   return (
-    <div className=" w-full md:h-full h-screen">
-      <div className="grid grid-cols-10 gap-4 m-4 md:m-10">
+    <div className=" w-full md:h-full  mb-auto">
+      {errorMessage && (
+        <Modals setErrorMessage={setErrorMessage} errorMessage={errorMessage} />
+      )}
+
+      <div className="grid grid-cols-10 gap-4 mb- m-4 md:m-10">
         <div className="col-start-2 col-span-8 ">
           <h1 className="text-black font-bold text-xl md:text-3xl  mb-2">
             ADD POST

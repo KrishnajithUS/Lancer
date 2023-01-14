@@ -18,7 +18,7 @@ class FreeLancer(models.Model):
     title=models.CharField(max_length=20,blank=True,null=True)
     profile_picture = models.ImageField(upload_to=upload_to,blank=True)
     bio = models.CharField(max_length=200,blank=True,null=True)
-    
+    is_package_active=models.BooleanField(default=False)
     social_media_links=models.CharField(max_length=40,blank=True,null=True)
     
     
@@ -66,17 +66,7 @@ class SubCategory(models.Model):
     subcategory_name=models.CharField(max_length=30,null=True,blank=True)
     def __str__(self):
         return self.subcategory_name
-class CreatePost(models.Model):
-    user=models.ForeignKey(FreeLancer,on_delete=models.CASCADE,default=None)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE,default=None)
-    sub_category=models.ForeignKey(SubCategory,on_delete=models.CASCADE,default=None)
-    specialization=models.CharField(max_length=200,blank=True,null=True)
-    title=models.CharField(max_length=30,blank=True,null=True)
-    cover_image=models.ImageField(upload_to=upload_to,blank=True,null=True)
-    description=models.TextField(max_length=800,blank=True,null=True)
-    keyfeatures=models.CharField(max_length=200,blank=True,null=True)
-    price=models.IntegerField(default=None,blank=True,null=True)
-    is_completed = models.BooleanField(default=False)
+
 
     # def __str__(self):
     #     return self.title
@@ -96,13 +86,7 @@ class CreatePost(models.Model):
 #         if account in self.connections.all():
 #             self.connections.remove(account)
 
-class Packages(models.Model):
-    title=models.CharField(max_length=200,blank=True,null=True)
-    no_of_posts=models.IntegerField(default=None,blank=True,null=True)
-    price=models.IntegerField(default=None,blank=True,null=True)
-    description=models.CharField(max_length=200,blank=True,null=True)
-    def __str__(self):
-        return  self.title
+
     
 
 

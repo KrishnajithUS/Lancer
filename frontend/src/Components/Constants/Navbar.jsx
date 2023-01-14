@@ -45,10 +45,10 @@ const Navbar = () => {
                     <div
                       className={
                         !isAuth
-                          ? 'ml-10 flex w-full  items-baseline space-x-4'
+                          ? ' flex w-full  items-baseline space-x-4'
                           : !FisAuth
                           ? 'flex  w-full items-center justify-end space-x-4 '
-                          : ' flex w-full  items-baseline space-x-4'
+                          : ' flex w-full justify-center items-baseline space-x-4'
                       }
                     >
                       <input
@@ -95,7 +95,10 @@ const Navbar = () => {
                                 </Link>
                               </li>
                               <li>
-                                <Link to="/cprofile" className=" block hover:text-green-600 px-4 py-2 ">
+                                <Link
+                                  to="/cprofile"
+                                  className=" block hover:text-green-600 px-4 py-2 "
+                                >
                                   Profile
                                 </Link>
                               </li>
@@ -134,7 +137,7 @@ const Navbar = () => {
                           <Link to="/select">
                             <a
                               href="#"
-                              className="font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
+                              className="pr-20 font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
                             >
                               Join
                             </a>

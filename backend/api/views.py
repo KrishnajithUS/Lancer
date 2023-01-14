@@ -9,7 +9,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-from api.models import Client, Education, FreeLancer, Skills,Packages,Experience,CreatePost,Category,SubCategory 
+from api.models import Client, Education, FreeLancer, Skills,Experience,Category,SubCategory 
+from payment.models import CreatePost,Packages,FreelancerPost
 from .emails import verify_token
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
@@ -444,8 +445,27 @@ class PostView(APIView):
             serializer = PostSerializer(post, many=False)
             print(serializer.data)
             return Response(serializer.data, status=status.HTTP_200_OK)
-
-       
+        user=request.user
+        freelancer = FreeLancer.objects.get(user=user)
+        
+        
+        if freelancer.is_package_active and CreatePost.objects.filter(Freelancer=freelancer).count() > 1:
+          
+            post=CreatePost.objects.filter(Freelancer=freelancer).count()
+            print(post,"post count")
+            getdata=FreelancerPost.objects.filter(Freelancer=freelancer)
+            packagecount=0
+            for i in getdata :
+                print(i.package.no_of_posts)
+                packagecount =  packagecount + i.package.no_of_posts
+            print("packagecount",packagecount)
+            if post >= packagecount:
+                freelancer.is_package_active=False
+                freelancer.save()
+                getdata.status=False
+                return Response({"details":"The limit exceeded ! Buy another packaget to continue..."},status=status.HTTP_400_BAD_REQUEST)
+        if freelancer.is_package_active is False:
+             return Response({"details":"buy a package to create a post"},status=status.HTTP_400_BAD_REQUEST)
         print('request comes here',request.data)
         serializer = PostSerializer(data=request.data, context={"request": request})
         print(serializer)
@@ -463,7 +483,7 @@ class PostView(APIView):
 
         freelancer = FreeLancer.objects.get(user=user)
 
-        post = CreatePost.objects.filter(user=freelancer)
+        post = CreatePost.objects.filter(Freelancer=freelancer)
         # skills may be multiple objets
         # so we need to use many= True to serialize that object
         serializer = PostSerializer(post, many=True)

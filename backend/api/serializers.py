@@ -2,15 +2,16 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import (
     Client,
-    CreatePost,
+   
     Education,
     FreeLancer,
     Skills,
     Experience,
     Category,
     SubCategory,
-    Packages
+   
 )
+from payment.models import Packages,CreatePost
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import exceptions
 
@@ -342,7 +343,7 @@ class PostSerializer(serializers.ModelSerializer):
         # category=Category.objects.get(pk=validated_data['category'])
         # subcategory=SubCategory.objects.get(pk=validated_data['sub_category'],subcategory=category)
         post = CreatePost(
-            user=freelancer,
+            Freelancer=freelancer,
             category=validated_data["category"],
             sub_category=validated_data["sub_category"],
             title=validated_data["title"],

@@ -29,6 +29,8 @@ import UpdatePost from '../Components/Freelancer/UpdatePost';
 import Packages from '../Components/Freelancer/Packages';
 import PostDetailPage from '../Components/Client/ServicePage/PostDetailPage';
 import PublicProfile from '../Components/Freelancer/PublicProfile';
+import Payment from '../Components/Freelancer/Payment';
+// import Chat from '../Components/Chat/Chat';
 
 const router = () => {
   const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
@@ -78,8 +80,10 @@ const router = () => {
           <Route path="/updatepost/:id" element={<UpdatePost />} />
           <Route path="/packages" element={<Packages />} />
           <Route path="/postDetails" element={<PostDetailPage />} />
+          {/* <Route path="/chat" element={<Chat />} /> */}
 
           <Route path="*" element={<Home />} />
+          <Route path="/payment/:id" element={<Payment />} />
         </Routes>
         <Footer />
       </>
