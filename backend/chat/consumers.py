@@ -24,14 +24,15 @@ class ChatConsumer(WebsocketConsumer):
             "client":message.client.user.first_name,
             "freelancer":message.freelancer.user.first_name,
             "content":message.content,
-            "timestamp":message.timestamp
+            # "timestamp":message.timestamp
         }
             
     def new_messages(self,data):
-        email_of_client=data['emailc']
-        email_of_freelancer=data['emailf']
-        client_user=User.objects.get(email=email_of_client)
-        freelancer_user=User.objects.get(email=email_of_freelancer)
+        print(data,"data in new messages")
+        id_of_client=data['user_id']
+        id_of_freelancer=data['freelancer_id']
+        client_user=User.objects.get(pk=id_of_client)
+        freelancer_user=User.objects.get(pk=id_of_freelancer)
         client=Client.objects.get(user=client_user)
         freelancer=FreeLancer.objects.get(user=freelancer_user)
         message=Messages.objects.create(client=client,freelancer=freelancer,content=data['message'])
@@ -70,8 +71,9 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         print("text",text_data)
         data = json.loads(text_data)
-        print(data)
-        self.commands[data['command']](self,data)
+        print(data["command"],"printing command")
+        print(data,"this is data")
+        self.commands[data["command"]](self,data)
         
     def send_chat_message(self,message):
         # Send message to room group

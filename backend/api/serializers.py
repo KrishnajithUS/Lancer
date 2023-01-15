@@ -300,8 +300,8 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(source="user.user.first_name", read_only=True, required=False)
-    user_id=serializers.CharField(source="user.user.id", read_only=True, required=False)
+    first_name = serializers.CharField(source="Freelancer.user.first_name", read_only=True, required=False)
+    user_id=serializers.CharField(source="Freelancer.user.id", read_only=True, required=False)
     categorydata = serializers.CharField(
         source="category.category_name", read_only=True, required=False
     )
@@ -309,10 +309,10 @@ class PostSerializer(serializers.ModelSerializer):
         source="sub_category.subcategory_name", read_only=True, required=False
     )
     profile_picture = serializers.ImageField(
-        source="user.profile_picture", read_only=True, required=False
+        source="Freelancer.profile_picture", read_only=True, required=False
     )
-    bio=serializers.CharField(source="user.bio",read_only=True,required=False)
-    user_title=serializers.CharField(source="user.title",read_only=True,required=False)
+    bio=serializers.CharField(source="Freelancer.bio",read_only=True,required=False)
+    user_title=serializers.CharField(source="Freelancer.title",read_only=True,required=False)
 
 
     class Meta:

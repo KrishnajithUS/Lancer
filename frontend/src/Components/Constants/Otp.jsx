@@ -40,7 +40,7 @@ function Otp() {
       },
     });
   return (
-    <div className="">
+    <div className="mb-auto">
       <>
         <div className=" flex  items-center m-10 flex-col justify-center overflow-hidden bg-gray-50 py-12">
           <div className="bg-white border border-gray-400 px-6 pt-10 pb-9 drop-shadow-2xl mx-auto w-full max-w-lg rounded-2xl">

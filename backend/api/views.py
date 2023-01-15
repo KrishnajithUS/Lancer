@@ -118,7 +118,7 @@ class LoginView(APIView):
         email = request.data["email"]
         passsword = request.data["password"]
         user = authenticate(email=email, password=passsword)
-
+        print(user,"user")
         if request.data.get("is_admin"):
 
             if user is not None and user.is_superadmin:

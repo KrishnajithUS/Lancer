@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SmalllChatBox from '../Chat/SmalllChatBox';
 
 function ContactSection({ status, dataN, post }) {
+  const [modal, showModal] = useState('');
+  console.log(post)
+  const dataHandler = () => {
+    showModal('showchat');
+  };
   if (status) {
     return (
       <div className="w-full  mb-20 md:mb-14 bg-gray-50 border border-gray-300  rounded-lg shadow-lg shadow-gray-700  ">
@@ -65,10 +71,14 @@ function ContactSection({ status, dataN, post }) {
         <div className="flex  mt-4 space-x-3 md:mt-6">
           <button
             type="button"
+            onClick={() => dataHandler()}
             className="inline-flex  items-center px-4 py-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "
           >
-            Connect
+            Message
           </button>
+          {modal === 'showchat' && (
+            <SmalllChatBox post={post} modal={modal} showModal={showModal} />
+          )}
           {status ? (
             ''
           ) : (

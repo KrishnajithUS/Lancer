@@ -16,19 +16,19 @@ function Packages() {
     response();
   }, []);
   return (
-    <div>
-      <section className="bg-white ">
+    <div className="mb-auto">
+      <section className="bg-white  ">
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16  lg:px-6">
           <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">
               Buy A Package
             </h2>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3  gap-4">
             {data?.map((item) => (
               <div
                 key={item.id}
-                className="space-y-8 col-span-full md:col-span-1"
+                className="space-y-8  col-span-full md:col-span-1"
               >
                 <div className="flex flex-col p-6 mx-auto max-w-lg bg-gray-100 shadow-xl border-2 border-gray-500 text-center text-gray-900  rounded-lg shadow ">
                   <h3 className="mb-4 text-2xl font-semibold">{item.title}</h3>

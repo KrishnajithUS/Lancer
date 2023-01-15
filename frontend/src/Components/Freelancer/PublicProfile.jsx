@@ -34,7 +34,7 @@ function PublicProfile() {
   console.log(FreelancerId, 'the freelancer id');
 
   return (
-    <div className="grid grid-cols-10 gap-4 mb-10">
+    <div className="grid grid-cols-10 gap-4 mb-auto">
       <div className="md:col-span-4 col-span-full  ml-5 mr-5 mt-5">
         <ContactSection dataN={dataN || ''} status />
       </div>
