@@ -9,6 +9,19 @@ import axiosInstance from '../../Axios/axiosPrivate';
 import { OtpShema } from '../../schemas';
 
 function Otp() {
+  const input1Ref = React.createRef();
+  const input2Ref = React.createRef();
+  const input3Ref = React.createRef();
+  const input4Ref = React.createRef();
+
+  const handleChangeL = (event, nextRef) => {
+    const { value } = event.target;
+    console.log(value);
+    if (value.length === 1) {
+      nextRef.current.focus();
+    }
+  };
+
   const params = useParams();
   const navigate = useNavigate();
   const id = params['id'];
@@ -19,26 +32,25 @@ function Otp() {
     digit3: '',
     digit4: '',
   };
-  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
-    useFormik({
-      initialValues,
-      validationSchema: OtpShema,
-      onSubmit: async (values, actions) => {
-        try {
-          const response = await axiosInstance.post(`/register/`, {
-            verification: true,
-            id,
-            otp: values.digit1 + values.digit2 + values.digit3 + values.digit4,
-          });
-          if (response.status === 201) {
-            navigate('/login');
-          }
-        } catch (err) {
-          alert(err);
+  const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+    initialValues,
+    validationSchema: OtpShema,
+    onSubmit: async (values, actions) => {
+      try {
+        const response = await axiosInstance.post(`/register/`, {
+          verification: true,
+          id,
+          otp: values.digit1 + values.digit2 + values.digit3 + values.digit4,
+        });
+        if (response.status === 201) {
+          navigate('/login');
         }
-        actions.resetForm();
-      },
-    });
+      } catch (err) {
+        alert(err);
+      }
+      actions.resetForm();
+    },
+  });
   return (
     <div className="mb-auto">
       <>
@@ -66,7 +78,8 @@ function Otp() {
                           id=""
                           value={values.digit1}
                           onChange={handleChange}
-                          onBlur={handleBlur}
+                          onInput={(e) => handleChangeL(e, input2Ref)}
+                          ref={input1Ref}
                         />
                         {errors.digit1 && touched.digit1 ? (
                           <p className="form-error text-red-600">
@@ -81,9 +94,10 @@ function Otp() {
                           type="text"
                           name="digit2"
                           id=""
+                          ref={input2Ref}
                           value={values.digit2}
                           onChange={handleChange}
-                          onBlur={handleBlur}
+                          onInput={(e) => handleChangeL(e, input3Ref)}
                         />
                         {errors.digit2 && touched.digit2 ? (
                           <p className="form-error text-red-600">
@@ -98,9 +112,10 @@ function Otp() {
                           type="text"
                           name="digit3"
                           id=""
+                          ref={input3Ref}
                           value={values.digit3}
                           onChange={handleChange}
-                          onBlur={handleBlur}
+                          onInput={(e) => handleChangeL(e, input4Ref)}
                         />
                         {errors.digit3 && touched.digit3 ? (
                           <p className="form-error text-red-600">
@@ -115,9 +130,10 @@ function Otp() {
                           type="text"
                           name="digit4"
                           id=""
+                          ref={input4Ref}
                           value={values.digit4}
                           onChange={handleChange}
-                          onBlur={handleBlur}
+                          onInput={(e) => handleChangeL(e, input4Ref)}
                         />
                         {errors.digit4 && touched.digit4 ? (
                           <p className="form-error text-red-600">
