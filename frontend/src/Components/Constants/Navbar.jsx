@@ -11,6 +11,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
+import { BsFillChatLeftTextFill } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import logo from '../../Assets/logo.png';
 // eslint-disable-next-line react/function-component-definition
@@ -54,10 +55,13 @@ const Navbar = () => {
                       <input
                         type="text"
                         placeholder="Search"
-                        className="lg:w-full w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
+                        className="lg:w-[80%] w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
                       />
                       {isAuth ? (
                         <>
+                          <div className="px-4 hover:cursor-pointer ">
+                            <BsFillChatLeftTextFill size={30} />
+                          </div>
                           <button
                             id="dropdownUserAvatarButton"
                             data-dropdown-toggle="dropdownAvatar"
@@ -125,24 +129,24 @@ const Navbar = () => {
                           </div>
                         </Link>
                       ) : (
-                        <>
+                        <div className="flex items-center jusitify-end pl-4">
                           <Link to="/login">
-                            <a
-                              href="#"
-                              className=" font-sans custom-line-button text-white px-1 py-2 primary text-sm font-medium"
+                            <button
+                              type="button"
+                              className=" font-sans custom-line-button text-white primary text-sm font-medium"
                             >
                               Login
-                            </a>
+                            </button>
                           </Link>
                           <Link to="/select">
-                            <a
-                              href="#"
-                              className="pr-20 font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
+                            <button
+                              type="button"
+                              className=" font-sans button-new hover:text-white  text-sm font-medium"
                             >
                               Join
-                            </a>
+                            </button>
                           </Link>
-                        </>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -212,6 +216,21 @@ const Navbar = () => {
                       className="py-1  text-sm text-gray-700 "
                       aria-labelledby="dropdownUserAvatarButton"
                     >
+                      <li>
+                        <input
+                          type="text"
+                          placeholder="Search"
+                          className="w-full mr-10  py-3  h-10 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
+                        />
+                      </li>
+                      <li className="mt-2">
+                        <Link
+                          to="/services"
+                          className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300  "
+                        >
+                          Inbox
+                        </Link>
+                      </li>
                       <li>
                         <Link
                           to="/services"

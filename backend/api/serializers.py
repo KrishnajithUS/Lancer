@@ -301,6 +301,8 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="Freelancer.user.first_name", read_only=True, required=False)
+    username = serializers.CharField(source="Freelancer.user.username", read_only=True, required=False)
+
     user_id=serializers.CharField(source="Freelancer.user.id", read_only=True, required=False)
     categorydata = serializers.CharField(
         source="category.category_name", read_only=True, required=False
@@ -318,6 +320,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreatePost
         fields = [
+            "username",
             "first_name",
             "bio",
            "profile_picture",

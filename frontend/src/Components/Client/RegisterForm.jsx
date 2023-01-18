@@ -89,7 +89,7 @@ function Register() {
                     First Name
                   </label>
                   <input
-                    className="border-slate-800 transition focus:z-10 focus:border-blue-600 focus:ring-blue-600 w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white  text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                     id="Last Name"
                     name="first_name"
                     type="text"
@@ -114,7 +114,7 @@ function Register() {
                     Last Name
                   </label>
                   <input
-                    className="border-slate-800 transition focus:z-10 focus:border-blue-600 focus:ring-blue-600 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white  text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                     id="Last Name"
                     name="last_name"
                     type="text"
@@ -138,7 +138,7 @@ function Register() {
                     Email
                   </label>
                   <input
-                    className="border-slate-800 transition focus:z-10 focus:border-blue-600 focus:ring-blue-600 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white  text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                     id="Email"
                     type="text"
                     name="email"
@@ -160,7 +160,7 @@ function Register() {
                     Password
                   </label>
                   <input
-                    className="border-slate-800 transition focus:z-10 focus:border-blue-600 focus:ring-blue-600 w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white  text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                     id="password"
                     name="password"
                     type="password"
@@ -182,7 +182,7 @@ function Register() {
                     Confirm Password
                   </label>
                   <input
-                    className="border-slate-800 transition focus:z-10 focus:border-blue-600 focus:ring-blue-600 w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white  text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                     id="confirm_password"
                     name="confirm_password"
                     type="password"
@@ -199,7 +199,7 @@ function Register() {
                   ) : null}
                 </div>
 
-                <div className="mb-6 text-center">
+                <div className="mb-6 mt-4 text-center">
                   <button
                     type="submit"
                     className="w-full md:w-[80%] md:ml-4 px-4 py-2 font-bold text-white button-new rounded-full hover:bg-purple-700 focus:outline-none focus:shadow-outline"

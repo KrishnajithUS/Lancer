@@ -33,6 +33,7 @@ import Payment from '../Components/Freelancer/Payment';
 import PrivateRouter from './PrivateRouter/PrivateRouter';
 import Public from './PrivateRouter/Public';
 import FreelancerPrivate from './PrivateRouter/FreelancerPrivate';
+import Chat from '../Pages/Chat';
 // import Chat from '../Components/Chat/Chat';
 
 const router = () => {
@@ -65,6 +66,7 @@ const router = () => {
             <Route path="/fprofile" element={<Fprofile />} />
 
             <Route path="/publicprofile" element={<PublicProfile />} />
+            <Route path="/chat" element={<Chat />} />
           </Route>
           <Route element={<FreelancerPrivate />}>
             <Route path="/post" element={<Post />} />
@@ -73,6 +75,7 @@ const router = () => {
             <Route path="/packages" element={<Packages />} />
             <Route path="/postDetails" element={<PostDetailPage />} />
             <Route path="/payment/:id" element={<Payment />} />
+            <Route path="/chat" element={<Chat />} />
           </Route>
           {/* <Route path="/chat" element={<Chat />} /> */}
         </Routes>
