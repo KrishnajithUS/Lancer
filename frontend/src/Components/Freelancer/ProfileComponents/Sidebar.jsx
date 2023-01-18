@@ -22,17 +22,19 @@ function Sidebar() {
                 </button>
               </Link>
             </li>
-            <li>
-              <button
-                type="button"
-                className="flex w-full hover:text-white items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-purple-700"
-              >
-                <MdSubscriptions />
-                <span className="flex-initial ml-3 whitespace-nowrap">
-                  Buy A Pakage
-                </span>
-              </button>
-            </li>
+            <Link to="/packages">
+              <li>
+                <button
+                  type="button"
+                  className="flex w-full hover:text-white items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-purple-700"
+                >
+                  <MdSubscriptions />
+                  <span className="flex-initial ml-3 whitespace-nowrap">
+                    Buy A Pakage
+                  </span>
+                </button>
+              </li>
+            </Link>
             <li>
               <Link to="publicprofile">
                 <button

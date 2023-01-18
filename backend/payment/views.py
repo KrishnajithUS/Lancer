@@ -91,8 +91,12 @@ class RazorpayCallback(APIView):
                
                 Freelancer=FreeLancer.objects.get(user=request.data["user_id"])
                 Freelancer.is_package_active=True
-                Freelancer.save()
                 package=Packages.objects.get(pk=request.data["id"])
+                
+                Freelancer.post_count = Freelancer.post_count + package.no_of_posts
+                
+               
+                Freelancer.save()
                 instance=FreelancerPost(Freelancer=Freelancer,package=package,payment=payment_object)
                 instance.save()
             

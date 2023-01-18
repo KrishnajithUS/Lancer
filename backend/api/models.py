@@ -19,6 +19,7 @@ class FreeLancer(models.Model):
     profile_picture = models.ImageField(upload_to=upload_to,blank=True)
     bio = models.CharField(max_length=200,blank=True,null=True)
     is_package_active=models.BooleanField(default=False)
+    post_count=models.IntegerField(blank=True,null=True)
     social_media_links=models.CharField(max_length=40,blank=True,null=True)
     
     

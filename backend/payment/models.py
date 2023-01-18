@@ -7,7 +7,7 @@ def upload_to(instance, filename):
     return "{filename}".format(filename=filename)
 class Packages(models.Model):
     title=models.CharField(max_length=200,blank=True,null=True)
-    no_of_posts=models.IntegerField(default=None,blank=True,null=True)
+    no_of_posts=models.IntegerField(blank=True,null=True,default=0)
     price=models.IntegerField(default=None,blank=True,null=True)
     description=models.CharField(max_length=200,blank=True,null=True)
     def __str__(self):

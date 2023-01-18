@@ -340,6 +340,8 @@ class PostSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         print("crerte method", validated_data)
         freelancer = FreeLancer.objects.get(user=self.context["request"].user)
+        freelancer.post_count = freelancer.post_count-1
+        freelancer.save()
         # category=Category.objects.get(pk=validated_data['category'])
         # subcategory=SubCategory.objects.get(pk=validated_data['sub_category'],subcategory=category)
         post = CreatePost(

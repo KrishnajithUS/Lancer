@@ -449,21 +449,15 @@ class PostView(APIView):
         freelancer = FreeLancer.objects.get(user=user)
         
         
-        if freelancer.is_package_active and CreatePost.objects.filter(Freelancer=freelancer).count() > 1:
-          
-            post=CreatePost.objects.filter(Freelancer=freelancer).count()
-            print(post,"post count")
-            getdata=FreelancerPost.objects.filter(Freelancer=freelancer)
-            packagecount=0
-            for i in getdata :
-                print(i.package.no_of_posts)
-                packagecount =  packagecount + i.package.no_of_posts
-            print("packagecount",packagecount)
-            if post >= packagecount:
+        if freelancer.post_count < 1:
+            
+        
                 freelancer.is_package_active=False
                 freelancer.save()
-                getdata.status=False
+               
                 return Response({"details":"The limit exceeded ! Buy another packaget to continue..."},status=status.HTTP_400_BAD_REQUEST)
+          
+
         if freelancer.is_package_active is False:
              return Response({"details":"buy a package to create a post"},status=status.HTTP_400_BAD_REQUEST)
         print('request comes here',request.data)
