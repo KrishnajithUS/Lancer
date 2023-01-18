@@ -5,67 +5,89 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable import/no-named-as-default-member */
-import React, { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import Footer from '../Components/Constants/Footer';
+import Otp from '../Components/Constants/Otp';
 import LogOut from '../Components/Constants/LogOut';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
+
 import Register from '../Pages/Register';
 import SelectionPage from '../Pages/SelectionPage';
 import FreelancerRegister from '../Pages/FreelancerRegister';
 import Cprofile from '../Components/Client/Cprofile';
 import Fprofile from '../Components/Freelancer/Fprofile';
+import Navbar from '../Components/Constants/Navbar';
 import AdminHome from '../Components/Admin/AdminHome';
+import Service from '../Components/Client/ServicePage/Service';
 import AdminLogin from '../Components/Admin/AdminLogin';
+import Post from '../Components/Freelancer/Post';
+import AddPost from '../Components/Freelancer/AddPost';
+import UpdatePost from '../Components/Freelancer/UpdatePost';
+import Packages from '../Components/Freelancer/Packages';
+import PostDetailPage from '../Components/Client/ServicePage/PostDetailPage';
+import PublicProfile from '../Components/Freelancer/PublicProfile';
+import Payment from '../Components/Freelancer/Payment';
+import PrivateRouter from './PrivateRouter/PrivateRouter';
+import Public from './PrivateRouter/Public';
+import FreelancerPrivate from './PrivateRouter/FreelancerPrivate';
+// import Chat from '../Components/Chat/Chat';
 
 const router = () => {
-  const navigate = useNavigate();
-  const userAuth = Boolean(useSelector((state) => state.user.user.isLoggedIn));
-
-  const FAuth = Boolean(
-    useSelector((state) => state.freelancer.Freelancer.isLoggedIn)
-  );
   const adminAuth = Boolean(
     useSelector((state) => state.admin.admin.isLoggedIn)
   );
 
-  useEffect(() => {
-    if (adminAuth) {
-      navigate('/dashboard');
-    }
-  }, []);
+  if (!adminAuth) {
+    console.log('router');
+    return (
+      <>
+        <Navbar />
+        <Routes>
+          <Route path="/logout" element={<LogOut />} />
+          <Route element={<Public />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/select" element={<SelectionPage />} />
+            <Route path="/adminlogin" element={<AdminLogin />} />
+            <Route path="/fregister" element={<FreelancerRegister />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/verifyotp/:id" element={<Otp />} />
+            <Route path="/login" element={<Login />} />
+          </Route>
+
+          <Route path="*" element={<Home />} />
+          <Route element={<PrivateRouter />}>
+            <Route path="/cprofile" element={<Cprofile />} />
+            <Route path="/services" element={<Service />} />
+
+            <Route path="/fprofile" element={<Fprofile />} />
+
+            <Route path="/publicprofile" element={<PublicProfile />} />
+          </Route>
+          <Route element={<FreelancerPrivate />}>
+            <Route path="/post" element={<Post />} />
+            <Route path="/addpost" element={<AddPost />} />
+            <Route path="/updatepost/:id" element={<UpdatePost />} />
+            <Route path="/packages" element={<Packages />} />
+            <Route path="/postDetails" element={<PostDetailPage />} />
+            <Route path="/payment/:id" element={<Payment />} />
+          </Route>
+          {/* <Route path="/chat" element={<Chat />} /> */}
+        </Routes>
+        <Footer />
+      </>
+    );
+  }
   return (
-    <div>
+    <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/select" element={<SelectionPage />} />
-        <Route
-          path="/login"
-          element={userAuth ? <Cprofile /> : FAuth ? <Fprofile /> : <Login />}
-        />
-        <Route
-          path="/adminlogin"
-          element={adminAuth ? <AdminHome /> : <AdminLogin />}
-        />
-        <Route path="/register" element={<Register />} />
-        <Route path="/fregister" element={<FreelancerRegister />} />
-        <Route path="/cprofile" element={userAuth ? <Cprofile /> : <Login />} />
-
-        <Route
-          path="/fprofile"
-          element={FAuth ? <Fprofile /> : userAuth ? <Cprofile /> : <Login />}
-        />
-
+        <Route path="*" element={<AdminHome />} />
+        <Route path="/dashboard" element={<AdminHome />} />
         <Route path="/logout" element={<LogOut />} />
-
-        <Route
-          path="/dashboard"
-          element={adminAuth ? <AdminHome /> : <AdminLogin />}
-        />
       </Routes>
-    </div>
+    </>
   );
 };
 

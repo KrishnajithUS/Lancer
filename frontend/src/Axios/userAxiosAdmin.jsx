@@ -5,13 +5,15 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
 import { useSelector, useDispatch } from 'react-redux';
-import { adminUpdate } from '../Redux/adminreducer';
+import { useNavigate } from 'react-router-dom';
+import { adminUpdate, adminLogOut } from '../Redux/adminreducer';
 
 const baseURL = 'http://127.0.0.1:8000/api/';
 
 const useAxiosAdmin = () => {
   const authTokens = useSelector((state) => state.admin.admin.access_token);
   const authRefresh = useSelector((state) => state.admin.admin.refresh_token);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -29,7 +31,10 @@ const useAxiosAdmin = () => {
     const response = await axios.post(`${baseURL}token/refresh/`, {
       refresh: authRefresh,
     });
-
+    if (response.status === 401) {
+      dispatch(adminLogOut());
+      navigate('/login');
+    }
     const token = { token: response.data };
     dispatch(adminUpdate(token));
 

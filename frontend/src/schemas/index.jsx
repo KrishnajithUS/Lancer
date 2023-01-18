@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable prettier/prettier */
 import * as Yup from 'yup';
 
@@ -36,15 +37,58 @@ const cprofileSchema = Yup.object({
   password: Yup.string().min(6),
   social_media_links: Yup.string().matches(
     /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-    'Enter correct url!',
+    'Enter correct url!'
   ),
   title: Yup.string().min(5).max(20),
-  bio: Yup.string().min(15).max(60),
+  bio: Yup.string().min(15).max(200),
   skills: Yup.string().max(20),
   new_password: Yup.string().min(6),
   confirm_new_password: Yup.string().oneOf(
     [Yup.ref('new_password'), null],
-    'Password must match',
+    'Password must match'
   ),
 });
-export { loginSchema, signUpSchema, cprofileSchema };
+const ExperienceSchema = Yup.object({
+  company: Yup.string()
+    .min(2)
+    .max(30)
+    .required('Please enter your Company name'),
+  country: Yup.string().min(2).max(30),
+  place: Yup.string().min(2).max(30),
+  description: Yup.string()
+    .min(15)
+    .max(40)
+    .required('Please enter your Description'),
+  checkbox: Yup.boolean().oneOf([true], 'Message'),
+
+  years: Yup.number(),
+});
+const EducationSchema = Yup.object({
+  university: Yup.string().min(2).max(30),
+  degree: Yup.string().min(2).max(30).required('Please enter Degree'),
+  field_of_study: Yup.string()
+    .min(5, 'minimum five characters')
+    .max(40)
+    .required('Please enter your Field of study'),
+});
+const OtpShema = Yup.object({
+  digit1: Yup.number().min(0).required('Please enter a Digit'),
+  digit2: Yup.number().min(0).required('Please enter a Digit'),
+  digit3: Yup.number().min(0).required('Please enter a Digit'),
+  digit4: Yup.number().min(0).required('Please enter a Digit'),
+});
+const AddPostSchema = Yup.object({
+  title: Yup.string().min(5).max(50).required('Enter Your Post Title'),
+  description: Yup.string().min(10).max(800).required('Please enter Description'),
+  price: Yup.number().min(2).required('Price is not acceptable'),
+});
+
+export {
+  loginSchema,
+  EducationSchema,
+  signUpSchema,
+  cprofileSchema,
+  ExperienceSchema,
+  OtpShema,
+  AddPostSchema,
+};

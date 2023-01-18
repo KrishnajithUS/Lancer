@@ -3,7 +3,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className="bg-white dark:bg-gray-900">
+    <footer className="bg-white h-full mb-0  dark:bg-gray-900">
       <div className="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
         <a
           href="#"
@@ -64,7 +64,7 @@ function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
 export default Footer;

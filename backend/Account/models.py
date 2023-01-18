@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -21,6 +21,7 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.is_active=False
         user.save(using=self._db)
+        user.is_verified=False
         return user
 
     def create_superuser(self,first_name,last_name,email, password):
@@ -57,11 +58,14 @@ class User(AbstractBaseUser):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
     phone_number=models.CharField(max_length=50)
+    expiration_time = models.DateTimeField(default=datetime.datetime.now)
     new_password=models.CharField(max_length=20,blank=True)
     confirm_new_password=models.CharField(max_length=20,blank=True)
+    is_verified=models.BooleanField(default=False)
+    otp=models.CharField(max_length=40,blank=True,null=True)
     is_staff = models.BooleanField(default=False) # a admin user; non super-user
     is_admin = models.BooleanField(default=False) # a superuser
-    is_user=models.BooleanField(default=False)
+   
     is_superadmin = models.BooleanField(default=False)
     is_freelancer=models.BooleanField(default=False)
     # notice the absence of a "Password field", that is built in.
@@ -88,7 +92,9 @@ class User(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
-    
+    def save(self, *args, **kwargs):
+        self.expiration_time = datetime.datetime.now() + datetime.timedelta(minutes=3)
+        super().save(*args, **kwargs)
   
 
 

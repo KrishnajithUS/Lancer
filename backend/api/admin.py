@@ -1,4 +1,4 @@
-from .models import Client,FreeLancer,Skills
+from .models import Client,FreeLancer,Skills,Experience,Education,Category,SubCategory
 from django.contrib import admin
 
 from django.utils.html import format_html
@@ -10,3 +10,7 @@ class ClientAdmin(admin.ModelAdmin):
 admin.site.register(Client,ClientAdmin)
 admin.site.register(FreeLancer)
 admin.site.register(Skills)
+admin.site.register(Experience)
+admin.site.register(Education)
+admin.site.register(Category)
+admin.site.register(SubCategory)

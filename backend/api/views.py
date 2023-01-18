@@ -9,7 +9,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
-from api.models import Client, FreeLancer, Skills
+from api.models import Client, Education, FreeLancer, Skills,Experience,Category,SubCategory 
+from payment.models import CreatePost,Packages,FreelancerPost
+from .emails import verify_token
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import ListAPIView
+import asyncio
+from asgiref.sync import sync_to_async
+from .tasks import send_otp
 
 User = get_user_model()
 from rest_framework.parsers import JSONParser
@@ -19,13 +26,20 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 from rest_framework.response import Response
 from .serializers import (
+    ExpSerializer,
     UserSerializer,
     UserSerializerWithToken,
     RegistrationSerializer,
     UserUpdateSerializer,
     ClientProfileSerializer,
     FreelancerSerializer,
-    SkillSerializer
+    SkillSerializer,
+    EduSerializer,
+    PostSerializer,
+    CategorySerializer,
+    SubCategorySerializer,
+    PackageSerializer
+    
 )
 
 
@@ -55,27 +69,57 @@ def getUserPrfile(request):
 # freelancer register
 class RegisterView(APIView):
     # permission_classes=[AllowAny]
+
     def post(self, request, format=None):
 
-        serializer = RegistrationSerializer(data=request.data)
+        if request.data.get("verification"):
 
-        if serializer.is_valid():
+            user = User.objects.get(pk=request.data["id"])
 
-            serializer.save()
-            data = serializer.data
-            return Response(data, status=status.HTTP_201_CREATED)
+            new = verify_token(user, request.data["otp"])
+            if new:
+                user.is_active = True
+                return Response(
+                    {"details": "Account Activated Login to Continue"},
+                    status=status.HTTP_201_CREATED,
+                )
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response(
+                    {"details": "Otp doesn't Match / TimeOut"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        else:
+            serializer = RegistrationSerializer(data=request.data)
+            if serializer.is_valid():
+
+                serializer.save()
+                print(serializer.data["email"])
+                try:
+                  send_otp.delay((request.data.get("email")))
+                except:
+                    pass
+                data = serializer.data
+                print(data)
+                return Response(
+                    {
+                        "details": "check your email for verification",
+                        "id": serializer.data["id"],
+                    },
+                    status=status.HTTP_201_CREATED,
+                )
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # freelancer Login
 class LoginView(APIView):
     def post(self, request):
+        email = request.data["email"]
+        passsword = request.data["password"]
+        user = authenticate(email=email, password=passsword)
+        print(user,"user")
         if request.data.get("is_admin"):
-
-            email = request.data["email"]
-            passsword = request.data["password"]
-            user = authenticate(email=email, password=passsword)
 
             if user is not None and user.is_superadmin:
                 login(request, user)
@@ -87,10 +131,6 @@ class LoginView(APIView):
             )
 
         else:
-
-            email = request.data["email"]
-            passsword = request.data["password"]
-            user = authenticate(email=email, password=passsword)
 
             if user is not None:
                 login(request, user)
@@ -188,7 +228,8 @@ class FreelancerUpdateView(APIView):
 
     # profile update
     def put(self, request):
-       
+        print(request.data)
+
         user = User.objects.get(pk=request.data["id"])
         freelancer_profile = FreeLancer.objects.get(user=user)
 
@@ -203,6 +244,7 @@ class FreelancerUpdateView(APIView):
                 return Response(serializernew.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     # profile picture update
     def patch(self, request, format=None):
         print(request.data)
@@ -210,7 +252,9 @@ class FreelancerUpdateView(APIView):
 
         userprofile = FreeLancer.objects.get(user=user)
 
-        serializer =FreelancerSerializer(instance=userprofile, data=request.data,partial=True)
+        serializer = FreelancerSerializer(
+            instance=userprofile, data=request.data, partial=True
+        )
         if serializer.is_valid():
 
             serializer.save()
@@ -218,48 +262,287 @@ class FreelancerUpdateView(APIView):
             serializernew = UserSerializer(user)
             return Response(serializernew.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#skill create and update
+
+
+# skill create and update
 class SkillsView(APIView):
-    permission_classes=[IsAuthenticated]
-    def post(self,request):
-      
-        if request.data.get('is_delete'):
-            skills=Skills.objects.get(pk=request.data["id"])
-            print(skills)            
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+
+        if request.data.get("is_delete"):
+            skills = Skills.objects.get(pk=request.data["id"])
+            print(skills)
             skills.delete()
-            return Response({"details":"deleted successfully"},status=status.HTTP_200_OK)
-        serializer=SkillSerializer(data=request.data, context={
-        'request': request
-    })
+            return Response(
+                {"details": "deleted successfully"}, status=status.HTTP_200_OK
+            )
+        serializer = SkillSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             print(serializer.data)
-            return Response({"details":"created"},status=status.HTTP_201_CREATED)
+            return Response({"details": "created"}, status=status.HTTP_201_CREATED)
 
-        
-        return Response(serializer.errors,status=status.HTTP_201_CREATED)
-    def get(self,request):
-        user=request.user
+        return Response(serializer.errors, status=status.HTTP_201_CREATED)
 
-        freelancer=FreeLancer.objects.get(user=user)
-     
-        skills=Skills.objects.filter(user=freelancer)
-        #skills may be multiple objets
-        #so we need to use many= True to serialize that object
-        serializer=SkillSerializer(skills,many=True)
+    def get(self, request):
+        user = request.user
 
-        return Response(serializer.data,status=status.HTTP_200_OK)
-    def put(self,request):
+        freelancer = FreeLancer.objects.get(user=user)
+
+        skills = Skills.objects.filter(user=freelancer)
+        # skills may be multiple objets
+        # so we need to use many= True to serialize that object
+        serializer = SkillSerializer(skills, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request):
         print(request.data)
-        skills=Skills.objects.get(pk=request.data["id"])
-        print("skills",skills)
-        serializer=SkillSerializer(instance=skills,data=request.data)
+        skills = Skills.objects.get(pk=request.data["id"])
+        print("skills", skills)
+        serializer = SkillSerializer(instance=skills, data=request.data)
         if serializer.is_valid():
             serializer.save()
             print(serializer.data)
-            return Response({"details":"updated"},status=status.HTTP_200_OK)
+            return Response({"details": "updated"}, status=status.HTTP_200_OK)
         return Response(serializer.errors)
 
+
+# Experience
+class ExperienceView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        print(request.data)
+        if request.data.get("is_delete"):
+            experience = Experience.objects.filter(pk=request.data["id"])
+
+            experience.delete()
+            return Response(
+                {"details": "deleted successfully"}, status=status.HTTP_200_OK
+            )
+        serializer = ExpSerializer(data=request.data, context={"request": request})
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response({"details": "created"}, status=status.HTTP_201_CREATED)
+
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        user = request.user
+
+        freelancer = FreeLancer.objects.get(user=user)
+
+        experience = Experience.objects.filter(user=freelancer)
+        # skills may be multiple objets
+        # so we need to use many= True to serialize that object
+        serializer = ExpSerializer(experience, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        print(request.data)
+        freelancer = FreeLancer.objects.get(user=request.user)
+        experience = Experience.objects.get(pk=request.data["id"], user=freelancer)
+        # country=request.data.get('bcountry')
+        # experience.country=country
+
+        print(experience)
+        serializer = ExpSerializer(instance=experience, data=request.data, many=False)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+            return Response({"details": "updated"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors)
+
+
+# Education
+class EducationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        print(request.data)
+        if request.data.get("is_delete"):
+            education = Education.objects.filter(pk=request.data["id"])
+
+            education.delete()
+            return Response(
+                {"details": "deleted successfully"}, status=status.HTTP_200_OK
+            )
+        serializer = EduSerializer(data=request.data, context={"request": request})
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response({"details": "created"}, status=status.HTTP_201_CREATED)
+
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        user = request.user
+
+        freelancer = FreeLancer.objects.get(user=user)
+
+        education = Education.objects.filter(user=freelancer)
+        # skills may be multiple objets
+        # so we need to use many= True to serialize that object
+        serializer = EduSerializer(education, many=True)
+        print(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        print(request.data)
+        freelancer = FreeLancer.objects.get(user=request.user)
+        education = Education.objects.get(pk=request.data["id"], user=freelancer)
+
+        serializer = EduSerializer(instance=education, data=request.data, many=False)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+            return Response({"details": "updated"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors)
+
+#Post
+class PostView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        
+        if request.data.get("get_category"):
+            category=Category.objects.all()
+            serializer=CategorySerializer(category,many=True)
+          
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        if request.data.get("get_sub_category"):
+            category=Category.objects.get(pk=request.data.get('category'))
+         
+            subcategory=SubCategory.objects.filter(subcategory=category)
+          
+            serializer=SubCategorySerializer(subcategory,many=True)
+          
+            return Response(serializer.data,status=status.HTTP_200_OK)
+            
+        if request.data.get("is_delete"):
+            post = CreatePost.objects.filter(pk=request.data["id"])
+
+            post.delete()
+            return Response(
+                {"details": "deleted successfully"}, status=status.HTTP_200_OK
+            )
+        if request.data.get("is_update"):
+            user = request.user
+
+            freelancer = FreeLancer.objects.get(user=user)
+
+            post = CreatePost.objects.get(pk=request.data["id"],user=freelancer)
+            # skills may be multiple objets
+            # so we need to use many= True to serialize that object
+            serializer = PostSerializer(post, many=False)
+            print(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        user=request.user
+        freelancer = FreeLancer.objects.get(user=user)
+        
+        
+        if freelancer.post_count < 1:
+            
+        
+                freelancer.is_package_active=False
+                freelancer.save()
+               
+                return Response({"details":"The limit exceeded ! Buy another packaget to continue..."},status=status.HTTP_400_BAD_REQUEST)
+          
+
+        if freelancer.is_package_active is False:
+             return Response({"details":"buy a package to create a post"},status=status.HTTP_400_BAD_REQUEST)
+        print('request comes here',request.data)
+        serializer = PostSerializer(data=request.data, context={"request": request})
+        print(serializer)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response({"details": "created"}, status=status.HTTP_201_CREATED)
+
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        user = request.user
+
+        freelancer = FreeLancer.objects.get(user=user)
+
+        post = CreatePost.objects.filter(Freelancer=freelancer)
+        # skills may be multiple objets
+        # so we need to use many= True to serialize that object
+        serializer = PostSerializer(post, many=True)
+      
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        print(request.data)
+        freelancer = FreeLancer.objects.get(user=request.user)
+        post = CreatePost.objects.get(pk=request.data["id"], user=freelancer)
+
+        serializer = PostSerializer(instance=post, data=request.data, many=False)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+            return Response({"details": "updated"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors)
+#Public Profile data
+class PublicProfileView(APIView):
+    permission_classes=[IsAuthenticated]
+
+        
+    def post(self,request):
+        print(request.data)
+        user=User.objects.get(pk=request.data.get("id"))
+        print(user)
+        freelancer=FreeLancer.objects.get(user=user)   
+        print(freelancer)
+        if freelancer is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        serializer=FreelancerSerializer(freelancer)
+        print(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+# get all posts
+class setPagination(PageNumberPagination):
+    page_size=2
+class GetAllPostView(ListAPIView):
+    queryset=CreatePost.objects.all()
+    serializer_class=PostSerializer
+    pagination_class=setPagination
+    
+    # def get(self,request):
+    #     print(request.data)
+    #     posts=CreatePost.objects.all()
+    #     print(posts)
+    #     serializer=PostSerializer(posts,many=True)
+    #     print(serializer.data)
+    #     return Response(serializer.data,status=status.HTTP_200_OK) 
+#get packages
+class PackageView(APIView):
+    def get(self,request):
+        print(request.data)
+        posts=Packages.objects.all()
+        print(posts)
+        serializer=PackageSerializer(posts,many=True)
+        print(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK) 
+    def post(self,request):
+        print(request.data)
+        posts=Packages.objects.get(pk=request.data["id"])
+        print(posts)
+        serializer=PackageSerializer(posts,many=False)
+        print(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK) 
 # logout
 
 

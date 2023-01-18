@@ -12,7 +12,7 @@ import { loginSchema } from '../../schemas';
 
 import axiosInstance from '../../Axios/axiosPrivate';
 
-import { adminData, adminUpdate } from '../../Redux/adminreducer';
+import { adminData } from '../../Redux/adminreducer';
 
 function AdminLogin() {
   const [errorMessage, setErrorMessage] = useState('');

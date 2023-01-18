@@ -6,6 +6,8 @@ const initialState = {
   FreelancerDetails: {},
   token: null,
   modalStatus: 'hidemodal',
+  modalStatusN: 'hidemodal',
+  setRefreshInProgress: false,
   skills: {},
 };
 
@@ -38,6 +40,10 @@ const FreelancerSlice = createSlice({
       const modelStatus = action.payload;
       return { ...state, modelStatus };
     },
+    modalStatusN: (state, action) => {
+      const modelStatusN = action.payload;
+      return { ...state, modelStatusN };
+    },
     FlogOut: (state) => {
       const Freelancer = {
         id: null,
@@ -57,9 +63,14 @@ const FreelancerSlice = createSlice({
       const skills = action.payload;
       return { ...state, skills };
     },
+    setRefreshInProgress: (state, action) => {
+      const setRefreshInProgress = action.payload;
+      console.log('setResfreshtoken', setRefreshInProgress);
+      return { ...state, setRefreshInProgress };
+    },
     FsetToken: (state, action) => {
-      console.log('token acess', action.payload.token.access);
-      console.log('refresh acess', action.payload.token.refresh);
+      console.log('token acess in reducer', action.payload.token.access);
+      console.log('refresh acess in reducer', action.payload.token.refresh);
       const token = {
         access_token: action.payload.token.access,
         refresh_token: action.payload.token.refresh,
@@ -71,5 +82,14 @@ const FreelancerSlice = createSlice({
     },
   },
 });
-export const { FlogOut, FDetails, Fskills, FData, FsetToken, modalStatus } = FreelancerSlice.actions;
+export const {
+  FlogOut,
+  FDetails,
+  Fskills,
+  FData,
+  FsetToken,
+  modalStatus,
+  modalStatusN,
+  setRefreshInProgress,
+} = FreelancerSlice.actions;
 export default FreelancerSlice.reducer;
