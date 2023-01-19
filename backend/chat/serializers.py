@@ -29,3 +29,18 @@ class MessageSerializer(serializers.ModelSerializer):
 
     def get_to_user(self, obj):
         return UserSerializer(obj.to_user).data
+class UserMessageSerializer(serializers.ModelSerializer):
+    to_user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Message
+        fields = (
+
+            "to_user",
+            
+        )
+
+
+
+    def get_to_user(self, obj):
+        return UserSerializer(obj.to_user).data

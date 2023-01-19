@@ -52,15 +52,15 @@ const Navbar = () => {
                           : ' flex w-full justify-center items-baseline space-x-4'
                       }
                     >
-                      <input
-                        type="text"
-                        placeholder="Search"
-                        className="lg:w-[80%] w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
-                      />
                       {isAuth ? (
                         <>
+                          <input
+                            type="text"
+                            placeholder="Search"
+                            className="lg:w-[80%] w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
+                          />
                           <div className="px-4 hover:cursor-pointer ">
-                            <BsFillChatLeftTextFill size={30} />
+                            <BsFillChatLeftTextFill size={25} />
                           </div>
                           <button
                             id="dropdownUserAvatarButton"
@@ -118,14 +118,21 @@ const Navbar = () => {
                           </div>
                         </>
                       ) : FisAuth ? (
-                        <div className="flex items-center mt-2">
+                        <div className="flex jusitfy-center items-center">
+                          <div>
+                            <input
+                              type="text"
+                              placeholder="Search"
+                              className="lg:w-[80%] w-[80%]  py-3  h-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
+                            />
+                          </div>
                           <Link to="/chat">
-                            <div className="px-4 hover:cursor-pointer ">
-                              <BsFillChatLeftTextFill size={30} />
+                            <div className=" pt-2 hover:cursor-pointer ">
+                              <BsFillChatLeftTextFill size={25} />
                             </div>
                           </Link>
                           <Link to="/logout">
-                            <div className="mr-8">
+                            <div className="">
                               <button
                                 type="button"
                                 className=" rounded-full font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"

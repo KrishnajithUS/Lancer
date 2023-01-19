@@ -5,7 +5,7 @@ import useWebSocket from 'react-use-websocket';
 
 function Content({ conversationName }) {
   const authTokens = useSelector(
-    (state) => state.freelancer.token.access_token
+    (state) => state.freelancer.token.access_token,
   );
   const [name, setName] = useState('');
 
@@ -39,14 +39,15 @@ function Content({ conversationName }) {
             break;
           case 'chat_message_echo':
             console.log(data);
-            setMessageHistory(...messageHistory, data.message);
+            setMessageHistory((prev) => prev.concat(data.message));
+
             break;
           default:
             console.error('unknown type');
             break;
         }
       },
-    }
+    },
   );
   function handleChangeMessage(e) {
     console.log(e.target.value, 'the handlechange value');

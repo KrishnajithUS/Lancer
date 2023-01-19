@@ -1,5 +1,7 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from 'react';
+import { AiOutlineSend } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import useWebSocket from 'react-use-websocket';
 
@@ -34,7 +36,7 @@ function SmalllChatBox({ modal, showModal, post }) {
             break;
           case 'chat_message_echo':
             console.log(data);
-            setMessageHistory(...messageHistory, data.message);
+            setMessageHistory((prev) => prev.concat(data.message));
             break;
           default:
             console.error('unknown type');
@@ -71,9 +73,9 @@ function SmalllChatBox({ modal, showModal, post }) {
         tabIndex={-1}
         className=" fixed flex justify-center items-center top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full"
       >
-        <div className="shadow-2xl bg-white border  md:h-[100%] border-gray-500 relative  rounded-lg">
+        <div className=" relative  rounded-lg">
           <div className="relative m-4 ">
-            <div className="w-80 h-96 flex flex-col border shadow-md bg-white">
+            <div className="w-full rounded-lg border border-gray-300 h-96 flex flex-col border shadow-2xl bg-white">
               <div className="flex items-center justify-between border-b p-2">
                 {/* user info */}
                 <div className="flex items-center">
@@ -83,9 +85,13 @@ function SmalllChatBox({ modal, showModal, post }) {
                   />
                   <div className="pl-2">
                     <div className="font-semibold">
-                      <a className="hover:underline" href="#">
+                      <button
+                        type="button"
+                        className="hover:underline"
+                        href="#"
+                      >
                         John Doe
-                      </a>
+                      </button>
                     </div>
                     <div className="text-xs text-gray-600">Online</div>
                   </div>
@@ -200,10 +206,10 @@ function SmalllChatBox({ modal, showModal, post }) {
                 {/* end chat input action */}
                 <div className="w-full mx-2">
                   <input
-                    className="w-full rounded-full border border-gray-200"
+                    className="border border-black focus:border-purple-600 focus:outline-none bg-white  text-white-900 text-sm rounded-lg block w-full   "
                     type="text"
                     defaultValue=""
-                    placeholder="Aa"
+                    placeholder="type your message here .... "
                     name="message"
                     value={message}
                     onChange={handleChangeMessage}
@@ -213,23 +219,10 @@ function SmalllChatBox({ modal, showModal, post }) {
                 <div>
                   <button
                     onClick={handleSubmit}
-                    className="inline-flex hover:bg-indigo-50 rounded-full p-2"
-                    type="button"
+                    type="submit"
+                    className="flex gap-1 items-center justify-center bg-purple-500 hover:bg-purple-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
+                    <AiOutlineSend />
                   </button>
                 </div>
                 {/* end chat send action */}
