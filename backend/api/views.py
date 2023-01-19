@@ -550,6 +550,7 @@ class PackageView(APIView):
 
 class chatUser(APIView):
     def get(self,request):
+           print(request.user)
            users=[]
            messages=Message.objects.filter(to_user=request.user)
            print(messages,"this is messages")

@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -5,24 +6,28 @@ import useWebSocket from 'react-use-websocket';
 
 function Content({ conversationName }) {
   const authTokens = useSelector(
-    (state) => state.freelancer.token.access_token,
+    (state) => state.freelancer.token.access_token
   );
+  const userTokens = useSelector((state) => state.user.token.access_token);
   const [name, setName] = useState('');
 
   const [messageHistory, setMessageHistory] = useState([]);
   const [message, setMessage] = useState('');
   const username = useSelector(
-    (state) => state.freelancer.FreelancerDetails.username,
+    (state) => state.freelancer.FreelancerDetails.username
   );
+  const uusername = useSelector((state) => state.user.userDetails.username);
   function formatMessageTimestamp(timestamp) {
     const date = new Date(timestamp);
     return date.toLocaleTimeString().slice(0, 5);
   }
   const { sendJsonMessage } = useWebSocket(
-    authTokens ? `ws://localhost:8000/${conversationName}/` : null,
+    authTokens || userTokens
+      ? `ws://localhost:8000/${conversationName}/`
+      : null,
     {
       queryParams: {
-        token: authTokens,
+        token: authTokens || userTokens,
       },
       onOpen: () => {
         console.log('Connected!');
@@ -47,7 +52,7 @@ function Content({ conversationName }) {
             break;
         }
       },
-    },
+    }
   );
   function handleChangeMessage(e) {
     console.log(e.target.value, 'the handlechange value');
@@ -90,7 +95,7 @@ function Content({ conversationName }) {
         <ul>
           {messageHistory.map((item) => (
             <li className="clearfix2">
-              {item.from_user.username !== username && (
+              {item.from_user.username !== (username || uusername) && (
                 <div className="w-full flex justify-start">
                   <div
                     className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
@@ -104,7 +109,7 @@ function Content({ conversationName }) {
                 </div>
               )}
 
-              {item.from_user.username === username && (
+              {item.from_user.username === (username || uusername) && (
                 <div className="w-full flex justify-end">
                   <div
                     className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"

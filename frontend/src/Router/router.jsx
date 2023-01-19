@@ -58,6 +58,8 @@ const router = () => {
 
             <Route path="/publicprofile" element={<PublicProfile />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/chat/:conversationName" element={<Chat />} />
+
           </Route>
           <Route element={<FreelancerPrivate />}>
             <Route path="/fchat/" element={<Chat />} />

@@ -9,9 +9,11 @@ function Sidebar({ chatData }) {
   const fusername = useSelector(
     (state) => state.freelancer?.FreelancerDetails.username
   );
+  const uusername = useSelector((state) => state.user?.userDetails.username);
+  console.log(uusername);
   function createConversationName(username) {
     console.log(username, 'username inside function');
-    const namesAlph = [username, fusername].sort();
+    const namesAlph = [username, fusername || uusername].sort();
     const name = `${namesAlph[0]}__${namesAlph[1]}`;
     console.log('conversation name', name);
     return `${namesAlph[0]}__${namesAlph[1]}`;
@@ -60,11 +62,19 @@ function Sidebar({ chatData }) {
                 />
                 <div className="w-full pb-2">
                   <div className="flex justify-between">
-                    <Link to={`/fchat/${createConversationName(item)}`}>
-                      <span className="block ml-2 font-semibold text-base text-gray-600 ">
-                        {item}
-                      </span>
-                    </Link>
+                    {fusername ? (
+                      <Link to={`/fchat/${createConversationName(item)}`}>
+                        <span className="block ml-2 font-semibold text-base text-gray-600 ">
+                          {item}
+                        </span>
+                      </Link>
+                    ) : (
+                      <Link to={`/chat/${createConversationName(item)}`}>
+                        <span className="block ml-2 font-semibold text-base text-gray-600 ">
+                          {item}
+                        </span>
+                      </Link>
+                    )}
                     <span className="block ml-2 text-sm text-gray-600">
                       1 hour
                     </span>
