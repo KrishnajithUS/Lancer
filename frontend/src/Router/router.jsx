@@ -48,15 +48,6 @@ const router = () => {
         <Navbar />
         <Routes>
           <Route path="/logout" element={<LogOut />} />
-          <Route element={<Public />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/select" element={<SelectionPage />} />
-            <Route path="/adminlogin" element={<AdminLogin />} />
-            <Route path="/fregister" element={<FreelancerRegister />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/verifyotp/:id" element={<Otp />} />
-            <Route path="/login" element={<Login />} />
-          </Route>
 
           <Route path="*" element={<Home />} />
           <Route element={<PrivateRouter />}>
@@ -69,13 +60,24 @@ const router = () => {
             <Route path="/chat" element={<Chat />} />
           </Route>
           <Route element={<FreelancerPrivate />}>
+            <Route path="/fchat/" element={<Chat />} />
+
+            <Route path="/fchat/:conversationName" element={<Chat />} />
             <Route path="/post" element={<Post />} />
             <Route path="/addpost" element={<AddPost />} />
             <Route path="/updatepost/:id" element={<UpdatePost />} />
             <Route path="/packages" element={<Packages />} />
             <Route path="/postDetails" element={<PostDetailPage />} />
             <Route path="/payment/:id" element={<Payment />} />
-            <Route path="/chat" element={<Chat />} />
+          </Route>
+          <Route element={<Public />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/select" element={<SelectionPage />} />
+            <Route path="/adminlogin" element={<AdminLogin />} />
+            <Route path="/fregister" element={<FreelancerRegister />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/verifyotp/:id" element={<Otp />} />
+            <Route path="/login" element={<Login />} />
           </Route>
           {/* <Route path="/chat" element={<Chat />} /> */}
         </Routes>

@@ -25,6 +25,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 from rest_framework.response import Response
+from chat.models import Message,Conversation
+from chat.serializers import MessageSerializer
 from .serializers import (
     ExpSerializer,
     UserSerializer,
@@ -545,7 +547,18 @@ class PackageView(APIView):
         return Response(serializer.data,status=status.HTTP_200_OK) 
 # logout
 
-
+class chatUser(APIView):
+    def get(self,request):
+           
+           message=Message.objects.filter(from_user=request.user).first()
+           user=message.to_user
+           print(user)
+           
+          
+           return Response(UserSerializer(user).data,status=status.HTTP_200_OK)
+        # except:
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+        
 @api_view(["POST"])
 def LogOut(request):
     print(request.user)

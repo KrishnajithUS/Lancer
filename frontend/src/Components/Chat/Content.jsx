@@ -1,6 +1,69 @@
-import React from 'react';
+/* eslint-disable no-restricted-globals */
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import useWebSocket from 'react-use-websocket';
 
-function Content({ handleSubmit, handleChangeMessage, message, setMessage }) {
+function Content({ conversationName }) {
+  const authTokens = useSelector(
+    (state) => state.freelancer.token.access_token
+  );
+  const [name, setName] = useState('');
+
+  const [messageHistory, setMessageHistory] = useState([]);
+  const [message, setMessage] = useState('');
+  const username = useSelector(
+    (state) => state.freelancer.FreelancerDetails.username,
+  );
+  function formatMessageTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString().slice(0, 5);
+  }
+  const { sendJsonMessage } = useWebSocket(
+    authTokens ? `ws://localhost:8000/${conversationName}/` : null,
+    {
+      queryParams: {
+        token: authTokens,
+      },
+      onOpen: () => {
+        console.log('Connected!');
+      },
+      onClose: () => {
+        console.log('Disconnected!');
+      },
+      onMessage: (e) => {
+        const data = JSON.parse(e.data);
+        console.log(data.message);
+        switch (data.type) {
+          case 'last_50_messages':
+            setMessageHistory(data.messages);
+            break;
+          case 'chat_message_echo':
+            console.log(data);
+            setMessageHistory(...messageHistory, data.message);
+            break;
+          default:
+            console.error('unknown type');
+            break;
+        }
+      },
+    }
+  );
+  function handleChangeMessage(e) {
+    console.log(e.target.value, 'the handlechange value');
+    setMessage(e.target.value);
+  }
+
+  function handleSubmit() {
+    sendJsonMessage({
+      type: 'chat_message',
+      message,
+      name,
+    });
+    setName('');
+
+    setMessage('');
+  }
+  console.log(messageHistory);
   return (
     <div className="w-full">
       <div className="flex items-center border-b border-gray-300 pl-3 py-3">
@@ -24,44 +87,37 @@ function Content({ handleSubmit, handleChangeMessage, message, setMessage }) {
         style={{ height: 700 }}
       >
         <ul>
-          <li className="clearfix2">
-            <div className="w-full flex justify-start">
-              <div
-                className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
-                style={{ maxWidth: 300 }}
-              >
-                <span className="block">Hello bro</span>
-                <span className="block text-xs text-right">10:30pm</span>
-              </div>
-            </div>
-            <div className="w-full flex justify-end">
-              <div
-                className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
-                style={{ maxWidth: 300 }}
-              >
-                <span className="block">Hello</span>
-                <span className="block text-xs text-left">10:32pm</span>
-              </div>
-            </div>
-            <div className="w-full flex justify-end">
-              <div
-                className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
-                style={{ maxWidth: 300 }}
-              >
-                <span className="block">how are you?</span>
-                <span className="block text-xs text-left">10:32pm</span>
-              </div>
-            </div>
-            <div className="w-full flex justify-start">
-              <div
-                className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
-                style={{ maxWidth: 300 }}
-              >
-                <span className="block">I am fine</span>
-                <span className="block text-xs text-right">10:42pm</span>
-              </div>
-            </div>
-          </li>
+          {messageHistory.map((item) => (
+            <li className="clearfix2">
+              {item.from_user.username !== username && (
+                <div className="w-full flex justify-start">
+                  <div
+                    className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
+                    style={{ maxWidth: 300 }}
+                  >
+                    <span className="block">{item.content}</span>
+                    <span className="block text-xs text-right">
+                      {formatMessageTimestamp(item.timestamp)}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {item.from_user.username === username && (
+                <div className="w-full flex justify-end">
+                  <div
+                    className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
+                    style={{ maxWidth: 300 }}
+                  >
+                    <span className="block">{item.content}</span>
+                    <span className="block text-xs text-right">
+                      {formatMessageTimestamp(item.timestamp)}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="w-full py-3 px-3 flex items-center justify-between border-t border-gray-300">
@@ -103,10 +159,14 @@ function Content({ handleSubmit, handleChangeMessage, message, setMessage }) {
           className="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700"
           type="text"
           name="message"
-          value={}
-          required=""
+          value={message}
+          onChange={handleChangeMessage}
         />
-        <button className="outline-none focus:outline-none" type="submit">
+        <button
+          onClick={handleSubmit}
+          className="outline-none focus:outline-none"
+          type="submit"
+        >
           <svg
             className="text-gray-400 h-7 w-7 origin-center transform rotate-90"
             xmlns="http://www.w3.org/2000/svg"

@@ -118,16 +118,23 @@ const Navbar = () => {
                           </div>
                         </>
                       ) : FisAuth ? (
-                        <Link to="/logout">
-                          <div className="mr-8">
-                            <button
-                              type="button"
-                              className=" rounded-full font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
-                            >
-                              LogOut
-                            </button>
-                          </div>
-                        </Link>
+                        <div className="flex items-center mt-2">
+                          <Link to="/chat">
+                            <div className="px-4 hover:cursor-pointer ">
+                              <BsFillChatLeftTextFill size={30} />
+                            </div>
+                          </Link>
+                          <Link to="/logout">
+                            <div className="mr-8">
+                              <button
+                                type="button"
+                                className=" rounded-full font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
+                              >
+                                LogOut
+                              </button>
+                            </div>
+                          </Link>
+                        </div>
                       ) : (
                         <div className="flex items-center jusitify-end pl-4">
                           <Link to="/login">

@@ -1,6 +1,20 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-function Sidebar() {
+function Sidebar({ chatData }) {
+  console.log(chatData);
+  const fusername = useSelector(
+    (state) => state.freelancer?.FreelancerDetails.username
+  );
+  function createConversationName(username) {
+    console.log(username, 'username inside function');
+    const namesAlph = [username, fusername].sort();
+    const name = `${namesAlph[0]}__${namesAlph[1]}`;
+    console.log('conversation name', name);
+    return `${namesAlph[0]}__${namesAlph[1]}`;
+  }
   return (
     <div>
       <div className="col-span-1 bg-white border-r border-gray-300">
@@ -32,6 +46,7 @@ function Sidebar() {
         </div>
         <ul className="overflow-auto" style={{ height: 500 }}>
           <h2 className="ml-2 mb-2 text-gray-600 text-lg my-2">Chats</h2>
+          {/* {chatData?.map((item) => ( */}
           <li>
             <button
               type="button"
@@ -44,9 +59,13 @@ function Sidebar() {
               />
               <div className="w-full pb-2">
                 <div className="flex justify-between">
-                  <span className="block ml-2 font-semibold text-base text-gray-600 ">
-                    Celia
-                  </span>
+                  <Link
+                    to={`/fchat/${createConversationName(chatData.username)}`}
+                  >
+                    <span className="block ml-2 font-semibold text-base text-gray-600 ">
+                      {chatData.username}
+                    </span>
+                  </Link>
                   <span className="block ml-2 text-sm text-gray-600">
                     1 hour
                   </span>
@@ -57,6 +76,7 @@ function Sidebar() {
               </div>
             </button>
           </li>
+          {/* ))} */}
         </ul>
       </div>
     </div>

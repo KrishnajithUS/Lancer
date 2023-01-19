@@ -1,191 +1,19 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable max-len */
-// /* eslint-disable comma-dangle */
-// /* eslint-disable new-cap */
-// /* eslint-disable jsx-a11y/click-events-have-key-events */
-// /* eslint-disable jsx-a11y/no-static-element-interactions */
-// /* eslint-disable no-undef */
-// /* eslint-disable react/button-has-type */
-// import React, { useState, useRef, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
-// import './ChatBox.css';
-// import { w3cwebsocket } from 'websocket';
-
-// function SmalllChatBox({ modal, showModal, post }) {
-//   console.log(post);
-//   const [messageInput, setMessageInput] = useState('');
-//   const [messages, setMessages] = useState([]);
-//   const connectionRef = useRef(null);
-//   const userId = useSelector((state) => state.user.user?.id);
-//   const FreelancerId = post.user_id;
-//   console.log(FreelancerId);
-//   console.log(userId);
-
-//   connectionRef.client = new w3cwebsocket(
-//     'ws://localhost:8000/ws/chat/private/'
-//   );
-//   useEffect(() => {
-//     connectionRef.client.onopen = () => {
-//       console.log('connected');
-//       connectionRef.client.send(
-//         JSON.stringify({
-//           command: 'fetch_messages',
-//         })
-//       );
-//     };
-
-//     connectionRef.client.onmessage = (message) => {
-//       const data = JSON.parse(message?.data);
-//       // console.log(data);
-
-//       if (data.command === 'new_message') {
-//         console.log('inside command1');
-//         setMessages([...messages, data.message]);
-//       } else if (data.command === 'messages') {
-//         console.log('inside command1');
-//         setMessages(data.messages);
-//       } else {
-//         setMessages(data?.messages);
-//       }
-//     };
-//     return () => {
-//       if (connectionRef.current) {
-//         connectionRef.current.close();
-//       }
-//     };
-//   }, [setMessages]);
-//   const handleChange = (event) => {
-//     setMessageInput(event.target.value);
-//   };
-
-//   const handleSend = () => {
-//     console.log(messageInput);
-//     connectionRef.client.send(
-//       JSON.stringify({
-//         command: 'new_messages',
-//         message: messageInput,
-//         user_id: userId,
-//         freelancer_id: FreelancerId,
-//       })
-//     );
-//     setMessageInput('');
-//   };
-
-//   const handleChangeL = () => {
-//     showModal('');
-//   };
-
-//   if (modal === 'showchat') {
-//     return (
-//       <div
-//         tabIndex={-1}
-//         className=" fixed flex justify-center items-center top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full"
-//       >
-//         <div className="w-[60%] rounded-lg">
-//           <div className="chat-modal   show w-full  flex flex-col shadow-lg">
-//             {/* close button */}
-//             <div
-//               onClick={handleChangeL}
-//               className="close-chat bg-red-500 hover:bg-red-600 text-white mb-1 w-10 flex justify-center items-center px-2 py-1 rounded self-end cursor-pointer"
-//             >
-//               <svg
-//                 width="1em"
-//                 height="1em"
-//                 viewBox="0 0 16 16"
-//                 className="bi bi-x"
-//                 fill="currentColor"
-//                 xmlns="http://www.w3.org/2000/svg"
-//               >
-//                 <path
-//                   fillRule="evenodd"
-//                   d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"
-//                 />
-//                 <path
-//                   fillRule="evenodd"
-//                   d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"
-//                 />
-//               </svg>
-//             </div>
-//             {/* admin profile */}
-//             <div className="flex justify-between items-center  text-white p-2 bg-green-500 border shadow-lg mr-5 w-full">
-//               <div className="flex items-center">
-//                 <img
-//                   src="https://f0.pngfuel.com/png/136/22/profile-icon-illustration-user-profile-computer-icons-girl-customer-avatar-png-clip-art-thumbnail.png"
-//                   alt="pic"
-//                   className="rounded-full w-8 h-8 mr-1"
-//                 />
-//                 <h2 className="font-semibold tracking-wider">HartDev</h2>
-//               </div>
-//               <div className="flex items-center justify-center">
-//                 <small className="mr-1">online</small>
-//                 <div className="rounded-full w-2 h-2 bg-white" />
-//               </div>
-//             </div>
-//             {/* chats */}
-//             <div className="flex flex-col bg-gray-200 px-2 chat-services expand overflow-auto">
-//               {messages.map((message) => (
-//                 <div className="chat bg-white text-gray-700 p-2 self-start my-2 rounded-md shadow mr-3">
-//                   {message.content}
-//                 </div>
-//               ))}
-//             </div>
-//             {/* send message */}
-//             <div className="relative bg-white">
-//               <input
-//                 value={messageInput}
-//                 onChange={handleChange}
-//                 type="text"
-//                 name="message"
-//                 placeholder="ketik pesan anda"
-//                 className="pl-4 pr-16 py-2 border border-green-500 focus:outline-none w-full"
-//               />
-//               <button
-//                 onClick={handleSend}
-//                 className="absolute right-0 bottom-0 text-green-600 bg-white  hover:text-green-500 m-1 px-3 py-1 w-auto transistion-color duration-100 focus:outline-none"
-//               >
-//                 Send
-//               </button>
-//             </div>
-//           </div>
-//           <div className="show-chat hidden mx-10 mb-6 mt-4 text-green-500 hover:text-green-600 flex justify-center items-center cursor-pointer ">
-//             <svg
-//               width="4em"
-//               height="4em"
-//               viewBox="0 0 16 16"
-//               className="bi bi-chat-text-fill"
-//               fill="currentColor"
-//               xmlns="http://www.w3.org/2000/svg"
-//             >
-//               <path
-//                 fillRule="evenodd"
-//                 d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM4.5 5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zm0 2.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zm0 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z"
-//               />
-//             </svg>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// export default SmalllChatBox;
-import React, { useState, useEffect } from 'react';
+/* eslint-disable jsx-a11y/alt-text */
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
+import useWebSocket from 'react-use-websocket';
 
 function SmalllChatBox({ modal, showModal, post }) {
   const username = useSelector((state) => state.user.userDetails?.username);
   console.log(post, 'props data');
   const freelancerUsername = post.username;
   const authTokens = useSelector((state) => state.user.token.access_token);
-  const [welcomeMessage, setWelcomeMessage] = useState('');
   const [messageHistory, setMessageHistory] = useState([]);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
   const namesAlph = [username, freelancerUsername].sort();
   const conversationName = `${namesAlph[0]}__${namesAlph[1]}`;
-  const { readyState, sendJsonMessage } = useWebSocket(
+  const { sendJsonMessage } = useWebSocket(
     authTokens ? `ws://localhost:8000/${conversationName}/` : null,
     {
       queryParams: {
@@ -201,9 +29,6 @@ function SmalllChatBox({ modal, showModal, post }) {
         const data = JSON.parse(e.data);
         console.log(data.message);
         switch (data.type) {
-          case 'welcome_message':
-            setWelcomeMessage(data.message);
-            break;
           case 'last_50_messages':
             setMessageHistory(data.messages);
             break;
@@ -221,7 +46,10 @@ function SmalllChatBox({ modal, showModal, post }) {
   function handleChangeMessage(e) {
     setMessage(e.target.value);
   }
-
+  function formatMessageTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString().slice(0, 5);
+  }
   function handleSubmit() {
     sendJsonMessage({
       type: 'chat_message',
@@ -232,43 +60,186 @@ function SmalllChatBox({ modal, showModal, post }) {
     setMessage('');
   }
   console.log(message, 'the older messages');
-
+  const handleChangeL = () => {
+    showModal('');
+  };
   console.log(messageHistory);
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: 'Connecting',
-    [ReadyState.OPEN]: 'Open',
-    [ReadyState.CLOSING]: 'Closing',
-    [ReadyState.CLOSED]: 'Closed',
-    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-  }[readyState];
-  return (
-    <div>
-      <input
-        name="message"
-        placeholder="Message"
-        onChange={handleChangeMessage}
-        value={message}
-        className="ml-2 shadow-sm sm:text-sm border-gray-300 bg-gray-100 rounded-md"
-      />
-      <button
-        type="button"
-        className="ml-3 bg-gray-300 px-3 py-1"
-        onClick={handleSubmit}
+
+  if (modal === 'showchat') {
+    return (
+      <div
+        tabIndex={-1}
+        className=" fixed flex justify-center items-center top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full"
       >
-        Submit
-      </button>
-      <hr />
-      <ul>
-        {messageHistory.length > 1
-          ? messageHistory.map((message, idx) => (
-              <div className="border border-gray-200 py-3 px-3" key={idx}>
-                {message.from_user.username}: {message.content}{' '}
+        <div className="shadow-2xl bg-white border  md:h-[100%] border-gray-500 relative  rounded-lg">
+          <div className="relative m-4 ">
+            <div className="w-80 h-96 flex flex-col border shadow-md bg-white">
+              <div className="flex items-center justify-between border-b p-2">
+                {/* user info */}
+                <div className="flex items-center">
+                  <img
+                    className="rounded-full w-10 h-10"
+                    src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  />
+                  <div className="pl-2">
+                    <div className="font-semibold">
+                      <a className="hover:underline" href="#">
+                        John Doe
+                      </a>
+                    </div>
+                    <div className="text-xs text-gray-600">Online</div>
+                  </div>
+                </div>
+                {/* end user info */}
+                {/* chat box action */}
+                <div>
+                  <button
+                    type="button"
+                    className="inline-flex hover:bg-indigo-50 rounded-full p-2"
+                    href="#"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={handleChangeL}
+                    className="inline-flex hover:bg-indigo-50 rounded-full p-2"
+                    type="button"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                {/* end chat box action */}
               </div>
-            ))
-          : ''}
-      </ul>
-    </div>
-  );
+              <div className="flex-1 px-4 py-4 overflow-y-auto">
+                {/* chat message */}
+
+                <ul>
+                  {messageHistory.map((item) => (
+                    <li className="clearfix2">
+                      {item.from_user.username !== username && (
+                        <div className="w-full flex justify-start">
+                          <div
+                            className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
+                            style={{ maxWidth: 300 }}
+                          >
+                            <span className="block">{item.content}</span>
+                            <span className="block text-xs text-right">
+                              {formatMessageTimestamp(item.timestamp)}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      {item.from_user.username === username && (
+                        <div className="w-full flex justify-end">
+                          <div
+                            className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
+                            style={{ maxWidth: 300 }}
+                          >
+                            <span className="block">{item.content}</span>
+                            <span className="block text-xs text-right">
+                              {formatMessageTimestamp(item.timestamp)}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+                {/* end chat message */}
+              </div>
+              <div className="flex items-center border-t p-2">
+                {/* chat input action */}
+                <div>
+                  <button
+                    className="inline-flex hover:bg-indigo-50 rounded-full p-2"
+                    type="button"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                {/* end chat input action */}
+                <div className="w-full mx-2">
+                  <input
+                    className="w-full rounded-full border border-gray-200"
+                    type="text"
+                    defaultValue=""
+                    placeholder="Aa"
+                    name="message"
+                    value={message}
+                    onChange={handleChangeMessage}
+                  />
+                </div>
+                {/* chat send action */}
+                <div>
+                  <button
+                    onClick={handleSubmit}
+                    className="inline-flex hover:bg-indigo-50 rounded-full p-2"
+                    type="button"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                {/* end chat send action */}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default SmalllChatBox;
