@@ -76,8 +76,8 @@ function Content({ conversationName }) {
   }
   console.log(messageHistory);
   return (
-    <div className="w-full">
-      <div className="flex items-center border-b border-gray-300 pl-3 py-3">
+    <div className="">
+      <div className="flex items-center z-10 border-b border-gray-300 pl-3 py-3">
         <img
           className="h-10 w-10 rounded-full object-cover"
           src="https://images.pexels.com/photos/3777931/pexels-photo-3777931.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../Components/Chat/Sidebar';
+
 import Content from '../Components/Chat/Content';
 import useAxios from '../Axios/useAxios';
 import EmptyChatComponent from '../Components/Chat/EmptyChatComponent';
@@ -21,13 +22,13 @@ function Chat() {
   return (
     <div>
       <>
-        <div className="w-screen">
+        <div className="w-screen mb-10">
           <div
-            className="grid grid-cols-3 min-w-full border rounded"
+            className="grid md:grid-cols-3 grid-cols-8  min-w-full border rounded"
             style={{ minHeight: '80vh' }}
           >
             <Sidebar chatData={chatData} />
-            <div className="col-span-2 bg-white">
+            <div className="md:col-span-2 col-span-7 bg-white">
               {conversationName ? (
                 <Content
                   chatData={chatData}

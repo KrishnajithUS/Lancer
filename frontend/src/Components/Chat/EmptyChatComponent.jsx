@@ -7,7 +7,7 @@ function EmptyChatComponent() {
     (state) => state.freelancer.FreelancerDetails.username,
   );
   return (
-    <div className="h-full w-full flex flex-col  items-center justify-center  bg-gray-100  p-4">
+    <div className="h-full md:w-full w-screen flex flex-col  items-center justify-center  bg-gray-100  p-4">
       <p className="max-w-lg text-2xl sm:text-3xl font-semibold leading-normal text-gray-900 font-mono">
         Welcome,
         {' '}
