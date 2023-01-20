@@ -21,8 +21,24 @@ const Navbar = () => {
   const FisAuth = useSelector(
     (state) => state.freelancer.Freelancer.isLoggedIn
   );
+  const fusername = useSelector(
+    (state) => state.freelancer?.FreelancerDetails?.username
+  );
+  const fprofile_picture = useSelector(
+    (state) => state.freelancer?.FreelancerDetails?.profile_picture
+  );
+  const femail = useSelector(
+    (state) => state.freelancer?.FreelancerDetails?.email
+  );
+
   const username = useSelector((state) =>
-    state.user.userDetails ? state.user.userDetails.username : null
+    state.user.userDetails
+      ? state.user.userDetails.username
+      : state.freelancer.FreelancerDetails.username
+  );
+  console.log(
+    'usernamehe',
+    useSelector((state) => state.freelancer.FreelancerDetails.username)
   );
   const email = useSelector((state) =>
     state.user.userDetails ? state.user.userDetails.email : null
@@ -45,9 +61,7 @@ const Navbar = () => {
                   <div className="hidden md:block">
                     <div
                       className={
-                        !isAuth
-                          ? ' flex w-full  items-baseline space-x-4'
-                          : !FisAuth
+                        isAuth || FisAuth
                           ? 'flex  w-full items-center justify-end space-x-4 '
                           : ' flex w-full justify-center items-baseline space-x-4'
                       }
@@ -102,7 +116,7 @@ const Navbar = () => {
                               </li>
                               <li>
                                 <Link
-                                  to="/cprofile"
+                                  to="/fprofile"
                                   className=" block hover:text-green-600 px-4 py-2 "
                                 >
                                   Profile
@@ -120,30 +134,64 @@ const Navbar = () => {
                           </div>
                         </>
                       ) : FisAuth ? (
-                        <div className="flex jusitfy-center items-center">
-                          <div>
-                            <input
-                              type="text"
-                              placeholder="Search"
-                              className="lg:w-[80%] w-[80%]  py-3  h-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
-                            />
-                          </div>
+                        <>
+                          <input
+                            type="text"
+                            placeholder="Search"
+                            className="lg:w-[80%] w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
+                          />
                           <Link to="/fchat">
-                            <div className=" pt-2 hover:cursor-pointer ">
+                            <div className="px-4 hover:cursor-pointer ">
                               <BsFillChatLeftTextFill size={25} />
                             </div>
                           </Link>
-                          <Link to="/logout">
-                            <div className="">
-                              <button
-                                type="button"
-                                className=" rounded-full font-sans button-new hover:text-white px-3 py-2  text-sm font-medium"
-                              >
-                                LogOut
-                              </button>
+                          <button
+                            id="dropdownUserAvatarButton"
+                            data-dropdown-toggle="dropdownAvatar"
+                            className="flex  text-sm bg-gray-800 rounded-full md:mr-0  focus:ring-4 focus:ring-gray-300 "
+                            type="button"
+                          >
+                            <span className="sr-only">Open user menu</span>
+                            <img
+                              className="w-10 h-10 rounded-full"
+                              src={`http://localhost:8000${fprofile_picture}`}
+                              alt="ph"
+                            />
+                          </button>
+
+                          <div
+                            id="dropdownAvatar"
+                            className="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 "
+                          >
+                            <div className="px-4 py-3 text-sm text-gray-900 ">
+                              <div>{fusername}</div>
+                              <div className="font-medium truncate">
+                                {femail}
+                              </div>
                             </div>
-                          </Link>
-                        </div>
+                            <ul
+                              className="py-1  text-sm text-gray-700 "
+                              aria-labelledby="dropdownUserAvatarButton"
+                            >
+                              <li>
+                                <Link
+                                  to="/fprofile"
+                                  className=" block hover:text-green-600 px-4 py-2 "
+                                >
+                                  Profile
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to="/flogout"
+                                  className="block px-4 py-2 hover:text-green-600 "
+                                >
+                                  Logout
+                                </Link>
+                              </li>
+                            </ul>
+                          </div>
+                        </>
                       ) : (
                         <div className="flex items-center jusitify-end pl-4">
                           <Link to="/login">
@@ -276,15 +324,44 @@ const Navbar = () => {
                 </div>
               ) : FisAuth ? (
                 <div className="md:hidden" id="mobile-menu">
-                  <div className="px-2  pt-2 pb-3 flex justify-center space-y-1 text-center sm:px-3">
-                    <Link to="/logOut">
-                      <button
-                        type="button"
-                        className=" rounded-full button-new text-white block px-3 py-2   text-base font-medium"
-                      >
-                        LogOut
-                      </button>
-                    </Link>
+                  <div className="px-2 pt-2 pb-3 space-y-1 text-center sm:px-3">
+                    <ul
+                      className="py-1  text-sm text-gray-700 "
+                      aria-labelledby="dropdownUserAvatarButton"
+                    >
+                      <li>
+                        <input
+                          type="text"
+                          placeholder="Search"
+                          className="w-full mr-10  py-3  h-10 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
+                        />
+                      </li>
+                      <li className="mt-2">
+                        <Link
+                          to="/fchat"
+                          className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300  "
+                        >
+                          Inbox
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          to="/fprofile"
+                          className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300 "
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/logout"
+                          className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300  "
+                        >
+                          Logout
+                        </Link>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               ) : (

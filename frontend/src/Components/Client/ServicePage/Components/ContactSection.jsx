@@ -59,7 +59,7 @@ function ContactSection({ status, dataN, post }) {
       <div className="flex  flex-col items-center pt-4 pb-10">
         <img
           className="w-24 h-24 mb-3 rounded-full shadow-lg"
-          src={post.cover_image}
+          src={post.profile_picture}
           alt="img"
         />
         <h5 className="mb-1 text-xl text-black font-medium text-black">

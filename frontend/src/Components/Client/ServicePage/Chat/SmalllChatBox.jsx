@@ -81,7 +81,7 @@ function SmalllChatBox({ modal, showModal, post }) {
                 <div className="flex items-center">
                   <img
                     className="rounded-full w-10 h-10"
-                    src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src={post.profile_picture}
                   />
                   <div className="pl-2">
                     <div className="font-semibold">
@@ -90,7 +90,7 @@ function SmalllChatBox({ modal, showModal, post }) {
                         className="hover:underline"
                         href="#"
                       >
-                        John Doe
+                        {freelancerUsername}
                       </button>
                     </div>
                     <div className="text-xs text-gray-600">Online</div>

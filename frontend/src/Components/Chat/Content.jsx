@@ -18,12 +18,13 @@ function Content({ conversationName }) {
   const username = useSelector(
     (state) => state.freelancer.FreelancerDetails.username
   );
-  const uusername = useSelector((state) => state.user.userDetails.username);
+  const currentUser = useSelector((state) => state.user.userDetails.username);
   function formatMessageTimestamp(timestamp) {
     const date = new Date(timestamp);
     return date.toLocaleTimeString().slice(0, 5);
   }
-  const otherUser = chatuser.filter((name) => name !== uusername || username);
+  console.log('username', username);
+  const otherUser = chatuser.filter((name) => name !== username || currentUser);
   const otherUserName = otherUser.shift();
 
   const { sendJsonMessage } = useWebSocket(
@@ -100,7 +101,7 @@ function Content({ conversationName }) {
         <ul>
           {messageHistory.map((item) => (
             <li className="clearfix2">
-              {item.from_user.username !== (username || uusername) && (
+              {item.from_user.username !== (username || currentUser) && (
                 <div className="w-full flex justify-start">
                   <div
                     className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
@@ -114,7 +115,7 @@ function Content({ conversationName }) {
                 </div>
               )}
 
-              {item.from_user.username === (username || uusername) && (
+              {item.from_user.username === (username || currentUser) && (
                 <div className="w-full flex justify-end">
                   <div
                     className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
@@ -165,9 +166,8 @@ function Content({ conversationName }) {
           </svg>
         </button>
         <input
-          aria-placeholder="Escribe un mensaje aquí"
-          placeholder="Escribe un mensaje aquí"
-          className="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700"
+          placeholder="type message here.."
+          className="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 forcus:border-2 border-black focus:border-purple-600 focus:outline-none"
           type="text"
           name="message"
           value={message}
@@ -179,7 +179,7 @@ function Content({ conversationName }) {
           type="submit"
         >
           <svg
-            className="text-gray-400 h-7 w-7 origin-center transform rotate-90"
+            className="text-purple-500 h-7 w-7  origin-center transform rotate-90"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
