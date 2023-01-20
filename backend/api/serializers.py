@@ -32,7 +32,14 @@ def generate_username(email):
     # Return the username with the unique number appended
     return username
 
+class UserSerializerN(serializers.ModelSerializer):
 
+
+    class Meta:
+        model = User
+        fields =["username"]
+
+        
 class UserSerializer(serializers.ModelSerializer):
     profile_picture = serializers.ImageField(
         source="client.profile_picture", read_only=True, required=False

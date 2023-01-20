@@ -1,8 +1,8 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable no-restricted-globals */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import useWebSocket from 'react-use-websocket';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 function Content({ conversationName }) {
   const authTokens = useSelector(
@@ -27,7 +27,7 @@ function Content({ conversationName }) {
   const otherUser = chatuser.filter((name) => name !== username || currentUser);
   const otherUserName = otherUser.shift();
 
-  const { sendJsonMessage } = useWebSocket(
+  const { readyState, sendJsonMessage } = useWebSocket(
     authTokens || userTokens
       ? `ws://localhost:8000/${conversationName}/`
       : null,
@@ -50,7 +50,8 @@ function Content({ conversationName }) {
             break;
           case 'chat_message_echo':
             console.log(data);
-            setMessageHistory((prev) => prev.concat(data.message));
+            setMessageHistory((prev) => [data.message, ...prev]);
+            sendJsonMessage({ type: 'read_messages' });
 
             break;
           default:
@@ -60,6 +61,20 @@ function Content({ conversationName }) {
       },
     }
   );
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: 'Connecting',
+    [ReadyState.OPEN]: 'Open',
+    [ReadyState.CLOSING]: 'Closing',
+    [ReadyState.CLOSED]: 'Closed',
+    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+  }[readyState];
+  useEffect(() => {
+    if (connectionStatus === 'Open') {
+      sendJsonMessage({
+        type: 'read_messages',
+      });
+    }
+  }, [connectionStatus, sendJsonMessage]);
   function handleChangeMessage(e) {
     console.log(e.target.value, 'the handlechange value');
     setMessage(e.target.value);
@@ -93,6 +108,7 @@ function Content({ conversationName }) {
           </svg>
         </span>
       </div>
+
       <div
         id="chat"
         className="w-full overflow-y-auto p-10 relative"

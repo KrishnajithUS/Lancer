@@ -560,9 +560,7 @@ class chatUser(APIView):
                     
                     users.append(message.from_user.username)
            print(users)
-           user=request.user
-           message=user.messages_to_me.filter().distinct()
-           message.filter()
+     
           
            return Response({"username":users},status=status.HTTP_200_OK)
         # except:

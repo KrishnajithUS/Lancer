@@ -8,14 +8,18 @@
 /* eslint-disable indent */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 import { BsFillChatLeftTextFill } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
+import { notification } from '../../Redux/notificationreducer';
 import logo from '../../Assets/logo.png';
 // eslint-disable-next-line react/function-component-definition
 const Navbar = () => {
+  notification();
+  const count = useSelector((state) => state.notification.unreadMessageCount);
+  console.log('the count', count);
   const [isOpen, setIsOpen] = useState(false);
   const isAuth = useSelector((state) => state.user.user.isLoggedIn);
   const FisAuth = useSelector(
@@ -71,11 +75,16 @@ const Navbar = () => {
                           <input
                             type="text"
                             placeholder="Search"
-                            className="lg:w-[80%] w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
+                            className="lg:w-[70%] w-[50%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
                           />
                           <Link to="/chat">
-                            <div className="px-4 hover:cursor-pointer ">
-                              <BsFillChatLeftTextFill size={25} />
+                            <div className="px-4 relative inline-flex items-center p-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                              <BsFillChatLeftTextFill size={20} />
+                              {count > 0 && (
+                                <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+                                  {count}
+                                </div>
+                              )}
                             </div>
                           </Link>
                           <button
@@ -86,7 +95,7 @@ const Navbar = () => {
                           >
                             <span className="sr-only">Open user menu</span>
                             <img
-                              className="w-10 h-10 rounded-full"
+                              className="w-10  h-10 rounded-full"
                               src={`http://localhost:8000${profile_picture}`}
                               alt="ph"
                             />
@@ -138,11 +147,16 @@ const Navbar = () => {
                           <input
                             type="text"
                             placeholder="Search"
-                            className="lg:w-[80%] w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
+                            className="lg:w-[70%] w-[50%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
                           />
                           <Link to="/fchat">
-                            <div className="px-4 hover:cursor-pointer ">
-                              <BsFillChatLeftTextFill size={25} />
+                            <div className="px-4 relative inline-flex items-center p-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                              <BsFillChatLeftTextFill size={20} />
+                              {count > 0 && (
+                                <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+                                  {count}
+                                </div>
+                              )}
                             </div>
                           </Link>
                           <button

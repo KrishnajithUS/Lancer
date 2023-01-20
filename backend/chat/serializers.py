@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Message
-from api.serializers import UserSerializer
+from api.serializers import UserSerializerN
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -25,10 +25,10 @@ class MessageSerializer(serializers.ModelSerializer):
         return str(obj.conversation.id)
 
     def get_from_user(self, obj):
-        return UserSerializer(obj.from_user).data
+        return UserSerializerN(obj.from_user).data
 
     def get_to_user(self, obj):
-        return UserSerializer(obj.to_user).data
+        return UserSerializerN(obj.to_user).data
 class UserMessageSerializer(serializers.ModelSerializer):
     to_user = serializers.SerializerMethodField()
 
@@ -44,4 +44,4 @@ class UserMessageSerializer(serializers.ModelSerializer):
 
     def get_to_user(self, obj):
         print(obj)
-        return UserSerializer(obj.from_user).data
+        return UserSerializerN(obj.from_user).data
