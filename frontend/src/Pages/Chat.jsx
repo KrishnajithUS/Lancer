@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Sidebar from '../Components/Chat/Sidebar';
 import Content from '../Components/Chat/Content';
 import useAxios from '../Axios/useAxios';
+import EmptyChatComponent from '../Components/Chat/EmptyChatComponent';
 
 function Chat() {
   const { conversationName } = useParams();
@@ -11,7 +12,7 @@ function Chat() {
   const [chatData, setChatData] = useState([]);
   const data = async () => {
     const response = await api.get('chatuser/');
-    console.log(response);
+    console.log(response, 'response');
     setChatData(response.data);
   };
   useEffect(() => {
@@ -20,8 +21,6 @@ function Chat() {
   return (
     <div>
       <>
-        {/* component */}
-        {/* This is an example component */}
         <div className="w-screen">
           <div
             className="grid grid-cols-3 min-w-full border rounded"
@@ -35,7 +34,7 @@ function Chat() {
                   conversationName={conversationName}
                 />
               ) : (
-                <h1>click a user to chat</h1>
+                <EmptyChatComponent />
               )}
             </div>
           </div>

@@ -43,4 +43,5 @@ class UserMessageSerializer(serializers.ModelSerializer):
 
 
     def get_to_user(self, obj):
-        return UserSerializer(obj.to_user).data
+        print(obj)
+        return UserSerializer(obj.from_user).data

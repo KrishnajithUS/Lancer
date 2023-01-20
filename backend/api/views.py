@@ -556,7 +556,7 @@ class chatUser(APIView):
            print(messages,"this is messages")
            for message in messages:
                print(users)
-               if "message.from_user.username" not in users:
+               if message.from_user.username not in users:
                     
                     users.append(message.from_user.username)
            print(users)

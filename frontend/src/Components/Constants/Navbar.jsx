@@ -59,9 +59,11 @@ const Navbar = () => {
                             placeholder="Search"
                             className="lg:w-[80%] w-[60%]  py-3  h-10 pl-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
                           />
-                          <div className="px-4 hover:cursor-pointer ">
-                            <BsFillChatLeftTextFill size={25} />
-                          </div>
+                          <Link to="/chat">
+                            <div className="px-4 hover:cursor-pointer ">
+                              <BsFillChatLeftTextFill size={25} />
+                            </div>
+                          </Link>
                           <button
                             id="dropdownUserAvatarButton"
                             data-dropdown-toggle="dropdownAvatar"
@@ -126,7 +128,7 @@ const Navbar = () => {
                               className="lg:w-[80%] w-[80%]  py-3  h-10  text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-purple-600"
                             />
                           </div>
-                          <Link to="/chat">
+                          <Link to="/fchat">
                             <div className=" pt-2 hover:cursor-pointer ">
                               <BsFillChatLeftTextFill size={25} />
                             </div>
@@ -239,7 +241,7 @@ const Navbar = () => {
                       </li>
                       <li className="mt-2">
                         <Link
-                          to="/services"
+                          to="/chat"
                           className="block hover:text-green-600 px-4 py-2 hover:bg-purple-300  "
                         >
                           Inbox

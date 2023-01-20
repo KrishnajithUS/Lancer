@@ -8,6 +8,8 @@ function Content({ conversationName }) {
   const authTokens = useSelector(
     (state) => state.freelancer.token.access_token
   );
+  const chatuser = conversationName.split('__');
+  console.log('chat user', chatuser);
   const userTokens = useSelector((state) => state.user.token.access_token);
   const [name, setName] = useState('');
 
@@ -21,6 +23,9 @@ function Content({ conversationName }) {
     const date = new Date(timestamp);
     return date.toLocaleTimeString().slice(0, 5);
   }
+  const otherUser = chatuser.filter((name) => name !== uusername || username);
+  const otherUserName = otherUser.shift();
+
   const { sendJsonMessage } = useWebSocket(
     authTokens || userTokens
       ? `ws://localhost:8000/${conversationName}/`
@@ -79,7 +84,7 @@ function Content({ conversationName }) {
           alt="username"
         />
         <span className="block ml-2 font-bold text-base text-gray-600">
-          Eduard
+          {otherUserName}
         </span>
         <span className="connected text-green-500 ml-2">
           <svg width={6} height={6}>
