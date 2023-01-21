@@ -21,11 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-n7u)16)j--)zc*w+p^)oq-11p+#td7r$xy95--muw#7a&kfvg#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -196,7 +197,6 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
-SECRET_KEY = env('SECRET_KEY')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -209,7 +209,6 @@ CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 RAZOR_KEY=env('RAZOR_KEY')
 RAZOR_SECRET = env('RAZOR_SECRET')
-
 
 
 
