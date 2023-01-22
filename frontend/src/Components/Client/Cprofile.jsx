@@ -16,7 +16,7 @@ import Alert from '../Alerts/Alert';
 
 function Cprofile() {
   const dispatch = useDispatch();
-  const mediaBase = 'http://localhost:8000';
+  const mediaBase = 'http://137.184.60.192:8000';
   const id = useSelector((state) => state.user.user.id);
   const [message, setMessage] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -341,8 +341,8 @@ function Cprofile() {
                             onChange={handleChange}
                             onBlur={handleBlur}
                           />
-                          {errors.confirm_new_password
-                          && touched.confirm_new_password ? (
+                          {errors.confirm_new_password &&
+                          touched.confirm_new_password ? (
                             <p className="form-error text-red-600">
                               {errors.confirm_new_password}
                             </p>

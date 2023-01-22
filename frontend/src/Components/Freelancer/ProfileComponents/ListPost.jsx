@@ -9,7 +9,7 @@ function ListPost({ dataHandler }) {
         <div className="m-2">
           <img
             className="rounded-t-lg w-full "
-            src={`http://localhost:8000${item?.cover_image}`}
+            src={`http://137.184.60.192:8000${item?.cover_image}`}
             alt="img"
           />
         </div>
@@ -32,12 +32,7 @@ function ListPost({ dataHandler }) {
             </div>
             <div className="text-dark mb-2">
               <span>Starting Price :</span>
-              <span>
-                {' '}
-                {item?.price}
-                {' '}
-                &#8377;
-              </span>
+              <span> {item?.price} &#8377;</span>
             </div>
             <div>
               <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 ">

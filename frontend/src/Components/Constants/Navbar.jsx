@@ -96,7 +96,7 @@ const Navbar = () => {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="w-10  h-10 rounded-full"
-                              src={`http://localhost:8000${profile_picture}`}
+                              src={`http://137.184.60.192:8000${profile_picture}`}
                               alt="ph"
                             />
                           </button>
@@ -168,7 +168,7 @@ const Navbar = () => {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="w-10 h-10 rounded-full"
-                              src={`http://localhost:8000${fprofile_picture}`}
+                              src={`http://137.184.60.192:8000${fprofile_picture}`}
                               alt="ph"
                             />
                           </button>

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 
-const baseURL = 'http://127.0.0.1:8000/api/';
+const baseURL = 'http://137.184.60.192/api/';
 
 const axiosInstance = axios.create({
   baseURL,
