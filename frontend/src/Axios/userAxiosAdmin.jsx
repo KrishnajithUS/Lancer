@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { adminUpdate, adminLogOut } from '../Redux/adminreducer';
 
-const baseURL = 'http://127.0.0.1:8000/api/';
+const baseURL = 'https://127.0.0.1:8000/api/';
 
 const useAxiosAdmin = () => {
   const authTokens = useSelector((state) => state.admin.admin.access_token);
