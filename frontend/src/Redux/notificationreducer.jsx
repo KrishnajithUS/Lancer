@@ -38,8 +38,8 @@ export const notification = () => {
   const dispatch = useDispatch();
 
   console.log('notification');
-  const authTokens = useSelector((state) => state.user.token.access_token);
-  const FTokens = useSelector((state) => state.freelancer.token.access_token);
+  const authTokens = useSelector((state) => state.user?.token?.access_token);
+  const FTokens = useSelector((state) => state.freelancer?.token?.access_token);
 
   const { readyState } = useWebSocket(
     authTokens
