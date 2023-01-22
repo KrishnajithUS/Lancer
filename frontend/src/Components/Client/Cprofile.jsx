@@ -341,8 +341,8 @@ function Cprofile() {
                             onChange={handleChange}
                             onBlur={handleBlur}
                           />
-                          {errors.confirm_new_password &&
-                          touched.confirm_new_password ? (
+                          {errors.confirm_new_password
+                          && touched.confirm_new_password ? (
                             <p className="form-error text-red-600">
                               {errors.confirm_new_password}
                             </p>

@@ -32,7 +32,12 @@ function ListPost({ dataHandler }) {
             </div>
             <div className="text-dark mb-2">
               <span>Starting Price :</span>
-              <span> {item?.price} &#8377;</span>
+              <span>
+                {' '}
+                {item?.price}
+                {' '}
+                &#8377;
+              </span>
             </div>
             <div>
               <h5 className="mb-2 text-xl underline tracking-tight text-gray-900 ">
