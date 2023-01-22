@@ -126,7 +126,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'lancer.wsgi.application'
+WSGI_APPLICATION = 'lancer.wsgi.application'
 ASGI_APPLICATION='lancer.asgi.application'
 CHANNEL_LAYERS = {
     "default": {
