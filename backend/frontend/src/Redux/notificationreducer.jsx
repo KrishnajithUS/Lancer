@@ -28,8 +28,7 @@ const notificationSlice = createSlice({
   },
 });
 
-export const { setUnreadMessageCount, setConnectionStatus, incrementCount } =
-  notificationSlice.actions;
+export const { setUnreadMessageCount, setConnectionStatus, incrementCount } = notificationSlice.actions;
 
 export default notificationSlice.reducer;
 
@@ -46,8 +45,8 @@ export const notification = () => {
     authTokens
       ? `ws://159.65.148.91/new/notifications/`
       : FTokens
-      ? `ws://159.65.148.91/new/notifications/`
-      : null,
+        ? `ws://159.65.148.91/new/notifications/`
+        : null,
     {
       queryParams: {
         token: authTokens || FTokens,
@@ -73,7 +72,7 @@ export const notification = () => {
             break;
         }
       },
-    }
+    },
   );
   const connectionStatus = {
     [ReadyState.CONNECTING]: 'Connecting',
