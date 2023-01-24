@@ -43,9 +43,9 @@ export const notification = () => {
 
   const { readyState } = useWebSocket(
     authTokens
-      ? `ws://137.184.60.192/new/notifications/`
+      ? `wss://137.184.60.192/new/notifications/`
       : FTokens
-        ? `ws://137.184.60.192/new/notifications/`
+        ? `wss://137.184.60.192/new/notifications/`
         : null,
     {
       queryParams: {
