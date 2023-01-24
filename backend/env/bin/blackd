@@ -1,4 +1,4 @@
-#!/home/krishnajith/Desktop/Lancer/backend/env/bin/python
+#!/root/Lancer/backend/env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
