@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { FlogOut, FsetToken, setRefreshInProgress } from '../Redux/Freducer';
 import { logOut, setToken } from '../Redux/reducer';
 
-const baseURL = 'http://127.0.0.1:8000/api/';
+const baseURL = 'http://159.65.148.91/api/';
 
 const useAxios = () => {
   const navigate = useNavigate();
