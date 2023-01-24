@@ -202,16 +202,16 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
-
+# Celery settings
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD =env('EMAIL_HOST_PASSWORD')
-# Celery settings
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+
 RAZOR_KEY=env('RAZOR_KEY')
 RAZOR_SECRET = env('RAZOR_SECRET')
 
