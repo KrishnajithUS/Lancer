@@ -14,3 +14,11 @@ User information: uid=0 euid=0 gid=0 egid=0
   warnings.warn('''Using settings.DEBUG leads to a memory
 
 [2023-01-24 21:32:42,631: INFO/MainProcess] celery@ubuntu-s-2vcpu-4gb-blr1-01 ready.
+[2023-01-24 23:09:11,153: INFO/MainProcess] Task api.tasks.send_otp[49f75a8d-f437-4875-af09-4896da8e7c71] received
+[2023-01-24 23:09:11,161: WARNING/ForkPoolWorker-2] i am sent otp
+[2023-01-24 23:09:11,161: WARNING/ForkPoolWorker-2]  
+[2023-01-24 23:09:11,161: WARNING/ForkPoolWorker-2] 2515
+[2023-01-24 23:09:11,162: WARNING/ForkPoolWorker-2] /root/Lancer/backend/env/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1564: RuntimeWarning: DateTimeField User.expiration_time received a naive datetime (2023-01-24 23:12:11.161431) while time zone support is active.
+  warnings.warn(
+
+[2023-01-24 23:09:14,476: INFO/ForkPoolWorker-2] Task api.tasks.send_otp[49f75a8d-f437-4875-af09-4896da8e7c71] succeeded in 3.3221984219999285s: True
