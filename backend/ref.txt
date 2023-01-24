@@ -1,0 +1,4 @@
+i followd the docs
+https://alphacoder.xyz/dead-simple-react-django-setup/
+the 
+re_path(".*",is used to pass unmatching urls handled by react app)//look at the urls

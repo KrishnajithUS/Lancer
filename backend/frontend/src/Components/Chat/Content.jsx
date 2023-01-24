@@ -6,19 +6,19 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 function Content({ conversationName }) {
   const authTokens = useSelector(
-    (state) => state.freelancer.token.access_token
+    (state) => state.freelancer?.token?.access_token
   );
   const chatuser = conversationName.split('__');
   console.log('chat user', chatuser);
-  const userTokens = useSelector((state) => state.user.token.access_token);
+  const userTokens = useSelector((state) => state.user?.token?.access_token);
   const [name, setName] = useState('');
 
   const [messageHistory, setMessageHistory] = useState([]);
   const [message, setMessage] = useState('');
   const username = useSelector(
-    (state) => state.freelancer.FreelancerDetails.username
+    (state) => state.freelancer?.FreelancerDetails?.username
   );
-  const currentUser = useSelector((state) => state.user.userDetails.username);
+  const currentUser = useSelector((state) => state.user?.userDetails?.username);
   function formatMessageTimestamp(timestamp) {
     const date = new Date(timestamp);
     return date.toLocaleTimeString().slice(0, 5);

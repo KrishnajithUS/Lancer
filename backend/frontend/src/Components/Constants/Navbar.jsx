@@ -197,7 +197,7 @@ const Navbar = () => {
                               </li>
                               <li>
                                 <Link
-                                  to="/flogout"
+                                  to="/logout"
                                   className="block px-4 py-2 hover:text-green-600 "
                                 >
                                   Logout
