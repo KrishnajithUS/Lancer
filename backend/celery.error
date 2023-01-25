@@ -22,3 +22,27 @@ User information: uid=0 euid=0 gid=0 egid=0
   warnings.warn(
 
 [2023-01-24 23:09:14,476: INFO/ForkPoolWorker-2] Task api.tasks.send_otp[49f75a8d-f437-4875-af09-4896da8e7c71] succeeded in 3.3221984219999285s: True
+[2023-01-25 00:59:26,476: INFO/MainProcess] Task api.tasks.send_otp[8ddf225e-e5db-42fe-a6c4-233ca3d328cb] received
+[2023-01-25 00:59:26,479: WARNING/ForkPoolWorker-2] i am sent otp
+[2023-01-25 00:59:26,479: WARNING/ForkPoolWorker-2]  
+[2023-01-25 00:59:26,479: WARNING/ForkPoolWorker-2] 5818
+[2023-01-25 00:59:26,479: WARNING/ForkPoolWorker-2] /root/Lancer/backend/env/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1564: RuntimeWarning: DateTimeField User.expiration_time received a naive datetime (2023-01-25 01:02:26.479357) while time zone support is active.
+  warnings.warn(
+
+[2023-01-25 00:59:29,663: INFO/ForkPoolWorker-2] Task api.tasks.send_otp[8ddf225e-e5db-42fe-a6c4-233ca3d328cb] succeeded in 3.1861301889985043s: True
+[2023-01-25 03:37:05,006: INFO/MainProcess] Task api.tasks.send_otp[7846ed2b-61fd-409d-b1fb-5250b1ce27dd] received
+[2023-01-25 03:37:05,009: WARNING/ForkPoolWorker-2] i am sent otp
+[2023-01-25 03:37:05,009: WARNING/ForkPoolWorker-2]  
+[2023-01-25 03:37:05,009: WARNING/ForkPoolWorker-2] 5395
+[2023-01-25 03:37:05,010: WARNING/ForkPoolWorker-2] /root/Lancer/backend/env/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1564: RuntimeWarning: DateTimeField User.expiration_time received a naive datetime (2023-01-25 03:40:05.009874) while time zone support is active.
+  warnings.warn(
+
+[2023-01-25 03:37:08,213: INFO/ForkPoolWorker-2] Task api.tasks.send_otp[7846ed2b-61fd-409d-b1fb-5250b1ce27dd] succeeded in 3.2057918879945646s: True
+[2023-01-25 03:41:49,566: INFO/MainProcess] Task api.tasks.send_otp[97dc935c-14bc-4295-bf8d-923f4aec42e5] received
+[2023-01-25 03:41:49,569: WARNING/ForkPoolWorker-2] i am sent otp
+[2023-01-25 03:41:49,569: WARNING/ForkPoolWorker-2]  
+[2023-01-25 03:41:49,569: WARNING/ForkPoolWorker-2] 1035
+[2023-01-25 03:41:49,570: WARNING/ForkPoolWorker-2] /root/Lancer/backend/env/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1564: RuntimeWarning: DateTimeField User.expiration_time received a naive datetime (2023-01-25 03:44:49.569859) while time zone support is active.
+  warnings.warn(
+
+[2023-01-25 03:41:52,745: INFO/ForkPoolWorker-2] Task api.tasks.send_otp[97dc935c-14bc-4295-bf8d-923f4aec42e5] succeeded in 3.1772454930032836s: True
