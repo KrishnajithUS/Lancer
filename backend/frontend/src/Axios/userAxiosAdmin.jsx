@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { adminUpdate, adminLogOut } from '../Redux/adminreducer';
 
-const baseURL = 'http://159.65.148.91/api/';
+const baseURL = 'https://lan-cer.online/api/';
 
 const useAxiosAdmin = () => {
   const authTokens = useSelector((state) => state.admin.admin.access_token);

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 
-const baseURL = 'http://159.65.148.91/api/';
+const baseURL = 'https://lan-cer.online/api/';
 
 const axiosInstance = axios.create({
   baseURL,
