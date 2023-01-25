@@ -41,7 +41,7 @@ function Ftables() {
     datan(newid);
   };
   return (
-    <div className="w-full  mx-auto">
+    <div className="  mx-auto">
       <div className="flex justify-center items-center">
         <div>
           <p className="m-4 text-bold text-lg font-3xl text-white">

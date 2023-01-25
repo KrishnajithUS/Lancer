@@ -26,7 +26,7 @@ function AdminHome() {
 
   return (
     <div>
-      <div className="grid grid-cols-5   md:grid-cols-8  ">
+      <div className="grid grid-cols-5   mb-auto  md:grid-cols-8  ">
         <div className="md:col-span-2 col-span-full">
           <div className="flex flex-col  md:h-screen p-3  dark:bg-gray-900 dark:text-gray-100">
             <div className="space-y-3">
@@ -230,7 +230,7 @@ function AdminHome() {
             </div>
           </div>
         </div>
-        <div className=" md:col-span-6 col-span-full     dark:bg-gray-800">
+        <div className="h-full mb-auto md:col-span-6 col-span-full     dark:bg-gray-800">
           {display === 'usermanagement' ? (
             <Tables />
           ) : display === 'freelancer' ? (
