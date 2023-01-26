@@ -36,3 +36,22 @@
 [tasks]
   . api.tasks.send_otp
 
+ 
+ -------------- celery@ubuntu-s-2vcpu-4gb-blr1-01 v5.2.7 (dawn-chorus)
+--- ***** ----- 
+-- ******* ---- Linux-5.15.0-58-generic-x86_64-with-glibc2.35 2023-01-25 07:50:51
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         lancer:0x7f3b0792ed40
+- ** ---------- .> transport:   redis://localhost:6379//
+- ** ---------- .> results:     redis://localhost:6379/
+- *** --- * --- .> concurrency: 2 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . api.tasks.send_otp
+
