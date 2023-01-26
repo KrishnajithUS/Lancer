@@ -16,7 +16,7 @@ import Alert from '../Alerts/Alert';
 
 function Cprofile() {
   const dispatch = useDispatch();
-  const mediaBase = 'http://localhost:8000';
+  const mediaBase = 'https://lan-cer.online';
   const id = useSelector((state) => state.user.user.id);
   const [message, setMessage] = useState(false);
   const [showModal, setShowModal] = useState(false);

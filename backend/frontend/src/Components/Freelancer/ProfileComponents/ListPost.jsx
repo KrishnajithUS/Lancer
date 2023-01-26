@@ -9,7 +9,7 @@ function ListPost({ dataHandler }) {
         <div className="m-2">
           <img
             className="rounded-t-lg w-full "
-            src={`http://localhost:8000${item?.cover_image}`}
+            src={`https://lan-cer.online${item?.cover_image}`}
             alt="img"
           />
         </div>
