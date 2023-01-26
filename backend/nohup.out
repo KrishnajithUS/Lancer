@@ -1,0 +1,52 @@
+Traceback (most recent call last):
+  File "/usr/bin/daphne", line 33, in <module>
+    sys.exit(load_entry_point('daphne==3.0.2', 'console_scripts', 'daphne')())
+  File "/usr/lib/python3/dist-packages/daphne/cli.py", line 170, in entrypoint
+    cls().run(sys.argv[1:])
+  File "/usr/lib/python3/dist-packages/daphne/cli.py", line 232, in run
+    application = import_by_path(args.application)
+  File "/usr/lib/python3/dist-packages/daphne/utils.py", line 12, in import_by_path
+    target = importlib.import_module(module_path)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 992, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/root/Lancer/backend/./lancer/__init__.py", line 1, in <module>
+    from .celery import app as celery_app
+  File "/root/Lancer/backend/./lancer/celery.py", line 6, in <module>
+    from celery import Celery
+ModuleNotFoundError: No module named 'celery'
+Traceback (most recent call last):
+  File "/usr/bin/daphne", line 33, in <module>
+    sys.exit(load_entry_point('daphne==3.0.2', 'console_scripts', 'daphne')())
+  File "/usr/lib/python3/dist-packages/daphne/cli.py", line 170, in entrypoint
+    cls().run(sys.argv[1:])
+  File "/usr/lib/python3/dist-packages/daphne/cli.py", line 232, in run
+    application = import_by_path(args.application)
+  File "/usr/lib/python3/dist-packages/daphne/utils.py", line 12, in import_by_path
+    target = importlib.import_module(module_path)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 992, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/root/Lancer/backend/./lancer/__init__.py", line 1, in <module>
+    from .celery import app as celery_app
+  File "/root/Lancer/backend/./lancer/celery.py", line 6, in <module>
+    from celery import Celery
+ModuleNotFoundError: No module named 'celery'

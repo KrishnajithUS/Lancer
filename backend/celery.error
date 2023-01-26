@@ -149,3 +149,317 @@ User information: uid=0 euid=0 gid=0 egid=0
   warnings.warn(
 
 [2023-01-25 09:41:20,711: INFO/ForkPoolWorker-2] Task api.tasks.send_otp[5e070ad4-f948-477f-b176-e73c382f9715] succeeded in 3.437033645000156s: True
+[2023-01-26 10:48:32,731: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 332, in start
+    blueprint.start(self)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 628, in start
+    c.loop(*c.loop_args())
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/asynchronous/hub.py", line 362, in create_loop
+    cb(*cbargs)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 1326, in on_readable
+    self.cycle.on_readable(fileno)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 562, in on_readable
+    chan.handlers[type]()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 906, in _receive
+    ret.append(self._receive_one(c))
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 916, in _receive_one
+    response = c.parse_response()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1531, in parse_response
+    response = self._execute(conn, try_read)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1507, in _execute
+    return conn.retry.call_with_retry(
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/retry.py", line 49, in call_with_retry
+    fail(error)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1509, in <lambda>
+    lambda error: self._disconnect_raise_connect(conn, error),
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1496, in _disconnect_raise_connect
+    raise error
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1508, in <lambda>
+    lambda: command(*args, **kwargs),
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1529, in try_read
+    return conn.read_response()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 848, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 335, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 344, in _read_response
+    raw = self._buffer.readline()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 243, in readline
+    self._read_from_socket()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 195, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+redis.exceptions.ConnectionError: Connection closed by server.
+[2023-01-26 10:48:32,737: WARNING/MainProcess] /root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:367: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered back to the queue.
+You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss setting.
+In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2023-01-26 10:48:32,740: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379//: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2023-01-26 10:48:34,745: INFO/MainProcess] Connected to redis://localhost:6379//
+[2023-01-26 10:48:34,747: INFO/MainProcess] mingle: searching for neighbors
+[2023-01-26 10:48:35,752: INFO/MainProcess] mingle: all alone
+
+worker: Warm shutdown (MainProcess)
+/root/Lancer/backend/env/lib/python3.10/site-packages/celery/platforms.py:840: SecurityWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the --uid option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  warnings.warn(SecurityWarning(ROOT_DISCOURAGED.format(
+[2023-01-26 12:13:09,467: INFO/MainProcess] Connected to redis://localhost:6379//
+[2023-01-26 12:13:09,470: INFO/MainProcess] mingle: searching for neighbors
+[2023-01-26 12:13:10,482: INFO/MainProcess] mingle: all alone
+[2023-01-26 12:13:10,512: WARNING/MainProcess] /root/Lancer/backend/env/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+[2023-01-26 12:13:10,513: INFO/MainProcess] celery@ubuntu-s-2vcpu-4gb-blr1-01 ready.
+[2023-01-26 12:58:52,723: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 332, in start
+    blueprint.start(self)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 628, in start
+    c.loop(*c.loop_args())
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/asynchronous/hub.py", line 362, in create_loop
+    cb(*cbargs)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 1326, in on_readable
+    self.cycle.on_readable(fileno)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 562, in on_readable
+    chan.handlers[type]()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 906, in _receive
+    ret.append(self._receive_one(c))
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 916, in _receive_one
+    response = c.parse_response()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1531, in parse_response
+    response = self._execute(conn, try_read)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1507, in _execute
+    return conn.retry.call_with_retry(
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/retry.py", line 49, in call_with_retry
+    fail(error)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1509, in <lambda>
+    lambda error: self._disconnect_raise_connect(conn, error),
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1496, in _disconnect_raise_connect
+    raise error
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1508, in <lambda>
+    lambda: command(*args, **kwargs),
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1529, in try_read
+    return conn.read_response()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 848, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 335, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 344, in _read_response
+    raw = self._buffer.readline()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 243, in readline
+    self._read_from_socket()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 195, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+redis.exceptions.ConnectionError: Connection closed by server.
+[2023-01-26 12:58:52,727: WARNING/MainProcess] /root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:367: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered back to the queue.
+You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss setting.
+In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2023-01-26 12:58:52,730: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379//: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2023-01-26 12:58:54,736: INFO/MainProcess] Connected to redis://localhost:6379//
+[2023-01-26 12:58:54,739: INFO/MainProcess] mingle: searching for neighbors
+[2023-01-26 12:58:55,744: INFO/MainProcess] mingle: all alone
+
+worker: Warm shutdown (MainProcess)
+/root/Lancer/backend/env/lib/python3.10/site-packages/celery/platforms.py:840: SecurityWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the --uid option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  warnings.warn(SecurityWarning(ROOT_DISCOURAGED.format(
+[2023-01-26 14:33:36,539: INFO/MainProcess] Connected to redis://localhost:6379//
+[2023-01-26 14:33:36,544: INFO/MainProcess] mingle: searching for neighbors
+[2023-01-26 14:33:37,562: INFO/MainProcess] mingle: all alone
+[2023-01-26 14:33:37,572: WARNING/MainProcess] /root/Lancer/backend/env/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+[2023-01-26 14:33:37,572: INFO/MainProcess] celery@ubuntu-s-2vcpu-4gb-blr1-01 ready.
+[2023-01-26 16:43:49,241: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 332, in start
+    blueprint.start(self)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 628, in start
+    c.loop(*c.loop_args())
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/asynchronous/hub.py", line 362, in create_loop
+    cb(*cbargs)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 1326, in on_readable
+    self.cycle.on_readable(fileno)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 562, in on_readable
+    chan.handlers[type]()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 906, in _receive
+    ret.append(self._receive_one(c))
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 916, in _receive_one
+    response = c.parse_response()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1531, in parse_response
+    response = self._execute(conn, try_read)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1507, in _execute
+    return conn.retry.call_with_retry(
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/retry.py", line 49, in call_with_retry
+    fail(error)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1509, in <lambda>
+    lambda error: self._disconnect_raise_connect(conn, error),
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1496, in _disconnect_raise_connect
+    raise error
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1508, in <lambda>
+    lambda: command(*args, **kwargs),
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1529, in try_read
+    return conn.read_response()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 848, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 335, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 344, in _read_response
+    raw = self._buffer.readline()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 243, in readline
+    self._read_from_socket()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 195, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+redis.exceptions.ConnectionError: Connection closed by server.
+[2023-01-26 16:43:49,291: WARNING/MainProcess] /root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:367: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered back to the queue.
+You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss setting.
+In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2023-01-26 16:43:49,311: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379//: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+
+worker: Warm shutdown (MainProcess)
+/root/Lancer/backend/env/lib/python3.10/site-packages/celery/platforms.py:840: SecurityWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the --uid option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  warnings.warn(SecurityWarning(ROOT_DISCOURAGED.format(
+[2023-01-26 16:47:25,336: INFO/MainProcess] Connected to redis://localhost:6379//
+[2023-01-26 16:47:25,339: INFO/MainProcess] mingle: searching for neighbors
+[2023-01-26 16:47:26,356: INFO/MainProcess] mingle: all alone
+[2023-01-26 16:47:26,370: WARNING/MainProcess] /root/Lancer/backend/env/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+[2023-01-26 16:47:26,370: INFO/MainProcess] celery@ubuntu-s-2vcpu-4gb-blr1-01 ready.
+[2023-01-26 17:50:07,649: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 332, in start
+    blueprint.start(self)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 628, in start
+    c.loop(*c.loop_args())
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/asynchronous/hub.py", line 362, in create_loop
+    cb(*cbargs)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 1326, in on_readable
+    self.cycle.on_readable(fileno)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 562, in on_readable
+    chan.handlers[type]()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 906, in _receive
+    ret.append(self._receive_one(c))
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/kombu/transport/redis.py", line 916, in _receive_one
+    response = c.parse_response()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1531, in parse_response
+    response = self._execute(conn, try_read)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1507, in _execute
+    return conn.retry.call_with_retry(
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/retry.py", line 49, in call_with_retry
+    fail(error)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1509, in <lambda>
+    lambda error: self._disconnect_raise_connect(conn, error),
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1496, in _disconnect_raise_connect
+    raise error
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1508, in <lambda>
+    lambda: command(*args, **kwargs),
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/client.py", line 1529, in try_read
+    return conn.read_response()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 848, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 335, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 344, in _read_response
+    raw = self._buffer.readline()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 243, in readline
+    self._read_from_socket()
+  File "/root/Lancer/backend/env/lib/python3.10/site-packages/redis/connection.py", line 195, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+redis.exceptions.ConnectionError: Connection closed by server.
+[2023-01-26 17:50:07,674: WARNING/MainProcess] /root/Lancer/backend/env/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:367: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered back to the queue.
+You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss setting.
+In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2023-01-26 17:50:07,681: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379//: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+
+worker: Warm shutdown (MainProcess)
+/root/Lancer/backend/env/lib/python3.10/site-packages/celery/platforms.py:840: SecurityWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the --uid option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  warnings.warn(SecurityWarning(ROOT_DISCOURAGED.format(
+[2023-01-26 17:50:40,150: INFO/MainProcess] Connected to redis://localhost:6379//
+[2023-01-26 17:50:40,157: INFO/MainProcess] mingle: searching for neighbors
+[2023-01-26 17:50:41,187: INFO/MainProcess] mingle: all alone
+[2023-01-26 17:50:41,199: WARNING/MainProcess] /root/Lancer/backend/env/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+[2023-01-26 17:50:41,199: INFO/MainProcess] celery@ubuntu-s-2vcpu-4gb-blr1-01 ready.
