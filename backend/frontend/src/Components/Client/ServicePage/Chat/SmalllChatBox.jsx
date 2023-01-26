@@ -16,7 +16,7 @@ function SmalllChatBox({ modal, showModal, post }) {
   const namesAlph = [username, freelancerUsername].sort();
   const conversationName = `${namesAlph[0]}__${namesAlph[1]}`;
   const { sendJsonMessage } = useWebSocket(
-    authTokens ? `wss://lan-cer.online/${conversationName}/` : null,
+    authTokens ? `ws://lan-cer.online/${conversationName}/` : null,
     {
       queryParams: {
         token: authTokens,
