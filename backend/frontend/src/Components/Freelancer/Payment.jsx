@@ -76,8 +76,8 @@ function Payment() {
     }
 
     // creating a new order and sending order ID to backend
-    const result = await axios.post(
-      'http://127.0.0.1:8000/api/razorpay_order/',
+    const result = await api.post(
+      'razorpay_order/',
       {
         order_id: 'Order-5152',
         user_id,
