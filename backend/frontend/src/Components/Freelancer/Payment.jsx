@@ -5,7 +5,6 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from '../../Axios/useAxios';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import './Payment.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
