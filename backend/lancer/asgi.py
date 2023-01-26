@@ -27,7 +27,6 @@ import chat.routing
 
 application = ProtocolTypeRouter(
     {
-   "websocket":JWTAuthMiddlewareStack(URLRouter(chat.routing.websocket_urlpatterns)),
 
    "http":django_asgi_app,
    "websocket": AllowedHostsOriginValidator(
