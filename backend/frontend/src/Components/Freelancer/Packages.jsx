@@ -8,7 +8,7 @@ function Packages() {
   const [data, setData] = useState([]);
   const api = useAxios();
   const response = async () => {
-    const Response = await api.get(`packages`);
+    const Response = await api.get(`packages/`);
     console.log(Response);
     setData(Response.data);
   };

@@ -63,7 +63,7 @@ function Fprofile() {
                         className="w-24 h-24 mt-2 rounded-full "
                         src={
                           item.fprofile_picture
-                            ? `http://lan-cer.online:8000${item.fprofile_picture}`
+                            ? `http://lan-cer.online${item.fprofile_picture}`
                             : profile1
                         }
                         alt="image_"
