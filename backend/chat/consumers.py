@@ -31,7 +31,9 @@ class ChatConsumer(JsonWebsocketConsumer):
         return json.dumps(content, cls=Encoder)
 
     def connect(self):
+        print("requst comes inside")
         self.user = self.scope['user']
+        print(self.user,"the user details")
         if not self.user.is_authenticated:
             return
         self.accept()
@@ -114,7 +116,7 @@ def unread_count(self, event):
 class NotificationConsumer(JsonWebsocketConsumer):
     print("notification")
     def __init__(self, *args, **kwargs):
-       
+        
         super().__init__(args, kwargs)
         self.notification_group_name = None
         self.user = None
