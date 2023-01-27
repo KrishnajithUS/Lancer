@@ -43,9 +43,9 @@ export const notification = () => {
 
   const { readyState } = useWebSocket(
     authTokens
-      ? `wss://lan-cer.online/new/notifications/`
+      ? `wss://lan-cer.online:9001/new/notifications/`
       : FTokens
-        ? `wss://lan-cer.online/new/notifications/`
+        ? `wss://lan-cer.online:9001/new/notifications/`
         : null,
     {
       queryParams: {

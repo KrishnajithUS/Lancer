@@ -29,7 +29,7 @@ function Content({ conversationName }) {
 
   const { readyState, sendJsonMessage } = useWebSocket(
     authTokens || userTokens
-      ? `ws://lan-cer.online/${conversationName}/`
+      ? `wss://lan-cer.online:9001/${conversationName}/`
       : null,
     {
       queryParams: {
