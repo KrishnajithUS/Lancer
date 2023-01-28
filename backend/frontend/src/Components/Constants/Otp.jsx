@@ -32,7 +32,7 @@ function Otp() {
     digit3: '',
     digit4: '',
   };
-  const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+  const { values, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema: OtpShema,
     onSubmit: async (values, actions) => {
@@ -58,7 +58,7 @@ function Otp() {
           <div className="bg-white border border-gray-400 px-6 pt-10 pb-9 drop-shadow-2xl mx-auto w-full max-w-lg rounded-2xl">
             <div className="mx-auto flex w-full max-w-md flex-col space-y-8 mb-0">
               <div className="flex flex-col items-center justify-center text-center space-y-2">
-                <div className="font-semibold text-3xl">
+                <div className="font-semibold text-xl md:text-3xl">
                   <p>Email Verification</p>
                 </div>
                 <div className="flex flex-row text-sm font-medium text-gray-400">
@@ -67,9 +67,9 @@ function Otp() {
               </div>
               <div>
                 <form onSubmit={handleSubmit} action="">
-                  <div className="flex flex-col space-y-8">
+                  <div className="flex flex-col  space-y-8">
                     <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-                      <div className="w-16 h-16 ">
+                      <div className="w-16   h-16  ">
                         <input
                           maxLength="1"
                           className="border-2 border-black w-full h-full flex flex-col border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl items-center justify-center text-center px-5 outline-none rounded-xl shadow-lg text-lg bg-white "
@@ -81,11 +81,6 @@ function Otp() {
                           onInput={(e) => handleChangeL(e, input2Ref)}
                           ref={input1Ref}
                         />
-                        {errors.digit1 && touched.digit1 ? (
-                          <p className="form-error text-red-600">
-                            {errors.digit1}
-                          </p>
-                        ) : null}
                       </div>
                       <div className="w-16 h-16 ">
                         <input
@@ -99,11 +94,6 @@ function Otp() {
                           onChange={handleChange}
                           onInput={(e) => handleChangeL(e, input3Ref)}
                         />
-                        {errors.digit2 && touched.digit2 ? (
-                          <p className="form-error text-red-600">
-                            {errors.digit2}
-                          </p>
-                        ) : null}
                       </div>
                       <div className="w-16 h-16 ">
                         <input
@@ -117,16 +107,11 @@ function Otp() {
                           onChange={handleChange}
                           onInput={(e) => handleChangeL(e, input4Ref)}
                         />
-                        {errors.digit3 && touched.digit3 ? (
-                          <p className="form-error text-red-600">
-                            {errors.digit3}
-                          </p>
-                        ) : null}
                       </div>
                       <div className="w-16 h-16 ">
                         <input
                           maxLength="1"
-                          className="border-2 border-black w-full h-full  border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl text-lg bg-white "
+                          className="border-2 border-black w-full h-full   border-2 border-slate-500 focus:bg-gray-50 focus:ring-1 ring-purple-700 drop-shadow-2xl flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl text-lg bg-white "
                           type="text"
                           name="digit4"
                           id=""
@@ -135,22 +120,18 @@ function Otp() {
                           onChange={handleChange}
                           onInput={(e) => handleChangeL(e, input4Ref)}
                         />
-                        {errors.digit4 && touched.digit4 ? (
-                          <p className="form-error text-red-600">
-                            {errors.digit4}
-                          </p>
-                        ) : null}
                       </div>
                     </div>
-                    <div className="flex flex-col m-24 mt-0 ">
-                      <div className="mt-0 ">
+                    <div className="flex flex-col  text-center item-center mt-0 ">
+                      <div className="flex text-center justify-center mb-2">
                         <button
-                          type="submit"
-                          className="flex  flex-row md:text-md text-sm items-center justify-center text-center w-full border hover:-translate-y-1 hover:scale-100 hover:bg-purple-500 duration-300 rounded-xl outline-none py-5 bg-purple-700 border-none text-white text-sm shadow-sm"
+                          type="button"
+                          className="border-purple-900 p-2 mb-2  rounded-lg bg-purple-600 text-sm md:text-lg text-white text-bold "
                         >
                           Verify Account
                         </button>
                       </div>
+
                       <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
                         <p>Didn't recieve code?</p>
                         <a

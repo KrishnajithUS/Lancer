@@ -4,7 +4,7 @@ import SmalllChatBox from '../Chat/SmalllChatBox';
 
 function ContactSection({ status, dataN, post }) {
   const [modal, showModal] = useState('');
-  console.log(post)
+  console.log(post);
   const dataHandler = () => {
     showModal('showchat');
   };
@@ -14,7 +14,7 @@ function ContactSection({ status, dataN, post }) {
         <div className="flex  flex-col items-center pt-4 pb-10">
           <img
             className="w-24 h-24 mb-3 rounded-full shadow-lg"
-            src={`http://localhost:8000${dataN.profile_picture}`}
+            src={`http://lan-cer.online${dataN.profile_picture}`}
             alt="img"
           />
           <h5 className="mb-1 text-xl text-black font-medium text-black">
@@ -24,12 +24,6 @@ function ContactSection({ status, dataN, post }) {
             {dataN?.title}
           </span>
           <div className="flex  mt-4 space-x-3 md:mt-6">
-            <button
-              type="button"
-              className="inline-flex  items-center px-4 py-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "
-            >
-              Connect
-            </button>
             {status ? (
               ''
             ) : (
@@ -59,7 +53,7 @@ function ContactSection({ status, dataN, post }) {
       <div className="flex  flex-col items-center pt-4 pb-10">
         <img
           className="w-24 h-24 mb-3 rounded-full shadow-lg"
-          src={post.profile_picture}
+          src={`${post.profile_picture}`}
           alt="img"
         />
         <h5 className="mb-1 text-xl text-black font-medium text-black">

@@ -51,9 +51,8 @@ function LoginForm() {
             setErrorMessage('Invalid Credentials');
           }
         } catch (err) {
-          if (err.response) {
-            setErrorMessage('Invalid Credentials');
-          }
+          console.log(err.response.data)
+          setErrorMessage(err.response.data.msg)
         }
         actions.resetForm();
       },
@@ -65,7 +64,12 @@ function LoginForm() {
       {/* Container */}
 
       <div className="container mx-auto ">
-        {errorMessage && <Modals setErrorMessage={setErrorMessage} />}
+        {errorMessage && (
+          <Modals
+            setErrorMessage={setErrorMessage}
+            errorMessage={errorMessage}
+          />
+        )}
         <div className="flex justify-center px-6  my-12">
           {/* Row */}
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">

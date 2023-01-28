@@ -63,7 +63,12 @@ function Register() {
   return (
     <section>
       <div className="container mx-auto">
-        {errorMessage && <Modals setErrorMessage={setErrorMessage} />}
+        {errorMessage && (
+          <Modals
+            setErrorMessage={setErrorMessage}
+            errorMessage={errorMessage}
+          />
+        )}
         <div className="flex justify-center px-6 my-12">
           {/* Row */}
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">

@@ -22,5 +22,8 @@ urlpatterns = [
     path("users/profile/", views.getUserPrfile, name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("packages/",views.PackageView.as_view(), name="packages"),
+    path("postfilter/<str:pk>/",views.FilterPosts.as_view(), name="packages"),
+
+    
 
 ]

@@ -6,19 +6,27 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 function Content({ conversationName }) {
   const authTokens = useSelector(
-    (state) => state.freelancer?.token?.access_token
+    (state) => state.freelancer.token.access_token
   );
   const chatuser = conversationName.split('__');
   console.log('chat user', chatuser);
-  const userTokens = useSelector((state) => state.user?.token?.access_token);
+  const userTokens = useSelector((state) => state.user.token.access_token);
   const [name, setName] = useState('');
-
+  const messageEl = React.useRef(null);
+  useEffect(() => {
+    if (messageEl) {
+      messageEl.current.addEventListener('DOMNodeInserted', (event) => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+      });
+    }
+  }, []);
   const [messageHistory, setMessageHistory] = useState([]);
   const [message, setMessage] = useState('');
   const username = useSelector(
-    (state) => state.freelancer?.FreelancerDetails?.username
+    (state) => state.freelancer.FreelancerDetails.username
   );
-  const currentUser = useSelector((state) => state.user?.userDetails?.username);
+  const currentUser = useSelector((state) => state.user.userDetails.username);
   function formatMessageTimestamp(timestamp) {
     const date = new Date(timestamp);
     return date.toLocaleTimeString().slice(0, 5);
@@ -92,8 +100,8 @@ function Content({ conversationName }) {
   }
   console.log(messageHistory);
   return (
-    <div className="">
-      <div className="flex items-center z-10 border-b border-gray-300 pl-3 py-3">
+    <div className="mb-20">
+      <div className="flex items-center   z-10 border-b border-gray-300 pl-3 py-3">
         <img
           className="h-10 w-10 rounded-full object-cover"
           src="https://images.pexels.com/photos/3777931/pexels-photo-3777931.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
@@ -111,16 +119,17 @@ function Content({ conversationName }) {
 
       <div
         id="chat"
-        className="w-full overflow-y-auto p-10 relative"
+        ref={messageEl}
+        className="w-full bg-gray-200 overflow-y-auto p-10 relative"
         style={{ height: 700 }}
       >
         <ul>
           {messageHistory.map((item) => (
             <li className="clearfix2">
               {item.from_user.username !== (username || currentUser) && (
-                <div className="w-full flex justify-start">
+                <div className="w-full flex justify-end">
                   <div
-                    className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
+                    className="bg-white shadow-md rounded-lg px-5 py-2 my-2 text-gray-700 relative"
                     style={{ maxWidth: 300 }}
                   >
                     <span className="block">{item.content}</span>
@@ -132,9 +141,9 @@ function Content({ conversationName }) {
               )}
 
               {item.from_user.username === (username || currentUser) && (
-                <div className="w-full flex justify-end">
+                <div className="w-full flex justify-start">
                   <div
-                    className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
+                    className="bg-white shadow-md rounded-lg px-5 py-2 my-2 text-gray-700 relative"
                     style={{ maxWidth: 300 }}
                   >
                     <span className="block">{item.content}</span>
@@ -149,38 +158,6 @@ function Content({ conversationName }) {
         </ul>
       </div>
       <div className="w-full py-3 px-3 flex items-center justify-between border-t border-gray-300">
-        <button type="button" className="outline-none focus:outline-none">
-          <svg
-            className="text-gray-400 h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-            />
-          </svg>
-        </button>
-        <button type="button" className="outline-none focus:outline-none ml-1">
-          <svg
-            className="text-gray-400 h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-            />
-          </svg>
-        </button>
         <input
           placeholder="type message here.."
           className="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 forcus:border-2 border-black focus:border-purple-600 focus:outline-none"

@@ -3,8 +3,10 @@ from rest_framework.views import APIView
 from rest_framework import exceptions
 import json
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.db.models import Q
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import generics
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
@@ -522,7 +524,14 @@ class GetAllPostView(ListAPIView):
     queryset=CreatePost.objects.all()
     serializer_class=PostSerializer
     pagination_class=setPagination
-    
+class FilterPosts(generics.ListAPIView):
+    permission_classes=[IsAuthenticated]
+    serializer_class=PostSerializer
+    def get_queryset(self):
+        slug=self.kwargs['pk']
+        print(slug)
+        return CreatePost.objects.filter(Q(category__category_name__icontains=slug) | Q(sub_category__subcategory_name__icontains=slug))
+     
     # def get(self,request):
     #     print(request.data)
     #     posts=CreatePost.objects.all()

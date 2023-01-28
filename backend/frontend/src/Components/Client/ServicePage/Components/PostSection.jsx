@@ -8,7 +8,7 @@ function PostSection({ post }) {
           <div className="m-5 border-2 border-gray-200 shadow-xl md:m-10   lg:24">
             <img
               className="rounded-t-lg w-full "
-              src="https://miro.medium.com/max/915/0*4DpFVUP_VfkhzSIL"
+              src={post.cover_image}
               alt="img"
             />
           </div>

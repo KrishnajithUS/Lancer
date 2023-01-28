@@ -1,6 +1,6 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import useWebSocket from 'react-use-websocket';
@@ -45,6 +45,16 @@ function SmalllChatBox({ modal, showModal, post }) {
       },
     }
   );
+  const messageEl = React.useRef(null);
+
+  useEffect(() => {
+    if (messageEl) {
+      messageEl.current.addEventListener('DOMNodeInserted', (event) => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+      });
+    }
+  }, []);
   function handleChangeMessage(e) {
     setMessage(e.target.value);
   }
@@ -100,26 +110,6 @@ function SmalllChatBox({ modal, showModal, post }) {
                 {/* chat box action */}
                 <div>
                   <button
-                    type="button"
-                    className="inline-flex hover:bg-indigo-50 rounded-full p-2"
-                    href="#"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-                      />
-                    </svg>
-                  </button>
-                  <button
                     onClick={handleChangeL}
                     className="inline-flex hover:bg-indigo-50 rounded-full p-2"
                     type="button"
@@ -142,16 +132,16 @@ function SmalllChatBox({ modal, showModal, post }) {
                 </div>
                 {/* end chat box action */}
               </div>
-              <div className="flex-1 px-4 py-4 overflow-y-auto">
+              <div className="flex-1 px-4 bg-gray-200 py-4 overflow-y-auto" ref={messageEl}>
                 {/* chat message */}
 
                 <ul>
                   {messageHistory.map((item) => (
                     <li className="clearfix2">
-                      {item.from_user.username !== username && (
-                        <div className="w-full flex justify-start">
+                      {item.from_user.username === username && (
+                        <div className="w-full flex justify-end">
                           <div
-                            className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
+                            className="bg-white shadow-md rounded-lg px-5 py-2 my-2 text-black relative"
                             style={{ maxWidth: 300 }}
                           >
                             <span className="block">{item.content}</span>
@@ -161,11 +151,10 @@ function SmalllChatBox({ modal, showModal, post }) {
                           </div>
                         </div>
                       )}
-
-                      {item.from_user.username === username && (
-                        <div className="w-full flex justify-end">
+                      {item.from_user.username !== username && (
+                        <div className="w-full  flex  flex justify-start">
                           <div
-                            className="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"
+                            className="bg-white shadow-md rounded-lg px-5 py-2 my-2 text-black relative"
                             style={{ maxWidth: 300 }}
                           >
                             <span className="block">{item.content}</span>

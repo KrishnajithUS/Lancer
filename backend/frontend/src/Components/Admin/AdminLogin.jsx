@@ -53,7 +53,7 @@ function AdminLogin() {
   console.log(values);
   console.log(errors);
   return (
-    <div>
+    <div className="h-[80%]  mb-auto">
       {errorMessage && (
         <div
           className="bg-red-100 border mt-4 border-red-400 text-red-700 px-4 py-3 rounded relative"
@@ -78,7 +78,7 @@ function AdminLogin() {
         </div>
       )}
       <section className="bg-gray-50 ">
-        <div className="flex  flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
+        <div className="flex  flex-col items-center justify-center px-6 py-8 mx-auto h-full lg:py-0">
           <div className="w-full  bg-white rounded-lg shadow-lg border border-gray md:mt-0 sm:max-w-md xl:p-0 ">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
