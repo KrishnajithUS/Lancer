@@ -58,7 +58,7 @@ function Content({ conversationName }) {
             break;
           case 'chat_message_echo':
             console.log(data);
-            setMessageHistory((prev) => [data.message, ...prev]);
+            setMessageHistory((prev) => [...prev, data.message]);
             sendJsonMessage({ type: 'read_messages' });
 
             break;

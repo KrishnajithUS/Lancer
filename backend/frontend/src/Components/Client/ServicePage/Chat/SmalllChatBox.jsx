@@ -36,7 +36,7 @@ function SmalllChatBox({ modal, showModal, post }) {
             break;
           case 'chat_message_echo':
             console.log(data);
-            setMessageHistory((prev) => prev.concat(data.message));
+            setMessageHistory((prev) => [...prev, data.message]);
             break;
           default:
             console.error('unknown type');
