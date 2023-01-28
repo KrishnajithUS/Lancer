@@ -237,7 +237,9 @@ function Experience({ addnew, setExpState, expState, experience }) {
                       Select Country
                     </label>
                     <select
-                      value={addnewN ? bcountry : bcountry || singleData.country}
+                      value={
+                        addnewN ? bcountry : bcountry || singleData.country
+                      }
                       id="countries"
                       onChange={changeHandler}
                       className=" text-gray-900      focus:border-purple-600 focus:outline-none bg-white border border-slate-500 text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"

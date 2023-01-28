@@ -125,7 +125,7 @@ function Otp() {
                     <div className="flex flex-col  text-center item-center mt-0 ">
                       <div className="flex text-center justify-center mb-2">
                         <button
-                          type="button"
+                          type="submit"
                           className="border-purple-900 p-2 mb-2  rounded-lg bg-purple-600 text-sm md:text-lg text-white text-bold "
                         >
                           Verify Account
