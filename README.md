@@ -1,8 +1,8 @@
 # Lancer
-Lancer is a freelancing website done using React JS as frontend and django as backend. It has three modules user, recruiter and admin. User can dicover job post and apply for the post. Recruiter can select the suitable candidate from the applicants. Admin can manage the user and recruiters.
+Lancer is a freelancing website done using React JS as frontend and django as backend. It has three modules user, recruiter and admin. User can dicover services and connect with Freelancer. Freelancer get notified when a new user send a message for their services. Admin can manage the user and Freelancers.
 ## Features
 
-* User, Recruiter and Admin Dashboard
+* User, Freelancer and Admin Dashboard
 * View Service Post and View Freelancer Details
 * Chat 
 * Post Management
