@@ -13,7 +13,7 @@ Lancer is a freelancing website done using React JS as frontend and django as ba
 
 ## Screenshots
 
-![Home](https://imgur.com/KJ27r0p)
+![Alt text](https://imgur.com/KJ27r0p)
 
 ## Prerequisites
 
