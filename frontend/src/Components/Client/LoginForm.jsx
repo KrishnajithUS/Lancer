@@ -66,7 +66,7 @@ function LoginForm() {
 
       <div className="container mx-auto ">
         {errorMessage && <Modals setErrorMessage={setErrorMessage} />}
-        <div className="flex justify-center px-6 my-12">
+        <div className="flex justify-center px-6  my-12">
           {/* Row */}
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             {/* Col */}
@@ -91,7 +91,7 @@ function LoginForm() {
                     Email
                   </label>
                   <input
-                    className="border-slate-800 w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white  text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                     id="email"
                     name="email"
                     type="text"
@@ -112,7 +112,7 @@ function LoginForm() {
                     Password
                   </label>
                   <input
-                    className="border-slate-800 w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="border-2 border-black focus:border-purple-600 focus:outline-none bg-white  text-white-900 text-sm rounded-lg block w-full p-2.5  dark:border-white-600 dark:placeholder-slate-400 dark:text-black"
                     id="password"
                     name="password"
                     type="password"

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import exceptions
+import json
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -25,6 +26,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 from rest_framework.response import Response
+from chat.models import Message,Conversation
+from chat.serializers import MessageSerializer,UserMessageSerializer
 from .serializers import (
     ExpSerializer,
     UserSerializer,
@@ -545,7 +548,24 @@ class PackageView(APIView):
         return Response(serializer.data,status=status.HTTP_200_OK) 
 # logout
 
-
+class chatUser(APIView):
+    def get(self,request):
+           print(request.user)
+           users=[]
+           messages=Message.objects.filter(to_user=request.user)
+           print(messages,"this is messages")
+           for message in messages:
+               print(users)
+               if message.from_user.username not in users:
+                    
+                    users.append(message.from_user.username)
+           print(users)
+     
+          
+           return Response({"username":users},status=status.HTTP_200_OK)
+        # except:
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+        
 @api_view(["POST"])
 def LogOut(request):
     print(request.user)

@@ -1,10 +1,37 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from api.models import FreeLancer,Client
+User = get_user_model()
+class Conversation(models.Model):
+    name = models.CharField(max_length=128)
+    online = models.ManyToManyField(to=User, blank=True)
 
-class Messages(models.Model):
-    client=models.ForeignKey(Client,related_name='client_messages',on_delete=models.CASCADE)
-    freelancer=models.ForeignKey(FreeLancer,related_name='client_messages',on_delete=models.CASCADE)
-    content=models.TextField()
-    timestamp=models.DateTimeField(auto_now_add=True)
-    def last_10_messages(self):
-        return Messages.objects.order_by('-timestamp').all()[:10]
+    def get_online_count(self):
+        return self.online.count()
+
+    def join(self, user):
+        self.online.add(user)
+        self.save()
+
+    def leave(self, user):
+        self.online.remove(user)
+        self.save()
+
+    def __str__(self):
+        return f"{self.name} ({self.get_online_count()})"
+class Message(models.Model):
+    conversation = models.ForeignKey(
+        Conversation, on_delete=models.CASCADE, related_name="messages"
+    )
+    from_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="messages_from_me"
+    )
+    to_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="messages_to_me"
+    )
+    content = models.CharField(max_length=512)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"From {self.from_user.username} to {self.to_user.username}: {self.content} [{self.timestamp}]"

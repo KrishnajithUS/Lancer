@@ -32,7 +32,14 @@ def generate_username(email):
     # Return the username with the unique number appended
     return username
 
+class UserSerializerN(serializers.ModelSerializer):
 
+
+    class Meta:
+        model = User
+        fields =["username"]
+
+        
 class UserSerializer(serializers.ModelSerializer):
     profile_picture = serializers.ImageField(
         source="client.profile_picture", read_only=True, required=False
@@ -301,6 +308,8 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="Freelancer.user.first_name", read_only=True, required=False)
+    username = serializers.CharField(source="Freelancer.user.username", read_only=True, required=False)
+
     user_id=serializers.CharField(source="Freelancer.user.id", read_only=True, required=False)
     categorydata = serializers.CharField(
         source="category.category_name", read_only=True, required=False
@@ -318,6 +327,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreatePost
         fields = [
+            "username",
             "first_name",
             "bio",
            "profile_picture",

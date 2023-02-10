@@ -15,6 +15,7 @@ import {
 import userReducer from './reducer';
 import FreelancerReducer from './Freducer';
 import adminreducer from './adminreducer';
+import notificationreducer from './notificationreducer';
 
 const persistConfig = {
   key: 'root',
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   user: userReducer,
   freelancer: FreelancerReducer,
   admin: adminreducer,
+  notification: notificationreducer,
 });
 const persistedReducer = persistReducer(persistConfig, reducers);
 

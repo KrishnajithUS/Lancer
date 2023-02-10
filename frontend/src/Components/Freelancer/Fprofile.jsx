@@ -63,7 +63,7 @@ function Fprofile() {
                         className="w-24 h-24 mt-2 rounded-full "
                         src={
                           item.fprofile_picture
-                            ? `http://localhost:8000${item.fprofile_picture}`
+                            ? `http://137.184.60.192:8000${item.fprofile_picture}`
                             : profile1
                         }
                         alt="image_"
