@@ -54,6 +54,7 @@ function Content({ conversationName }) {
         console.log(data.message);
         switch (data.type) {
           case 'last_50_messages':
+            data.messages.reverse();
             setMessageHistory(data.messages);
             break;
           case 'chat_message_echo':
@@ -69,6 +70,7 @@ function Content({ conversationName }) {
       },
     }
   );
+
   const connectionStatus = {
     [ReadyState.CONNECTING]: 'Connecting',
     [ReadyState.OPEN]: 'Open',

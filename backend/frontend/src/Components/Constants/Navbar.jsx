@@ -125,7 +125,7 @@ const Navbar = () => {
                               </li>
                               <li>
                                 <Link
-                                  to="/fprofile"
+                                  to="/cprofile"
                                   className=" block hover:text-green-600 px-4 py-2 "
                                 >
                                   Profile
